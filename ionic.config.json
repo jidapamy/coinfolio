@@ -1,6 +1,13 @@
 {
-  "name": "coinfolio",
-  "app_id": "971cd870",
+  "name": "Project_Crypto",
+  "app_id": "",
   "type": "ionic-angular",
-  "integrations": {}
+  "integrations": {},
+  "proxies": [
+    {
+      "path": "/api",
+      "proxyUrl": "https://bx.in.th/api"
+    }
+  ]
 }
+

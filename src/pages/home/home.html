@@ -29,29 +29,32 @@
       </ion-row>
   </ion-grid>
 </ion-header>
-  <!-- <row>
-    <col>Coin</col>
-    <col>Holding</col>
-    <col>Price</col>
-    <col>Alert</col>
-  </row> -->
 <ion-content padding>  
-  <ion-grid>
-      <ion-row *ngFor="let coin of coins">
-          <ion-col>
-              <span class="s-s-{{coin.id}} currency-logo-sprite" style="margin-right:10px;"></span>
-              <br><br>
-              {{coin.symbol}}
+  <ion-grid style="gridCoin">
+      <ion-row *ngFor="let coin of coins" style="padding-bottom:0.5%;padding-top:0.5%;border-bottom: 1px solid rgba(222, 222, 222, 0.09);">
+          <ion-col class="coin">
+              <p class="s-s-{{coin.id}} currency-logo-sprite" style="margin: 13%;margin-right: 34%;margin-left: 34%;"></p>
+              <p style="margin: 13%;">{{coin.symbol}}</p>
           </ion-col>
-          <ion-col></ion-col>
-          <ion-col>
-            T฿{{coin.price_thb}}
-            <ion-icon name="md-arrow-dropdown"></ion-icon><br>
-            {{coin.percent_change_1h}}
-            
 
+          <ion-col class="holding"></ion-col>
+
+          <ion-col class="price" style="text-align: right;" >
+            T฿{{coin.price_thb}}
+              <span *ngIf="coin.percent_change_1h<0" [ngClass]="{ratedownCurrency:coin.percent_change_1h<0}">
+                <ion-icon name="md-arrow-dropdown"></ion-icon><br>
+                {{coin.percent_change_1h}}
+              </span>
+              <span *ngIf="coin.percent_change_1h>=0" [ngClass]="{rateupCurrency:coin.percent_change_1h>=0}">
+              <ion-icon name="md-arrow-dropup"></ion-icon><br>
+                {{coin.percent_change_1h}}
+              </span>
           </ion-col>
-          <ion-col><ion-icon name="notifications"></ion-icon></ion-col>
+
+          <ion-col class="alert" style="padding-top: 5%;">
+            <ion-icon name="notifications"></ion-icon>
+          </ion-col>
+
         </ion-row>
     </ion-grid>
 </ion-content>

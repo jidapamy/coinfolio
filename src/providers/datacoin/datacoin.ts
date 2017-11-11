@@ -2,7 +2,9 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
-import { Observable } from 'rxjs' ;
+import { Observable } from 'rxjs';
+import _ from 'lodash';
+import { OnInit } from '@angular/core';
 
 
 /*
@@ -11,6 +13,13 @@ import { Observable } from 'rxjs' ;
   See https://angular.io/guide/dependency-injection for more info on providers
   and Angular DI.
 */
+
+let num;
+for (let i = 1 ; i <= 27; i++) {
+	num=[i];
+}
+
+
 @Injectable()
 export class DatacoinProvider {
 
@@ -23,6 +32,13 @@ export class DatacoinProvider {
            .map(response => {
                return response.json();
            });
+  }
+
+  loadBX():Observable<cryptoNumbers[]>{
+  	return this.http.get("/api")
+  			   .map(response => {
+  			   		return response.json()
+  			   });
   }
 
 }
@@ -55,3 +71,40 @@ export class objectCoinMarKetCap{
 	h24_volume_thb:any;
 	market_cap_thb:any;
 }
+
+
+export class bids{
+	total:any
+	volume:any
+	highbid:any
+}
+export class asks{
+	total:any
+	volume:any
+	highbid:any
+}
+export class orderbook{
+	bids : bids[]
+	asks : asks[]
+}
+export class cryto{
+	pairing_id:any
+	primary_currency:any
+	secondary_currency:any
+	change:number
+	last_price:string
+	volume_24hours:any
+	// nameCrypto:any[]
+	orderbooks:orderbook[]
+
+}
+export class cryptoNumbers{
+	// number:string='1';
+	crytos:cryto[]
+}
+
+export const NAME:any[] = ["Bitcoin","Litecoin","Namecoin","Dogcoin",
+					"Peercoin","Feathercoin","Primecoin","Zcash",
+					"HyperStake","Pandacoin","Cryptonite","Paycoin",
+					"Quark","Ethereum","Ethereum","Dash","Augur","Gnosis",
+					"Ripple","OmiseGo","BitcoinCash"];
