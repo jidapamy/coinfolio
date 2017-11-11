@@ -31,23 +31,24 @@
 </ion-header>
 <ion-content padding>  
   <ion-grid style="gridCoin">
-      <ion-row *ngFor="let coin of coins" style="padding-bottom:0.5%;padding-top:0.5%;border-bottom: 1px solid rgba(222, 222, 222, 0.09);">
+      <ion-row *ngFor="let crypto of cryptoMix" style="padding-bottom:0.5%;padding-top:0.5%;border-bottom: 1px solid rgba(222, 222, 222, 0.09);">
           <ion-col class="coin">
-              <p class="s-s-{{coin.id}} currency-logo-sprite" style="margin: 13%;margin-right: 34%;margin-left: 34%;"></p>
-              <p style="margin: 13%;">{{coin.symbol}}</p>
+              <!-- <p class="s-s-{{coin.id}} currency-logo-sprite" style="margin: 13%;margin-right: 34%;margin-left: 34%;"></p> -->
+              <img src="https://d2v7vc3vnopnyy.cloudfront.net/img/coins/{{ crypto.secondary_currency }}.png" />
+              <p style="margin: 13%;">{{ crypto.secondary_currency }}</p>
           </ion-col>
 
           <ion-col class="holding"></ion-col>
 
           <ion-col class="price" style="text-align: right;" >
-            T฿{{coin.price_thb}}
-              <span *ngIf="coin.percent_change_1h<0" [ngClass]="{ratedownCurrency:coin.percent_change_1h<0}">
+            T฿{{crypto.last_price}}
+              <span *ngIf="crypto.change<0" [ngClass]="{ratedownCurrency:crypto.change<0}">
                 <ion-icon name="md-arrow-dropdown"></ion-icon><br>
-                {{coin.percent_change_1h}}
+                {{crypto.change}}
               </span>
-              <span *ngIf="coin.percent_change_1h>=0" [ngClass]="{rateupCurrency:coin.percent_change_1h>=0}">
+              <span *ngIf="crypto.change>=0" [ngClass]="{rateupCurrency:crypto.change>=0}">
               <ion-icon name="md-arrow-dropup"></ion-icon><br>
-                {{coin.percent_change_1h}}
+                {{crypto.change}}
               </span>
           </ion-col>
 

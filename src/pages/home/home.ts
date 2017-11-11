@@ -32,9 +32,8 @@ priceDecimal:any[];
           console.dir(this.cryptoNumbers)},
         error => {console.log("error: "+error);},
            () => {this.addName();
-                  this.selectThb();
             console.log("Read park completely");})
-this.isSelect=false;
+            this.isSelect=false;
         // for(let i=0;i<this.coins.length;i++){
         //   this.priceDecimal.push({symbol:this.coins[i].symbol,price:this.coins[i].price_thb});
         // }
@@ -54,20 +53,4 @@ this.isSelect=false;
     }
   }
 
-  selectThb(){
-    if (this.cryptoMix.length>-1){
-      let filteredTHB = this.cryptoMix.filter( row => { 
-         if (row.primary_currency=='THB') {
-              return true;
-          }else {
-              return false ;
-            }
-      });
-      this.isSelect=false;
-      console.log('FilterTHB : '+filteredTHB) ;
-     this.THB = filteredTHB ;
-    }else {
-     console.log('No data') ;
-    }
-}
 }
