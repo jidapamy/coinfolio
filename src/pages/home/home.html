@@ -3,16 +3,55 @@
     <button end ion-button menuToggle>
       <ion-icon name="md-more"></ion-icon>
     </button>
-    <ion-title>Home</ion-title>
+    <ion-buttons end >
+      <button ion-button>
+        <ion-icon name="add"></ion-icon>
+      </button>
+ 	  </ion-buttons>
+    <ion-title>My Folio</ion-title>
   </ion-navbar>
+  <ion-item>
+    <ion-label class="frontFixedLabel">
+      <p class="aboveFixedLabel">Total Portfolio Value</p>
+      <span class="underFixedLabel"><span style="font-size:17px">THB </span><span style="font-size:30px">42896.71</span></span>
+    </ion-label>
+    <ion-label class="endFixedLabel" style="margin-top: 3px;">
+      <p class="aboveFixedLabel" style="margin-bottom: 5px;">24hr Change</p>
+      <p class="underFixedLabel" style="font-size:14px">-T฿2202.97</p>
+    </ion-label>
+  </ion-item>
+  <ion-grid class="headerGird">
+      <ion-row>
+        <ion-col class="coin">Coin</ion-col>
+        <ion-col class="holding">Holding</ion-col>
+        <ion-col class="price">Price</ion-col>
+        <ion-col class="alert">Alert</ion-col>
+      </ion-row>
+  </ion-grid>
 </ion-header>
+  <!-- <row>
+    <col>Coin</col>
+    <col>Holding</col>
+    <col>Price</col>
+    <col>Alert</col>
+  </row> -->
+<ion-content padding>  
+  <ion-grid>
+      <ion-row *ngFor="let coin of coins">
+          <ion-col>
+              <span class="s-s-{{coin.id}} currency-logo-sprite" style="margin-right:10px;"></span>
+              <br><br>
+              {{coin.symbol}}
+          </ion-col>
+          <ion-col></ion-col>
+          <ion-col>
+            T฿{{coin.price_thb}}
+            <ion-icon name="md-arrow-dropdown"></ion-icon><br>
+            {{coin.percent_change_1h}}
+            
 
-<ion-content padding>
-  <h3>Ionic Menu Starter</h3>
-
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
-
-  <button ion-button secondary menuToggle>Toggle Menu</button>
+          </ion-col>
+          <ion-col><ion-icon name="notifications"></ion-icon></ion-col>
+        </ion-row>
+    </ion-grid>
 </ion-content>
