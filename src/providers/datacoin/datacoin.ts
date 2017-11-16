@@ -103,8 +103,20 @@ export class cryptoNumbers{
 	crytos:cryto[]
 }
 
+export class crytoMix {
+	pairing_id: any;
+	primary_currency: any;
+	secondary_currency: any;
+	change: any;
+	last_price: any;
+	volume_24hours: any
+	nameCrypto: any;
+	orderbooks: any;
+
+}
+
 export const NAME:any[] = ["Bitcoin","Litecoin","Namecoin","Dogcoin",
 					"Peercoin","Feathercoin","Primecoin","Zcash",
 					"HyperStake","Pandacoin","Cryptonite","Paycoin",
 					"Quark","Ethereum","Ethereum","Dash","Augur","Gnosis",
-					"Ripple","OmiseGo","BitcoinCash"];
+					"Ripple","OmiseGo","BitcoinCash","Everex","Zcoin"];

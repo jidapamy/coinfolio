@@ -1,0 +1,133 @@
+page-folio {
+    .content{
+        color: #FFFFFF;
+        background-color: #151A1D;
+        font-size:16px;
+    }
+
+
+
+    .frontFixedLabel {
+        min-width: 67% !important;
+        max-width: 67% !important;
+        // color:rgb(255, 255, 255);
+        font-weight: 500;
+    }
+    // .frontFixedLabel >p,
+    // .endFixedLabel >p{
+    //     color:rgb(237, 235, 235);
+    //     // font-weight: 500;
+    // } 
+
+    .aboveFixedLabel{
+        color:rgb(131, 131, 131);
+        font-weight: 800;
+        font-size:12px
+    }
+
+    .underFixedLabel{
+        color:rgb(255, 255, 255);
+        font-weight: 800;
+    }
+
+    .endFixedLabel {
+        min-width: 30% !important;
+        max-width: 30% !important;
+        // color:#414141;
+        font-weight: 500;
+        font-size:10px;
+        text-align: right;
+    }
+
+    .item {
+        padding-left: 10px;
+        padding-right: 0px;
+        position: relative;
+        font-size: 1.6rem;
+        font-weight: normal;
+        text-transform: none;
+        color: rgb(201, 201, 201);
+        background-color: #1D1D1D;
+        box-shadow: none;
+        transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .item.item-block .item-inner {
+        padding-right: 8px;
+        border-bottom: 0px solid rgba(222, 222, 222, 0.09);
+    }
+
+    .headerGird{
+        background: #2A2A2A;
+        color: rgb(201, 201, 201);
+        font-weight: 900;
+        font-size:13px;
+    }
+    .gridCoin{
+        font-weight: 400;
+        font-size: 25px;
+    }
+    
+    .coin{
+        min-width: 16% !important;
+        max-width: 16% !important;
+        text-align: center;
+    }
+    .holding{
+        min-width: 36% !important;
+        max-width: 36% !important;
+        text-align: center;
+    }
+    .price{
+        min-width: 36% !important;
+        max-width: 36% !important;
+        text-align: center;
+    }
+    .alert{
+        min-width: 12% !important;
+        max-width: 12% !important;
+        text-align: center;
+    }
+
+    .scroll-content {
+        width: 108%;
+        margin-left: -4%;
+        left: 0;
+        right: 0;
+        top: -12px;
+        top: -9px;
+        position: absolute;
+        z-index: 1;
+        display: block;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        -webkit-overflow-scrolling: touch;
+        will-change: scroll-position;
+        contain: size style layout;
+    }
+
+
+
+
+
+              
+              
+        .currency-logo-sprite{
+            //   margin-right:10px;
+            //   margin-top:4px;
+            //   margin-bottom:10px;
+            //   margin-left:-4px;
+                // margin-right: 32%;
+                // float:right;
+                // text-align:center;
+              }
+        .currency-logo-sprite{
+            //   margin-right:4px;
+            //   margin-top:3px;
+            //   margin-left:0;
+              
+              }
+          
+      
+      
+}

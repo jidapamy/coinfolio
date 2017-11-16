@@ -6,7 +6,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { HomePage } from '../pages/home/home';
 import { AddTransationPage } from '../pages/add-transation/add-transation';
 import { AlertPage } from '../pages/alert/alert';
-import { ChattingPage } from '../pages/chatting/chatting';
+import { ChatPage } from '../pages/chat/chat';
 import { DetailsPage } from '../pages/details/details';
 import { NewsPage } from '../pages/news/news';
 import { NewsSourcePage } from '../pages/news-source/news-source';
@@ -14,6 +14,7 @@ import { PrivacyPage } from '../pages/privacy/privacy';
 import { SelectCoinPage } from '../pages/select-coin/select-coin';
 import { SettingPage } from '../pages/setting/setting';
 import { TutorialPage } from '../pages/tutorial/tutorial';
+import { FolioPage } from '../pages/folio/folio';
 
 
 @Component({
@@ -22,7 +23,8 @@ import { TutorialPage } from '../pages/tutorial/tutorial';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = HomePage;
+  // rootPage: any = HomePage;
+  rootPage: any = ChatPage;
 
   pages: Array<{title: string, component: any}>;
 
@@ -31,9 +33,10 @@ export class MyApp {
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'My Folio', component: HomePage },
+      { title: 'Home', component: HomePage },
+      { title: 'My Folio', component: FolioPage },
       { title: 'News', component: NewsPage },
-      { title: 'Talks', component: ChattingPage },
+      { title: 'Talks', component: ChatPage },
       { title: 'Settings', component: SettingPage }
       
     ];

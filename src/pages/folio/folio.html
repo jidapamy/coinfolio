@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-navbar>
+    <button end ion-button menuToggle>
+      <ion-icon name="md-more"></ion-icon>
+    </button>
+    <ion-title style="padding-left: 15%;">My Folio</ion-title>
+  </ion-navbar>
+  <ion-item>
+    <ion-label class="frontFixedLabel">
+      <p class="aboveFixedLabel">Total Portfolio Value</p>
+      <span class="underFixedLabel"><span style="font-size:17px">THB </span><span style="font-size:30px">42896.71</span></span>
+    </ion-label>
+    <ion-label class="endFixedLabel" style="margin-top: 3px;">
+      <p class="aboveFixedLabel" style="margin-bottom: 5px;">24hr Change</p>
+      <p class="underFixedLabel" style="font-size:14px">-T฿2202.97</p>
+    </ion-label>
+  </ion-item>
+  <ion-grid class="headerGird">
+      <ion-row>
+        <ion-col class="coin">Coin</ion-col>
+        <ion-col class="holding">Holding</ion-col>
+        <ion-col class="price">Price</ion-col>
+        <ion-col class="alert">Alert</ion-col>
+      </ion-row>
+  </ion-grid>
+</ion-header>
+<ion-content padding>  
+  <ion-grid style="gridCoin">
+      <ion-row *ngFor="let crypto of cryptoMix" style="padding-bottom:0.5%;padding-top:0.5%;border-bottom: 1px solid rgba(222, 222, 222, 0.09);">
+          <ion-col class="coin">
+              <!-- <p class="s-s-{{coin.id}} currency-logo-sprite" style="margin: 13%;margin-right: 34%;margin-left: 34%;"></p> -->
+              <img src="https://d2v7vc3vnopnyy.cloudfront.net/img/coins/{{ crypto.secondary_currency }}.png" />
+              <p style="margin: 13%;">{{ crypto.secondary_currency }}</p>
+          </ion-col>
+
+          <ion-col class="holding"></ion-col>
+
+          <ion-col class="price" style="text-align: right;" >
+            T฿{{crypto.last_price}}
+              <span *ngIf="crypto.change<0" [ngClass]="{ratedownCurrency:crypto.change<0}">
+                <ion-icon name="md-arrow-dropdown"></ion-icon><br>
+                {{crypto.change}}
+              </span>
+              <span *ngIf="crypto.change>=0" [ngClass]="{rateupCurrency:crypto.change>=0}">
+              <ion-icon name="md-arrow-dropup"></ion-icon><br>
+                {{crypto.change}}
+              </span>
+          </ion-col>
+
+          <ion-col class="alert" style="padding-top: 5%;">
+            <ion-icon name="notifications"></ion-icon>
+          </ion-col>
+
+        </ion-row>
+    </ion-grid>
+</ion-content>
