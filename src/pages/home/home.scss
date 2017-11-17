@@ -93,13 +93,44 @@ page-home {
         padding-right: 8px;
         border-bottom: 0px solid rgba(222, 222, 222, 0.09);
     }
-    .switchColor{
-        background-color: red;
-    }
-    ion-item:nth-child(2n+2) {
-        background-color: rgba(38, 45, 51, 0.26);
-    }
     
+    // ion-item:nth-child(2n+2) {
+    //     // background-color: rgba(255, 0, 0, 0.26) !important;
+        
+    //     background-color: rgba(38, 44, 51, 0.26) !important;
+    // }
+
+
+    // .list ion-item-options:nth-child(2n+2) {
+    //     // background-color: rgba(255, 0, 0, 0.26) !important;
+        
+    //     background-color: rgba(38, 44, 51, 0.26) !important;
+    // }
+
+    .list ion-item-sliding:nth-child(2n+2) {
+        background-color: rgba(38, 44, 51, 0.26) !important;
+    }
+
+    //  .list ion-item:nth-child(2n+2) {
+    //     // background-color: rgba(255, 0, 0, 0.26) !important;
+        
+    //     background-color: rgba(38, 44, 51, 0.26) !important;
+    // }
+
+
+    .button-inner {
+        width: 122%;
+        height: 100%;
+    }
+
+    .list ion-item-sliding {
+        background-color: #151A1D;
+      
+    }
+
+    .list ion-item-options {
+        border-bottom: 0px solid #dedede;
+    }
 
     // .scroll-content {
     //     left: 0;
@@ -117,6 +148,20 @@ page-home {
     //     margin-right: -4%;
     // }
 
+
+    .list {
+        margin-left: -5%;
+        margin-top: -4%;
+    }
+
+
+    ion-list {
+        margin: 0;
+        padding: 0;
+        display: block;
+        list-style-type: none;
+        width: 110%;
+    }
     .segment .segment-button {
         -webkit-box-flex: 1;
         -webkit-flex: 1;

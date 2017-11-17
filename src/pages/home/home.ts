@@ -161,7 +161,6 @@ export class HomePage {
       this.pushCrytoTotal(type,i);
     }
     console.log(`${type} length : ${this.cryptoTotal.length}`)
-
   }
 
 
