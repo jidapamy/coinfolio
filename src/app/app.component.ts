@@ -23,21 +23,21 @@ import { FolioPage } from '../pages/folio/folio';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  // rootPage: any = HomePage;
-  rootPage: any = ChatPage;
+  rootPage: any = HomePage;
+  // rootPage: any = ChatPage;
 
-  pages: Array<{title: string, component: any}>;
+  pages: Array<{icon:string;title: string, component: any}>;
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Home', component: HomePage },
-      { title: 'My Folio', component: FolioPage },
-      { title: 'News', component: NewsPage },
-      { title: 'Talks', component: ChatPage },
-      { title: 'Settings', component: SettingPage }
+      { icon:'home',title: 'Home', component: HomePage },
+      { icon: 'star',title: 'My Folio', component: FolioPage },
+      { icon: 'information-circle',title: 'News', component: NewsPage },
+      { icon: 'chatbubbles',title: 'Talks', component: ChatPage },
+      { icon: 'settings',title: 'Settings', component: SettingPage }
       
     ];
 

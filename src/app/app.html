@@ -12,14 +12,15 @@
 
   <ion-content>
     <ion-list>
-      <button  menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
-        {{p.title}}
+      <button class="designItem"  menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
+        <ion-label class="iconFix"><ion-icon name="{{p.icon}}"></ion-icon></ion-label>
+        <ion-label> {{p.title}} </ion-label>
       </button>
     </ion-list>
   </ion-content>
-  <ion-footer>
+  <!-- <ion-footer>
       <button ion-button menuClose block outline color="danger">Logout</button>
-  </ion-footer>
+  </ion-footer> -->
 </ion-menu>
 
 <!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
