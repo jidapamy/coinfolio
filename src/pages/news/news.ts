@@ -1,5 +1,11 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
+import { Http } from '@angular/http';
+import 'rxjs/add/operator/map';
+import xml2js from 'xml2js';
+import { InAppBrowser, InAppBrowserOptions } from "@ionic-native/in-app-browser";
+// import { DatacoinProvider , objectCoinMarKetCap} from '../../providers/datacoin/datacoin';
+import { DatacoinProvider, newsData, newsDataDetail } from '../../providers/datacoin/datacoin';
 
 /**
  * Generated class for the NewsPage page.
@@ -13,12 +19,110 @@ import { NavController, NavParams } from 'ionic-angular';
   templateUrl: 'news.html',
 })
 export class NewsPage {
+  news: any = '';
+  // status: any;
+  // feed: feeds[];
+  items: newsDataDetail[] = [];
+  // data: newsDataDetail[];
+  isSelect: boolean;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  title: any;
+  pubDate: any;
+  link: any;
+  description: any;
+
+  url: "https://www.youtube.com/watch?v=SPJ9TdHaI3A&t=356s";
+  constructor(private inAppBrowser: InAppBrowser, public http: Http, public navCtrl: NavController, public provider: DatacoinProvider) {
+    
+    this.provider.loadNews().subscribe(data => {
+      this.news = data;
+      // this.news = data; Object.keys(data).map(key => data[key]);
+      console.dir(this.news)
+    },
+      error => { console.log("error: " + error); },
+      () => {
+        console.log("Read park completely");
+        // console.log('length' + this.news.items);
+        // console.log('item' + this.news.items.length);
+
+        for (let i = 0; i < this.news.items.length; i++) {
+
+          this.items.push({
+            title: this.news.items[i].title,
+            pubDate: this.news.items[i].pubDate,
+            link: this.news.items[i].link,
+            guid: this.news.items[i].guid,
+            author: this.news.items[i].author,
+            thumbnail: this.news.items[i].thumbnail,
+            description: this.news.items[i].description,
+            content: this.news.items[i].content,
+            enclosure: this.news.items[i].enclosure.link,
+            categories: this.news.items[i].categories
+
+          })
+
+          console.log('item' + i + ' ' + this.news.items[i].title);
+        }
+        console.log('item' + this.items.length);
+        console.log('item 3:' + this.items[3].title);
+
+
+
+      })
+    // }, 1000);
+
+    this.isSelect = false;
+    this.isSelect = false;
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad NewsPage');
+
+
+  openWebpage(url: string) {
+    console.log(`click this.`)
+    const options: InAppBrowserOptions = {
+      zoom: 'no'
+    }
+
+    // Opening a URL and returning an InAppBrowserObject
+    const browser = this.inAppBrowser.create(url, '_self', options);
+
+    // Inject scripts, css and more with browser.X
   }
 
+  doRefresh(refresher) {
+    console.log("5555555");
+
+    // this.items.length = 0;
+
+    setTimeout(() => {
+      console.log('Async operation has ended');
+      this.items.length = 0;
+      for (let i = 0; i < this.news.items.length; i++) {
+        this.items.push({
+          title: this.news.items[i].title,
+          pubDate: this.news.items[i].pubDate,
+          link: this.news.items[i].link,
+          guid: this.news.items[i].guid,
+          author: this.news.items[i].author,
+          thumbnail: this.news.items[i].thumbnail,
+          description: this.news.items[i].description,
+          content: this.news.items[i].content,
+          enclosure: this.news.items[i].enclosure.link,
+          categories: this.news.items[i].categories
+        })
+        console.log('item' + i + ' ' + this.news.items[i].title);
+      }
+
+      refresher.complete();
+      console.log(`length: ${this.items.length}`)
+
+    }, 500);
+
+
+
+  }
+
+  test() {
+    console.log('item' + this.news.items[0].title);
+  }
 }

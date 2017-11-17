@@ -22,6 +22,8 @@ import { FormsModule } from '@angular/forms' ;
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { DatacoinProvider } from '../providers/datacoin/datacoin';
+import { IonicStorageModule } from '@ionic/storage';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 @NgModule({
   declarations: [
@@ -66,6 +68,7 @@ import { DatacoinProvider } from '../providers/datacoin/datacoin';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     DatacoinProvider,
+    InAppBrowser
   ]
 })
 export class AppModule {}

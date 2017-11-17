@@ -10,12 +10,32 @@
       <button end ion-button menuToggle>
           <ion-icon name="md-more"></ion-icon>
       </button>
-    <ion-title style="padding-left: 18%;">News</ion-title>
+    <ion-title style="padding-left: 18%;">News Cryptocurrentcy</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+  <ion-refresher class="color" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content style="color:goldenrod" pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles"
+      refreshingText="Refreshing..." style="fill:aliceblue">
+    </ion-refresher-content>
+  </ion-refresher>
+  <!-- <span name="a"[(ngModel)]="url" > -->
+  <ion-card *ngFor='let item of items' (click)="openWebpage()" class="size" style="margin-top:0%;">
+    <!-- <a href="{{item.link}}" > -->
+    <img src="{{item.enclosure}}" />
+    <ion-card-content>
 
+      <ion-card-title class="title">
+        {{item.title}}
+      </ion-card-title>
+
+      <ion-icon name="md-calendar"></ion-icon>&nbsp;{{item.pubDate}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+      <ion-icon name="md-person"></ion-icon>&nbsp;{{item.author}}
+
+    </ion-card-content>
+    <!-- </a> -->
+  </ion-card>
 </ion-content>

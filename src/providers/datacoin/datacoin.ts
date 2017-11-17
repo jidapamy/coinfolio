@@ -40,7 +40,48 @@ export class DatacoinProvider {
   			   		return response.json()
   			   });
   }
+  loadNews(): Observable<newsData[]> {
 
+	  return this.http.get('https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fcointelegraph.com%2Frss&api_key=ss1px1umuunducpxqlhspjeyh18k9hfweenrq8ds')
+		  .map(response => {
+			  return response.json();
+		  });
+  } 
+
+}
+export class newsData {
+	status: any;
+	feed: feeds[];
+	items: newsDataDetail[];
+
+}
+export class feeds {
+	url: any;
+	title: any;
+	link: any;
+	author: any;
+	description: any;
+	image: any;
+}
+export class newsDataDetail {
+	title: any;
+	pubDate: any;
+	link: any;
+	guid: any;
+	author: any;
+	thumbnail: any;
+	description: any;
+	content: any;
+	enclosure: enclosure[];
+	categories: categories[];
+}
+export class enclosure {
+	link: any;
+} export class categories {
+	0: any;
+	1: any;
+	2: any;
+	3: any;
 }
 
 // export class detailCoin{
