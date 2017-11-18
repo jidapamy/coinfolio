@@ -5,6 +5,8 @@ import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs';
 import _ from 'lodash';
 import { OnInit } from '@angular/core';
+import { Storage } from '@ionic/storage';
+
 
 
 /*
@@ -14,25 +16,21 @@ import { OnInit } from '@angular/core';
   and Angular DI.
 */
 
-let num;
-for (let i = 1 ; i <= 27; i++) {
-	num=[i];
-}
-
 
 @Injectable()
 export class DatacoinProvider {
+	myCoins: crytoMix[] = [];
 
-  constructor(public http: Http) {
-    console.log('Hello DatacoinProvider Provider');
-  }
-
-  loadCoin():Observable<objectCoinMarKetCap[]>{
-    return this.http.get('https://api.coinmarketcap.com/v1/ticker/?convert=THB&limit=100')
-           .map(response => {
-               return response.json();
-           });
-  }
+	constructor(public http: Http,public storage: Storage) {
+		console.log('Hello DatacoinProvider Provider');
+		this.storage.ready().then(() => {
+			this.storage.get('myCoins').then((data) => {
+				if (data) {
+					this.myCoins = data;
+				}
+			});
+		});
+	}
 
   loadBX():Observable<cryptoNumbers[]>{
   	return this.http.get("/api")
@@ -48,7 +46,12 @@ export class DatacoinProvider {
 		  });
   } 
 
+//   addTransaction(coin,){
+// 	  this.myCoins.push()
+//   }
+
 }
+
 export class newsData {
 	status: any;
 	feed: feeds[];
@@ -77,42 +80,14 @@ export class newsDataDetail {
 }
 export class enclosure {
 	link: any;
-} export class categories {
+} 
+
+export class categories {
 	0: any;
 	1: any;
 	2: any;
 	3: any;
 }
-
-// export class detailCoin{
-//   date:any;
-//   price:any;	
-//   open:any;	
-//   high:any;	
-//   low:any;	
-//   change:any;
-// }
-
-export class objectCoinMarKetCap{
-	id:any;
-	name:any;
-	symbol:any;
-	rank:any;
-	price_usd:number;
-	price_btc:number;
-	h24_volume_usd:any;
-	market_cap_usd:any;
-	available_supply:any;
-	total_supply:any;
-	percent_change_1h:any;
-	percent_change_24h:any;
-	percent_change_7d:any;
-	last_updated:any;
-	price_thb:number;
-	h24_volume_thb:any;
-	market_cap_thb:any;
-}
-
 
 export class bids{
 	total:any

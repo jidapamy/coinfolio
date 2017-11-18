@@ -33,7 +33,7 @@
     <button end ion-button menuToggle>
       <ion-icon name="md-more"></ion-icon>
     </button>
-    <ion-title style="padding-left: 12%;">Home</ion-title>
+    <ion-title style="padding-left: 12%;">My Folio</ion-title>
   </ion-navbar>
   <ion-item style="background-color: #151A1D;">
     <ion-label class="frontFixedLabel">
@@ -47,19 +47,17 @@
   </ion-item>
   <ion-grid class="headerGird">
     <ion-row>
-      <ion-col class="coin">Coin</ion-col>
-      <ion-col class="holding">Holding</ion-col>
-      <ion-col class="price">Price</ion-col>
-      <ion-col class="alert">Alert</ion-col>
+      <ion-col class="coin">COIN</ion-col>
+      <ion-col class="holding">HOLDING</ion-col>
+      <ion-col class="price">PRICE</ion-col>
     </ion-row>
   </ion-grid>
   
 </ion-header>
 <ion-content padding>  
-  <ion-grid style="gridCoin">
+  <!-- <ion-grid style="gridCoin">
       <ion-row *ngFor="let crypto of cryptoMix" style="padding-bottom:0.5%;padding-top:0.5%;border-bottom: 1px solid rgba(222, 222, 222, 0.09);">
           <ion-col class="coin">
-              <!-- <p class="s-s-{{coin.id}} currency-logo-sprite" style="margin: 13%;margin-right: 34%;margin-left: 34%;"></p> -->
               <img src="https://d2v7vc3vnopnyy.cloudfront.net/img/coins/{{ crypto.secondary_currency }}.png" />
               <p style="margin: 13%;">{{ crypto.secondary_currency }}</p>
           </ion-col>
@@ -77,11 +75,41 @@
                 {{crypto.change}}
               </span>
           </ion-col>
-
-          <ion-col class="alert" style="padding-top: 5%;">
-            <ion-icon name="notifications"></ion-icon>
-          </ion-col>
-
         </ion-row>
-    </ion-grid>
+    </ion-grid> -->
+
+    <ion-list>
+      <ion-item-sliding #slidingItem *ngFor="let crypto of coins">
+        <ion-item style="padding-right: 2%;">
+          <ion-avatar item-start>
+            <img class="imgSize" src="https://d2v7vc3vnopnyy.cloudfront.net/img/coins/{{ crypto.secondary_currency }}.png" />
+          </ion-avatar>
+          <ion-label class="fixedLeft">
+            {{ crypto.secondary_currency }} <br>
+            <span class="fontsize bottons">{{crypto.nameCrypto}}</span>
+          </ion-label>
+          <ion-label class="fixedRight">
+            <span [ngClass]="{rateCurrency:crypto.change<0}">
+                {{crypto.last_price}} {{crypto.primary_currency}}
+            <br>
+            <span *ngIf="crypto.change<0" [ngClass]="{ratedownCurrency:crypto.change<0}">
+                  {{crypto.change}}%
+                  <span><ion-icon name="md-arrow-dropdown"></ion-icon></span>
+            </span>
+            <span *ngIf="crypto.change>=0" [ngClass]="{rateupCurrency:crypto.change>=0}">
+                <span> +{{crypto.change}} </span>
+            <ion-icon name="md-arrow-dropup"></ion-icon>
+            </span>
+            </span>
+          </ion-label>
+        </ion-item>
+
+        <ion-item-options side="left">
+          <button ion-button icon-only (click)="removeTask(slidingItem,task)" color="bgyellow">
+	 	 			  <ion-icon color="light" name="add-circle"></ion-icon>
+	 	 		  </button>
+        </ion-item-options>
+
+      </ion-item-sliding>
+    </ion-list>
 </ion-content>

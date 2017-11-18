@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 // import { DatacoinProvider , objectCoinMarKetCap} from '../../providers/datacoin/datacoin';
-import { DatacoinProvider , objectCoinMarKetCap,cryptoNumbers ,cryto ,orderbook ,asks , bids , NAME} from '../../providers/datacoin/datacoin';
+import { DatacoinProvider ,cryptoNumbers ,cryto ,orderbook ,asks , bids , NAME} from '../../providers/datacoin/datacoin';
 @Component({
   selector: 'page-folio',
   templateUrl: 'folio.html'
 }) 
 export class FolioPage {
-coins:objectCoinMarKetCap[];
+// coins:objectCoinMarKetCap[];
 cryptoNumbers:cryto[];
 THB:cryto[];
 BTC:cryto[];
@@ -23,20 +23,14 @@ cryptoMix:any[]=[{pairing_id:'',
                   orderbooks:''}];
 priceDecimal:any[];
   constructor(public navCtrl: NavController,public provider:DatacoinProvider) {
-    this.provider.loadCoin().subscribe(data => { this.coins = data },
-      error => {console.log("error: "+error);},
-        () => {console.log("Read qoute completely");})
-    
-
-        this.provider.loadBX().subscribe( data => { this.cryptoNumbers = Object.keys(data).map(key => data[key]) ;
-          console.dir(this.cryptoNumbers)},
-        error => {console.log("error: "+error);},
-           () => {this.addName();
-            console.log("Read park completely");})
-            this.isSelect=false;
-        // for(let i=0;i<this.coins.length;i++){
-        //   this.priceDecimal.push({symbol:this.coins[i].symbol,price:this.coins[i].price_thb});
-        // }
+    this.provider.loadBX().subscribe(data => {
+      this.cryptoNumbers = Object.keys(data).map(key => data[key]);
+                            console.dir(this.cryptoNumbers)
+                          },
+                          error => { console.log("error: " + error); },
+                          () => {
+                            this.addName();
+                          })
   }
 
   addName(){
@@ -52,5 +46,23 @@ priceDecimal:any[];
       console.log('Sussess '+i+'----- name :'+this.cryptoMix[i].nameCrypto);
     }
   }
+
+  // selectThb() {
+  //      if (this.cryptoTotal.length>-1){
+  //        let filteredTHB = this.cryptoTotal.filter( row => { 
+  //           if (row.primary_currency=='THB') {
+  //                return true;
+  //            }else {
+  //                return false ;
+  //              }
+  //        });
+  //       //  this.isSelect=false;
+  //       //  console.log('FilterTHB : '+filteredTHB) ;
+  //       this.THB = filteredTHB ;
+  //      }else {
+  //       console.log('No data') ;
+  //      }
+
+  // }
 
 }

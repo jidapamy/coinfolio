@@ -57,37 +57,34 @@ page-folio {
         border-bottom: 0px solid rgba(222, 222, 222, 0.09);
     }
 
-    .headerGird{
-        background-color: #151A1D;
-        // border-top: 2px solid #F0B90A;
-        border-bottom: 0px solid #151A1D;  
-        color: rgb(201, 201, 201);
-        font-weight: 900;
-        font-size:13px;
-    }
+    // .headerGird{
+    //     background-color: #262D33;
+    //     // border-top: 2px solid #F0B90A;
+    //     border-bottom: 0px solid #151A1D;  
+    //     color: #ffffff;
+    //     padding-top: 2.27%;
+    //     padding-bottom: 2.27%;
+    //     font-weight: 900;
+    //     font-size:11px;
+    // }
     .gridCoin{
         font-weight: 400;
         font-size: 25px;
     }
     
     .coin{
-        min-width: 16% !important;
-        max-width: 16% !important;
+        min-width: 30% !important;
+        max-width: 30% !important;
         text-align: center;
     }
     .holding{
-        min-width: 36% !important;
-        max-width: 36% !important;
+        min-width: 35% !important;
+        max-width: 35% !important;
         text-align: center;
     }
     .price{
-        min-width: 36% !important;
-        max-width: 36% !important;
-        text-align: center;
-    }
-    .alert{
-        min-width: 12% !important;
-        max-width: 12% !important;
+        min-width: 35% !important;
+        max-width: 35% !important;
         text-align: center;
     }
 
@@ -108,28 +105,21 @@ page-folio {
         contain: size style layout;
     }
 
-
-
-
-
-              
-              
-        .currency-logo-sprite{
-            //   margin-right:10px;
-            //   margin-top:4px;
-            //   margin-bottom:10px;
-            //   margin-left:-4px;
-                // margin-right: 32%;
-                // float:right;
-                // text-align:center;
-              }
-        .currency-logo-sprite{
-            //   margin-right:4px;
-            //   margin-top:3px;
-            //   margin-left:0;
-              
-              }
-          
+    .headerGird{
+        border-bottom-width: 2px;
+        border-bottom-style: solid;
+        border-bottom-color: rgba(0, 0, 0, 0.1);
+        // border-top: 1px solid rgba(0, 0, 0, 0.21);
+        font-size: 11px;
+        font-weight: 900;
+        line-height: 3rem;
+        color: #ffffff;
+        background-color: #262D33;
+        opacity: 1;
+        padding: 0 6px;
+    }
+    
+    
       
       
 }

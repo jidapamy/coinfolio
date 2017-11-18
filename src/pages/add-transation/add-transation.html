@@ -7,12 +7,79 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>addTransation</ion-title>
+    <ion-buttons start (click)="goBack()">
+      <button ion-button>
+        <ion-icon name="close"></ion-icon>
+      </button>
+ 	  </ion-buttons>
+    <ion-title>Add Transation</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+  <!-- <form [formGroup]="typeTransaction"> -->
+    <ion-list >
+      <ion-item>
+        <ion-label class="fixedLeft">
+          Trading Pair
+        </ion-label>
+        <ion-label class="fixedRight">
+           {{ crypto.secondary_currency }}/{{crypto.primary_currency}}
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          Status 
+          <span *ngIf="status==''" style="font-size: 10px;color: #e13838;"> * please choose status</span>
+        </ion-label>
+        <ion-select [(ngModel)]="status" interface="popover">
+          <ion-option color="bgyellow" value="buy">BUY</ion-option>
+          <ion-option value="sell">SELL</ion-option>
+          <ion-option value="watch">WATCH ONLY</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
 
+
+    
+    <ion-list >
+      <ion-item>
+        <ion-label class="fixedLeft">Current Price</ion-label>
+        <ion-label class="fixedRight"><img class="imgSize" src="https://d2v7vc3vnopnyy.cloudfront.net/img/coins/{{crypto.secondary_currency}}.png"/>&nbsp;&nbsp;{{ crypto.secondary_currency }}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label class="fixedLeft">Trade Price</ion-label>
+        <ion-input class="fixedRight" [(ngModel)]="price" item-right type="number" placeholder="{{crypto.last_price}}" value="{{crypto.last_price}}"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label class="fixedLeft">Enter Quantity</ion-label>
+        <ion-input class="fixedRight" [(ngModel)]="quantity" item-right min="1" type="number" placeholder="1" value="1"></ion-input>
+      </ion-item>
+      
+      <ion-item>
+        <ion-label class="fixedLeft">Total Value</ion-label>
+        <ion-label class="fixedRight" >{{price * quantity}}</ion-label>
+      </ion-item>
+    </ion-list>
+
+    <ion-list>
+      <ion-item >
+        <ion-label class="fixedLeft">Trade Date</ion-label>
+        <ion-datetime  class="datetimeColor" displayFormat="MMMM/DD/YYYY" [(ngModel)]="myDate"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label class="fixedLeft">Note</ion-label>
+        <ion-input class="fixedRight"></ion-input>
+      </ion-item>
+    </ion-list>
+    
+  <!-- </form> -->
+   
+  <ion-list>
+      <button full ion-button color="bgyellow" (click)="saveTransation()">Save</button>
+  </ion-list>
+  
+      
 </ion-content>

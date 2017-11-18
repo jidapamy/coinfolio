@@ -25,6 +25,7 @@ import { DatacoinProvider } from '../providers/datacoin/datacoin';
 import { IonicStorageModule } from '@ionic/storage';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 
+
 @NgModule({
   declarations: [
     MyApp,
@@ -45,7 +46,8 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
     BrowserModule,
     IonicModule.forRoot(MyApp),
     HttpModule,
-    FormsModule
+    FormsModule,
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [

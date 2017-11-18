@@ -1,7 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ItemSliding, ModalController } from 'ionic-angular';
 import { DatacoinProvider, cryptoNumbers, cryto, orderbook, asks, bids, NAME, crytoMix} from '../../providers/datacoin/datacoin';
 import { Content } from 'ionic-angular';
+import { AddTransationPage } from '../add-transation/add-transation';
+
+
 /**
  * Generated class for the HomePage page.
  *
@@ -16,10 +19,10 @@ import { Content } from 'ionic-angular';
 export class HomePage {
   @ViewChild(Content) content: Content
   cryptoNumbers: cryto[];
-  ETH: crytoMix[]=[];
-  USD: crytoMix[] = [];
-  THB: crytoMix[] = [];
-  BTC: crytoMix[] = [];
+  // ETH: crytoMix[]=[];
+  // USD: crytoMix[] = [];
+  // THB: crytoMix[] = [];
+  // BTC: crytoMix[] = [];
   crytoName: any[] = NAME;
   cryptoMix: crytoMix[] = [];
   cryptoTotal: crytoMix[] = [];
@@ -29,7 +32,10 @@ export class HomePage {
   rateUsd:any=0; // 1 USD = 34 THB
   coins: crytoMix[] = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,public provider:DatacoinProvider) {
+  constructor(public navCtrl: NavController, 
+              public navParams: NavParams,
+              public provider:DatacoinProvider,
+              public modalCtrl: ModalController) {
     this.provider.loadBX().subscribe(data => {
       this.cryptoNumbers = Object.keys(data).map(key => data[key]);
         console.dir(this.cryptoNumbers)
@@ -473,5 +479,15 @@ export class HomePage {
     //     }
     //       }
   // }
+
+
+  addTransaction(slidingItem: ItemSliding, crypto: any): void {
+    // this.
+    // this.navCtrl.push();
+    
+    let modal = this.modalCtrl.create(AddTransationPage,crypto);
+    modal.present();
+    slidingItem.close();
+  }
 
 }
