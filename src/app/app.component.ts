@@ -15,6 +15,7 @@ import { SelectCoinPage } from '../pages/select-coin/select-coin';
 import { SettingPage } from '../pages/setting/setting';
 import { TutorialPage } from '../pages/tutorial/tutorial';
 import { FolioPage } from '../pages/folio/folio';
+import { LoginPage } from '../pages/login/login';
 
 
 @Component({
@@ -23,8 +24,8 @@ import { FolioPage } from '../pages/folio/folio';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = HomePage;
-  // rootPage: any = ChatPage;
+  // rootPage: any = HomePage;
+  rootPage: any = LoginPage;
 
   pages: Array<{icon:string;title: string, component: any}>;
 

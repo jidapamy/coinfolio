@@ -5,6 +5,9 @@ import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs';
 import _ from 'lodash';
 import { OnInit } from '@angular/core';
+import { Storage } from '@ionic/storage';
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+
 
 
 /*
@@ -14,25 +17,25 @@ import { OnInit } from '@angular/core';
   and Angular DI.
 */
 
-let num;
-for (let i = 1 ; i <= 27; i++) {
-	num=[i];
-}
-
 
 @Injectable()
 export class DatacoinProvider {
-
-  constructor(public http: Http) {
-    console.log('Hello DatacoinProvider Provider');
-  }
-
-  loadCoin():Observable<objectCoinMarKetCap[]>{
-    return this.http.get('https://api.coinmarketcap.com/v1/ticker/?convert=THB&limit=100')
-           .map(response => {
-               return response.json();
-           });
-  }
+	// myCoins: any[] = [];
+	myCoins: FirebaseListObservable<any[]>;
+	constructor(public http: Http,
+				public storage: Storage,
+				public angularfire: AngularFireDatabase) {
+		console.log('Hello DatacoinProvider Provider');
+		this.myCoins = angularfire.list('/myCoins');
+		// this.storage.ready().then(() => {
+		// 	this.storage.get('myCoins').then((data) => {
+		// 		if (data) {
+		// 			this.myCoins = data;
+		// 			console.log('myCoins')
+		// 		}
+		// 	});
+		// });
+	}
 
   loadBX():Observable<cryptoNumbers[]>{
   	return this.http.get("/api")
@@ -88,6 +91,7 @@ loadAsks(pairing_id): Observable<any[]> {
 
 
 
+<<<<<<< HEAD
 
 
 
@@ -159,6 +163,38 @@ export class tempbookorderAsks {
 }
 
 
+=======
+  addTransaction(dataTransaction){
+	  console.log('addTransaction')
+	//   console.dir('dataTransaction:>> ' + dataTransaction.coin.pairing_id)
+	  
+	  this.myCoins.push(dataTransaction);
+	//   this.storage.set('myCoins', this.myCoins);
+  }
+
+  getTransaction() {
+	//   return this.myCoins;
+  }
+
+  addName(newCrypto,crypto) {
+	  for (let i = 0; i < crypto.length; i++) {
+		  newCrypto[i] = {
+			  pairing_id: crypto[i].pairing_id,
+			  primary_currency: crypto[i].primary_currency,
+			  secondary_currency: crypto[i].secondary_currency,
+			  change: crypto[i].change,
+			  last_price: crypto[i].last_price,
+			  volume_24hours: crypto[i].volume_24hours,
+			  nameCrypto: NAME[i]
+		  }
+		//   console.log('Sussess ' + i + '----- name :' + newCrypto[i].nameCrypto);
+	  }
+  }
+
+
+}
+
+>>>>>>> 4e39091bf8cf0188a7f77a8c53ec7e37bfec1573
 export class newsData {
 	status: any;
 	feed: feeds[];
@@ -187,42 +223,14 @@ export class newsDataDetail {
 }
 export class enclosure {
 	link: any;
-} export class categories {
+} 
+
+export class categories {
 	0: any;
 	1: any;
 	2: any;
 	3: any;
 }
-
-// export class detailCoin{
-//   date:any;
-//   price:any;	
-//   open:any;	
-//   high:any;	
-//   low:any;	
-//   change:any;
-// }
-
-export class objectCoinMarKetCap{
-	id:any;
-	name:any;
-	symbol:any;
-	rank:any;
-	price_usd:number;
-	price_btc:number;
-	h24_volume_usd:any;
-	market_cap_usd:any;
-	available_supply:any;
-	total_supply:any;
-	percent_change_1h:any;
-	percent_change_24h:any;
-	percent_change_7d:any;
-	last_updated:any;
-	price_thb:number;
-	h24_volume_thb:any;
-	market_cap_thb:any;
-}
-
 
 export class bids{
 	total:any
@@ -234,10 +242,10 @@ export class asks{
 	volume:any
 	highbid:any
 }
-export class orderbook{
-	bids : bids[]
-	asks : asks[]
-}
+// export class {
+// 	bids : bids[]
+// 	asks : asks[]
+// }
 export class cryto{
 	pairing_id:any
 	primary_currency:any
@@ -246,7 +254,7 @@ export class cryto{
 	last_price:string
 	volume_24hours:any
 	// nameCrypto:any[]
-	orderbooks:orderbook[]
+	// orderbooks:orderbook[]
 
 }
 export class cryptoNumbers{
@@ -262,7 +270,7 @@ export class crytoMix {
 	last_price: any;
 	volume_24hours: any
 	nameCrypto: any;
-	orderbooks: any;
+	// orderbooks: orderbook[];
 
 }
 

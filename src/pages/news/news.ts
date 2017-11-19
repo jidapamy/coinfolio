@@ -41,7 +41,7 @@ export class NewsPage {
     },
       error => { console.log("error: " + error); },
       () => {
-        console.log("Read park completely");
+        // console.log("Read park completely");
         // console.log('length' + this.news.items);
         // console.log('item' + this.news.items.length);
 
@@ -78,6 +78,10 @@ export class NewsPage {
 
 
   openWebpage(item) {
+<<<<<<< HEAD
+=======
+    console.log(`click this.`)
+>>>>>>> 4e39091bf8cf0188a7f77a8c53ec7e37bfec1573
     const options: InAppBrowserOptions = {
       zoom: 'no'
     }

@@ -241,9 +241,15 @@
     </ion-list>  -->
 
 
+<<<<<<< HEAD
     <ion-list>
       <ion-item-sliding #slidingItem *ngFor="let crypto of coins" >
         <ion-item (click)="goToDetail(crypto)" style="padding-right: 2%;">
+=======
+    <ion-list >
+      <ion-item-sliding #slidingItem  *ngFor="let crypto of coins" >
+        <ion-item  style="padding-right: 2%;">
+>>>>>>> 4e39091bf8cf0188a7f77a8c53ec7e37bfec1573
           <ion-avatar item-start>
             <img class="imgSize" src="https://d2v7vc3vnopnyy.cloudfront.net/img/coins/{{ crypto.secondary_currency }}.png" />
           </ion-avatar>
@@ -268,7 +274,7 @@
         </ion-item>
 
         <ion-item-options side="left">
-          <button ion-button icon-only (click)="removeTask(slidingItem,task)" color="bgyellow">
+          <button ion-button icon-only (click)="addTransaction(slidingItem,crypto)" color="bgyellow">
 	 	 			  <ion-icon color="light" name="add-circle"></ion-icon>
 	 	 		  </button>
         </ion-item-options>
