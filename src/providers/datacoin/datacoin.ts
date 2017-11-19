@@ -47,8 +47,118 @@ export class DatacoinProvider {
 			  return response.json();
 		  });
   } 
+  loadStatistics(): Observable<tempStatisticsCoins[]> {
+	  return this.http.get('DataCoinPriceOfDay.json')
+	.map(response => {
+		return response.json();
+	});
+  } 
+
+	
+  loadOrderbook(pairing_id): Observable<tempbookorder[]> {
+	  console.log(`loadBids: ${pairing_id}`);
+	 console.log('/orderbook/?/orderbook/?pairing='+pairing_id);
+	  let url = `/api${pairing_id}`
+	  console.log(`url: ${url}`)
+	  return this.http.get('api/'+'orderbook/?/orderbook/?pairing='+pairing_id)
+		  .map(response => {
+			  return response.json()
+		  });
+  }
+
+loadBids(pairing_id): Observable<any[]> {
+	 console.log(`loadBids: ${pairing_id}`);
+	 console.log('/orderbook/?/orderbook/?pairing='+pairing_id);
+	  let url = `/api${pairing_id}`
+	  console.log(`url: ${url}`)
+	  return this.http.get('api/'+'orderbook/?/orderbook/?pairing='+pairing_id)
+	  	.map(response => response.json().bids);
+}
+loadAsks(pairing_id): Observable<any[]> {
+	 console.log(`loadBids: ${pairing_id}`);
+	 console.log('/orderbook/?/orderbook/?pairing='+pairing_id);
+	  let url = `/api${pairing_id}`
+	  console.log(`url: ${url}`)
+	  return this.http.get('api/'+'orderbook/?/orderbook/?pairing='+pairing_id)
+	  	.map(response => response.json().asks);
+  }
+
+
+} 
+
+
+
+
+
+
+export class tempStatisticsCoins {
+	coins: tempStatisticsCoinsDetail[]; // 
+
 
 }
+export class tempStatisticsCoinsDetail {
+	pairing_id:any;
+	secondary_currency: any;
+	priceofday: detailOfDate[];
+
+}
+// export class boxCoinPerDay {
+// 	dates: detailOfDate;
+// } 
+
+export class detailOfDate{
+	date: any;
+	price: any;
+}
+
+
+
+
+
+
+export class tempbookorderBidBox {
+	box: tempbookorderBidItem[];
+	
+
+} export class tempbookorderAsksBox {
+	box: tempbookorderBidItem[];
+
+}
+
+ export class tempbookorder {
+	bids: tempbookorderBidItem[];
+	asks: tempbookorderAsksItem[];
+	
+
+}
+
+export class tempbookorderBidItem {
+	Item: tempbookorderBid[];
+	
+}
+export class tempbookorderAsksItem {
+	Item: tempbookorderAsks[];
+
+}
+
+
+export class Bids {
+	total: any
+	volume: any
+	highbid: any
+}
+
+
+export class tempbookorderBid {
+	price: any[];
+	amount: any[];	
+}
+export class tempbookorderAsks {
+	price: any[];
+	amount: any[];	
+}
+
+
 export class newsData {
 	status: any;
 	feed: feeds[];

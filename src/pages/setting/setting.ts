@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
+
+
 /**
  * Generated class for the SettingPage page.
  *
@@ -13,12 +15,16 @@ import { NavController, NavParams } from 'ionic-angular';
   templateUrl: 'setting.html',
 })
 export class SettingPage {
+  
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad SettingPage');
+  constructor(public navCtrl: NavController, public navParams: NavParams){
+    
   }
+  
 
 }
+
+
+
+

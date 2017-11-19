@@ -31,7 +31,7 @@ export class NewsPage {
   link: any;
   description: any;
 
-  url: "https://www.youtube.com/watch?v=SPJ9TdHaI3A&t=356s";
+  url: string;  
   constructor(private inAppBrowser: InAppBrowser, public http: Http, public navCtrl: NavController, public provider: DatacoinProvider) {
     
     this.provider.loadNews().subscribe(data => {
@@ -77,23 +77,26 @@ export class NewsPage {
 
 
 
-  openWebpage(url: string) {
-    console.log(`click this.`)
+  openWebpage(item) {
     const options: InAppBrowserOptions = {
       zoom: 'no'
     }
 
     // Opening a URL and returning an InAppBrowserObject
-    const browser = this.inAppBrowser.create(url, '_self', options);
+    const browser = this.inAppBrowser.create(item.link, '_self', options);
 
     // Inject scripts, css and more with browser.X
   }
-
   doRefresh(refresher) {
     console.log("5555555");
 
     // this.items.length = 0;
 
+    
+    
+    
+    
+    
     setTimeout(() => {
       console.log('Async operation has ended');
       this.items.length = 0;

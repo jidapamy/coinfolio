@@ -15,6 +15,7 @@ import { SelectCoinPage } from '../pages/select-coin/select-coin';
 import { SettingPage } from '../pages/setting/setting';
 import { TutorialPage } from '../pages/tutorial/tutorial';
 import { FolioPage } from '../pages/folio/folio';
+import { CoinsDetailPage } from '../pages/coins-detail/coins-detail';
 
 import { HttpModule } from '@angular/http' ;
 import { FormsModule } from '@angular/forms' ;
@@ -24,6 +25,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { DatacoinProvider } from '../providers/datacoin/datacoin';
 import { IonicStorageModule } from '@ionic/storage';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
+
+
 
 @NgModule({
   declarations: [
@@ -39,7 +42,8 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
     SelectCoinPage,
     SettingPage,
     TutorialPage,
-    FolioPage
+    FolioPage,
+    CoinsDetailPage
   ],
   imports: [
     BrowserModule,
@@ -61,7 +65,8 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
     SelectCoinPage,
     SettingPage,
     TutorialPage,
-    FolioPage
+    FolioPage,
+    CoinsDetailPage
   ],
   providers: [
     StatusBar,

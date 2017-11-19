@@ -2,6 +2,9 @@ import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { DatacoinProvider, cryptoNumbers, cryto, orderbook, asks, bids, NAME, crytoMix} from '../../providers/datacoin/datacoin';
 import { Content } from 'ionic-angular';
+import { CoinsDetailPage } from '../coins-detail/coins-detail';
+
+
 /**
  * Generated class for the HomePage page.
  *
@@ -473,5 +476,10 @@ export class HomePage {
     //     }
     //       }
   // }
+
+  goToDetail(crypto){
+    this.navCtrl.push(CoinsDetailPage,crypto);
+    
+  }
 
 }
