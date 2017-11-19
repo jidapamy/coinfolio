@@ -78,26 +78,66 @@
         </ion-row>
     </ion-grid> -->
 
-    <ion-list>
-      <ion-item-sliding #slidingItem *ngFor="let crypto of coins">
+    <!-- <ion-list>
+      <ion-item-sliding #slidingItem *ngFor="let crypto of myCoins | async" >
         <ion-item style="padding-right: 2%;">
-          <ion-avatar item-start>
-            <img class="imgSize" src="https://d2v7vc3vnopnyy.cloudfront.net/img/coins/{{ crypto.secondary_currency }}.png" />
-          </ion-avatar>
-          <ion-label class="fixedLeft">
-            {{ crypto.secondary_currency }} <br>
-            <span class="fontsize bottons">{{crypto.nameCrypto}}</span>
+          <ion-label class="fixedLeft" style="margin: 0;">
+            <ion-avatar item-start>
+              <img class="imgSize" src="https://d2v7vc3vnopnyy.cloudfront.net/img/coins/{{ crypto.secondary_currency }}.png" alige="bottom"/> 
+              <p class="nameCoins"><b>{{ crypto.secondary_currency }}</b></p>
+            </ion-avatar>
+          </ion-label>
+          <ion-label class="fixedMiddle">
+            {{ crypto.totalPrice }} THB<br> {{ crypto.totalQuantity }}
           </ion-label>
           <ion-label class="fixedRight">
             <span [ngClass]="{rateCurrency:crypto.change<0}">
                 {{crypto.last_price}} {{crypto.primary_currency}}
             <br>
-            <span *ngIf="crypto.change<0" [ngClass]="{ratedownCurrency:crypto.change<0}">
+           <span *ngIf="crypto.change<0" [ngClass]="{ratedownCurrency:crypto.change<0}">
                   {{crypto.change}}%
                   <span><ion-icon name="md-arrow-dropdown"></ion-icon></span>
             </span>
             <span *ngIf="crypto.change>=0" [ngClass]="{rateupCurrency:crypto.change>=0}">
-                <span> +{{crypto.change}} </span>
+                <span> +{{crypto.change}}% </span>
+            <ion-icon name="md-arrow-dropup"></ion-icon>
+            </span>
+            </span>
+          </ion-label>
+        </ion-item>
+
+        <ion-item-options side="left">
+          <button ion-button icon-only (click)="removeTask(slidingItem,task)" color="bgyellow">
+	 	 			  <ion-icon color="light" name="add-circle"></ion-icon>
+	 	 		  </button>
+        </ion-item-options>
+
+      </ion-item-sliding>
+    </ion-list> -->
+
+    <ion-list>
+      <ion-item-sliding #slidingItem *ngFor="let crypto of cryptoRecent">
+        <ion-item style="padding-right: 2%;">
+          <ion-label class="fixedLeft" style="margin: 0;">
+            <ion-avatar item-start>
+              <img class="imgSize" src="https://d2v7vc3vnopnyy.cloudfront.net/img/coins/{{ crypto.secondary_currency }}.png" alige="bottom"
+              />
+              <p class="nameCoins"><b>{{ crypto.secondary_currency }}</b></p>
+            </ion-avatar>
+          </ion-label>
+          <ion-label class="fixedMiddle">
+            {{ crypto.totalPrice }} THB<br> {{ crypto.totalQuantity }}
+          </ion-label>
+          <ion-label class="fixedRight">
+            <span [ngClass]="{rateCurrency:crypto.change<0}">
+                {{crypto.last_price}} {{crypto.primary_currency}}
+            <br>
+           <span *ngIf="crypto.change<0" [ngClass]="{ratedownCurrency:crypto.change<0}">
+                  {{crypto.change}}%
+                  <span><ion-icon name="md-arrow-dropdown"></ion-icon></span>
+            </span>
+            <span *ngIf="crypto.change>=0" [ngClass]="{rateupCurrency:crypto.change>=0}">
+                <span> +{{crypto.change}}% </span>
             <ion-icon name="md-arrow-dropup"></ion-icon>
             </span>
             </span>

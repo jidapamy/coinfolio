@@ -4,22 +4,13 @@ page-folio {
         background-color: #151A1D;
         font-size:16px;
     }
-
-
-
     .frontFixedLabel {
         min-width: 67% !important;
         max-width: 67% !important;
         // color:rgb(255, 255, 255);
         font-weight: 500;
     }
-    // .frontFixedLabel >p,
-    // .endFixedLabel >p{
-    //     color:rgb(237, 235, 235);
-    //     // font-weight: 500;
-    // } 
-
-    .aboveFixedLabel{
+     .aboveFixedLabel{
         color:rgb(131, 131, 131);
         font-weight: 800;
         font-size:12px
@@ -38,6 +29,59 @@ page-folio {
         font-size:10px;
         text-align: right;
     }
+    .fixedRight{
+        min-width: 40% !important;
+        max-width: 40% !important;
+        text-align: right;
+    }
+    .fixedLeft{
+        min-width: 17% !important;
+        max-width: 17% !important;
+        text-align: left;
+    }
+    .fixedMiddle{
+        min-width: 40% !important;
+        max-width: 40% !important;
+        text-align: right;
+    }
+    // .item ion-avatar {
+    //     min-width: 0;
+    //     min-height: 0;
+    // }
+    .nameCoins{
+        padding-top: 18%;
+        color: #c9c9c9;
+        font-size: 16px;
+        padding-left: 11%;
+    }
+
+    .bgColor{
+        background-color: #151A1D;
+    }
+    .imgSize{
+        width:-10%x;
+        height:-10%;
+    }
+    .top-left{
+        margin-top: -5%;
+        margin-left: -4.7%;
+        margin-right: -4.7%;
+    }
+    .letfs{
+        float:right; 
+    
+    }
+    .bottons{
+        margin-top:3%;
+    }
+    .fontsize{
+        font-size:13px;
+        color:rgb(131, 131, 131);
+    }
+    .tableColor{
+        on-item:nth-child(even) {background: #CCC}
+        on-item:nth-child(odd) {background: #FFF}
+    }
 
     .item {
         padding-left: 10px;
@@ -47,26 +91,57 @@ page-folio {
         font-weight: normal;
         text-transform: none;
         color: rgb(201, 201, 201);
-        background-color: #1D1D1D;
+        background-color: #151A1D;
         box-shadow: none;
         transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .item.item-block .item-inner {
         padding-right: 8px;
-        border-bottom: 0px solid rgba(222, 222, 222, 0.09);
+        border-bottom: 0.5px solid rgba(222, 222, 222, 0.09);
     }
 
-    // .headerGird{
-    //     background-color: #262D33;
-    //     // border-top: 2px solid #F0B90A;
-    //     border-bottom: 0px solid #151A1D;  
-    //     color: #ffffff;
-    //     padding-top: 2.27%;
-    //     padding-bottom: 2.27%;
-    //     font-weight: 900;
-    //     font-size:11px;
-    // }
+    .list ion-item-sliding:nth-child(2n+2) {
+        background-color: rgba(38, 44, 51, 0.26) !important;
+    }
+
+    .button-inner {
+        width: 122%;
+        height: 100%;
+    }
+
+    .list ion-item-sliding {
+        background-color: #151A1D;
+      
+    }
+
+    .list ion-item-options {
+        border-bottom: 0px solid #dedede;
+    }
+
+    .list {
+        margin-left: -4%;
+        margin-top: -4%;
+        padding-top: 1%;
+    }
+
+
+    ion-list {
+        margin: 0;
+        padding: 0;
+        display: block;
+        list-style-type: none;
+        width: 108%;
+    }
+    ion-icon {
+        // display: inline-block;
+        font-size: 21px;
+    }
+
+    .item ion-avatar[item-left], .item ion-thumbnail[item-left], .item ion-avatar[item-start], .item ion-thumbnail[item-start] {
+        margin: 8px 16px 8px 8px;
+    }
+
     .gridCoin{
         font-weight: 400;
         font-size: 25px;
@@ -88,23 +163,6 @@ page-folio {
         text-align: center;
     }
 
-    .scroll-content {
-        width: 108%;
-        margin-left: -4%;
-        left: 0;
-        right: 0;
-        top: -12px;
-        top: -9px;
-        position: absolute;
-        z-index: 1;
-        display: block;
-        overflow-x: hidden;
-        overflow-y: scroll;
-        -webkit-overflow-scrolling: touch;
-        will-change: scroll-position;
-        contain: size style layout;
-    }
-
     .headerGird{
         border-bottom-width: 2px;
         border-bottom-style: solid;
@@ -118,8 +176,123 @@ page-folio {
         opacity: 1;
         padding: 0 6px;
     }
+
     
+    // .aboveFixedLabel{
+    //     color:rgb(131, 131, 131);
+    //     font-weight: 800;
+    //     font-size:12px
+    // }
+
+    // .underFixedLabel{
+    //     color:rgb(255, 255, 255);
+    //     font-weight: 800;
+    // }
+
+    // .endFixedLabel {
+    //     min-width: 30% !important;
+    //     max-width: 30% !important;
+    //     font-weight: 500;
+    //     font-size:10px;
+    //     text-align: right;
+    // }
+
+    // .item {
+    //     padding-left: 10px;
+    //     padding-right: 0px;
+    //     position: relative;
+    //     font-size: 1.6rem;
+    //     font-weight: normal;
+    //     text-transform: none;
+    //     color: rgb(201, 201, 201);
+    //     background-color: #1D1D1D;
+    //     box-shadow: none;
+    //     transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    // }
+
+    // .scroll-content {
+    //     width: 108%;
+    //     margin-left: -4%;
+    //     left: 0;
+    //     right: 0;
+    //     top: -12px;
+    //     top: -9px;
+    //     position: absolute;
+    //     z-index: 1;
+    //     display: block;
+    //     overflow-x: hidden;
+    //     overflow-y: scroll;
+    //     -webkit-overflow-scrolling: touch;
+    //     will-change: scroll-position;
+    //     contain: size style layout;
+    // }
     
+    // .item {
+    //     padding-left: 10px;
+    //     padding-right: 0px;
+    //     position: relative;
+    //     font-size: 1.6rem;
+    //     font-weight: normal;
+    //     text-transform: none;
+    //     color: rgb(201, 201, 201);
+    //     background-color: #151A1D;
+    //     box-shadow: none;
+    //     transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    // }
+
+    // .item.item-block .item-inner {
+    //     padding-right: 8px;
+    //     border-bottom: 0px solid rgba(222, 222, 222, 0.09);
+    // }
+
+    // // ion-item:nth-child(2n+2) {
+    // //     // background-color: rgba(255, 0, 0, 0.26) !important;
+        
+    // //     background-color: rgba(38, 44, 51, 0.26) !important;
+    // // }
+    // .fixedRight{
+    //     min-width: 50% !important;
+    //     max-width: 50% !important;
+    //     text-align: right;
+    // }
+    // .fixedLeft{
+    //     min-width: 47.5% !important;
+    //     max-width: 47.5% !important;
+    //     text-align: left;
+    // }
       
+    // .list ion-item-sliding {
+    //     background-color: #151A1D;
       
+    // }
+
+    // .list ion-item-options {
+    //     border-bottom: 0px solid #dedede;
+    // }
+
+    // .list ion-item-sliding:nth-child(2n+2) {
+    //     background-color: rgba(38, 44, 51, 0.26) !important;
+    // }
+      
+    // ion-icon {
+    //     // display: inline-block;
+    //     font-size: 21px;
+    // }
+
+    // .item ion-avatar[item-left], .item ion-thumbnail[item-left], .item ion-avatar[item-start], .item ion-thumbnail[item-start] {
+    //     margin: 8px 16px 8px 8px;
+    // }
+    // .list {
+    //     margin-left: -5%;
+    //     margin-top: -4%;
+    // }
+
+
+    // ion-list {
+    //     margin: 0;
+    //     padding: 0;
+    //     display: block;
+    //     list-style-type: none;
+    //     width: 110%;
+    // }
 }

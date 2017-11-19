@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import _ from 'lodash';
 import { OnInit } from '@angular/core';
 import { Storage } from '@ionic/storage';
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 
 
 
@@ -19,17 +20,21 @@ import { Storage } from '@ionic/storage';
 
 @Injectable()
 export class DatacoinProvider {
-	myCoins: crytoMix[] = [];
-
-	constructor(public http: Http,public storage: Storage) {
+	// myCoins: any[] = [];
+	myCoins: FirebaseListObservable<any[]>;
+	constructor(public http: Http,
+				public storage: Storage,
+				public angularfire: AngularFireDatabase) {
 		console.log('Hello DatacoinProvider Provider');
-		this.storage.ready().then(() => {
-			this.storage.get('myCoins').then((data) => {
-				if (data) {
-					this.myCoins = data;
-				}
-			});
-		});
+		this.myCoins = angularfire.list('/myCoins');
+		// this.storage.ready().then(() => {
+		// 	this.storage.get('myCoins').then((data) => {
+		// 		if (data) {
+		// 			this.myCoins = data;
+		// 			console.log('myCoins')
+		// 		}
+		// 	});
+		// });
 	}
 
   loadBX():Observable<cryptoNumbers[]>{
@@ -46,9 +51,33 @@ export class DatacoinProvider {
 		  });
   } 
 
-//   addTransaction(coin,){
-// 	  this.myCoins.push()
-//   }
+  addTransaction(dataTransaction){
+	  console.log('addTransaction')
+	//   console.dir('dataTransaction:>> ' + dataTransaction.coin.pairing_id)
+	  
+	  this.myCoins.push(dataTransaction);
+	//   this.storage.set('myCoins', this.myCoins);
+  }
+
+  getTransaction() {
+	//   return this.myCoins;
+  }
+
+  addName(newCrypto,crypto) {
+	  for (let i = 0; i < crypto.length; i++) {
+		  newCrypto[i] = {
+			  pairing_id: crypto[i].pairing_id,
+			  primary_currency: crypto[i].primary_currency,
+			  secondary_currency: crypto[i].secondary_currency,
+			  change: crypto[i].change,
+			  last_price: crypto[i].last_price,
+			  volume_24hours: crypto[i].volume_24hours,
+			  nameCrypto: NAME[i]
+		  }
+		//   console.log('Sussess ' + i + '----- name :' + newCrypto[i].nameCrypto);
+	  }
+  }
+
 
 }
 
@@ -99,10 +128,10 @@ export class asks{
 	volume:any
 	highbid:any
 }
-export class orderbook{
-	bids : bids[]
-	asks : asks[]
-}
+// export class {
+// 	bids : bids[]
+// 	asks : asks[]
+// }
 export class cryto{
 	pairing_id:any
 	primary_currency:any
@@ -111,7 +140,7 @@ export class cryto{
 	last_price:string
 	volume_24hours:any
 	// nameCrypto:any[]
-	orderbooks:orderbook[]
+	// orderbooks:orderbook[]
 
 }
 export class cryptoNumbers{
@@ -127,7 +156,7 @@ export class crytoMix {
 	last_price: any;
 	volume_24hours: any
 	nameCrypto: any;
-	orderbooks: any;
+	// orderbooks: orderbook[];
 
 }
 

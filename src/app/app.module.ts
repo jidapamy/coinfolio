@@ -15,9 +15,14 @@ import { SelectCoinPage } from '../pages/select-coin/select-coin';
 import { SettingPage } from '../pages/setting/setting';
 import { TutorialPage } from '../pages/tutorial/tutorial';
 import { FolioPage } from '../pages/folio/folio';
+import { LoginPage } from '../pages/login/login';
+import { RegisterPage } from '../pages/register/register';
 
 import { HttpModule } from '@angular/http' ;
 import { FormsModule } from '@angular/forms' ;
+
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -25,6 +30,14 @@ import { DatacoinProvider } from '../providers/datacoin/datacoin';
 import { IonicStorageModule } from '@ionic/storage';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 
+export const config = {
+  apiKey: "AIzaSyCqUaUXncsFJqpFi4LnTa_ak3iI3SzNJ0M",
+  authDomain: "coinfoli.firebaseapp.com",
+  databaseURL: "https://coinfoli.firebaseio.com",
+  projectId: "coinfoli",
+  storageBucket: "coinfoli.appspot.com",
+  messagingSenderId: "993908064513"
+};
 
 @NgModule({
   declarations: [
@@ -40,14 +53,18 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
     SelectCoinPage,
     SettingPage,
     TutorialPage,
-    FolioPage
+    FolioPage,
+    LoginPage,
+    RegisterPage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
     HttpModule,
     FormsModule,
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
+    AngularFireModule.initializeApp(config),
+    AngularFireDatabaseModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -63,7 +80,9 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
     SelectCoinPage,
     SettingPage,
     TutorialPage,
-    FolioPage
+    FolioPage,
+    LoginPage,
+    RegisterPage
   ],
   providers: [
     StatusBar,

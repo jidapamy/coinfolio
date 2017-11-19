@@ -23,7 +23,7 @@
     </ion-refresher-content>
   </ion-refresher>
   <!-- <span name="a"[(ngModel)]="url" > -->
-  <ion-card *ngFor='let item of items' (click)="openWebpage()" class="size" style="margin-top:0%;">
+  <ion-card *ngFor='let item of items' (click)="openWebpage(item)" class="size" style="margin-top:0%;">
     <!-- <a href="{{item.link}}" > -->
     <img src="{{item.enclosure}}" />
     <ion-card-content>

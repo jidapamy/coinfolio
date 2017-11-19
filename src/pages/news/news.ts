@@ -41,7 +41,7 @@ export class NewsPage {
     },
       error => { console.log("error: " + error); },
       () => {
-        console.log("Read park completely");
+        // console.log("Read park completely");
         // console.log('length' + this.news.items);
         // console.log('item' + this.news.items.length);
 
@@ -77,14 +77,14 @@ export class NewsPage {
 
 
 
-  openWebpage(url: string) {
+  openWebpage(item) {
     console.log(`click this.`)
     const options: InAppBrowserOptions = {
       zoom: 'no'
     }
 
     // Opening a URL and returning an InAppBrowserObject
-    const browser = this.inAppBrowser.create(url, '_self', options);
+    const browser = this.inAppBrowser.create(item.link, '_self', options);
 
     // Inject scripts, css and more with browser.X
   }
