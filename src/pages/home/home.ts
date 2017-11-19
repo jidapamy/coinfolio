@@ -2,11 +2,8 @@ import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams, ItemSliding, ModalController } from 'ionic-angular';
 import { DatacoinProvider, cryptoNumbers, cryto, asks, bids, NAME, crytoMix } from '../../providers/datacoin/datacoin';
 import { Content } from 'ionic-angular';
-<<<<<<< HEAD
 import { CoinsDetailPage } from '../coins-detail/coins-detail';
-=======
 import { AddTransationPage } from '../add-transation/add-transation';
->>>>>>> 4e39091bf8cf0188a7f77a8c53ec7e37bfec1573
 
 
 /**

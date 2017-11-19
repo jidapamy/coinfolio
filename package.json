@@ -26,20 +26,14 @@
     "@ionic-native/status-bar": "4.3.3",
     "@ionic/pro": "1.0.14",
     "@ionic/storage": "2.1.3",
-<<<<<<< HEAD
-=======
     "angularfire2": "^4.0.0-rc.1",
->>>>>>> 4e39091bf8cf0188a7f77a8c53ec7e37bfec1573
     "cordova-android": "6.3.0",
     "cordova-plugin-device": "^1.1.4",
     "cordova-plugin-inappbrowser": "^1.7.2",
     "cordova-plugin-ionic-webview": "^1.1.16",
     "cordova-plugin-splashscreen": "^4.0.3",
     "cordova-plugin-whitelist": "^1.3.1",
-<<<<<<< HEAD
-=======
     "firebase": "^3.9.0",
->>>>>>> 4e39091bf8cf0188a7f77a8c53ec7e37bfec1573
     "highcharts": "^6.0.3",
     "ionic-angular": "3.9.2",
     "ionic-plugin-keyboard": "^2.2.1",
@@ -61,12 +55,7 @@
       "cordova-plugin-whitelist": {},
       "cordova-plugin-device": {},
       "cordova-plugin-splashscreen": {},
-<<<<<<< HEAD
       "cordova-plugin-ionic-webview": {}
-=======
-      "cordova-plugin-ionic-webview": {},
-      "cordova-sqlite-storage": {}
->>>>>>> 4e39091bf8cf0188a7f77a8c53ec7e37bfec1573
     },
     "platforms": [
       "android"

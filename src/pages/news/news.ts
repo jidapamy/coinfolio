@@ -78,10 +78,6 @@ export class NewsPage {
 
 
   openWebpage(item) {
-<<<<<<< HEAD
-=======
-    console.log(`click this.`)
->>>>>>> 4e39091bf8cf0188a7f77a8c53ec7e37bfec1573
     const options: InAppBrowserOptions = {
       zoom: 'no'
     }

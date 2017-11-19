@@ -15,12 +15,9 @@ import { SelectCoinPage } from '../pages/select-coin/select-coin';
 import { SettingPage } from '../pages/setting/setting';
 import { TutorialPage } from '../pages/tutorial/tutorial';
 import { FolioPage } from '../pages/folio/folio';
-<<<<<<< HEAD
 import { CoinsDetailPage } from '../pages/coins-detail/coins-detail';
-=======
 import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
->>>>>>> 4e39091bf8cf0188a7f77a8c53ec7e37bfec1573
 
 import { HttpModule } from '@angular/http' ;
 import { FormsModule } from '@angular/forms' ;
@@ -34,9 +31,7 @@ import { DatacoinProvider } from '../providers/datacoin/datacoin';
 import { IonicStorageModule } from '@ionic/storage';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 
-<<<<<<< HEAD
 
-=======
 export const config = {
   apiKey: "AIzaSyCqUaUXncsFJqpFi4LnTa_ak3iI3SzNJ0M",
   authDomain: "coinfoli.firebaseapp.com",
@@ -45,7 +40,6 @@ export const config = {
   storageBucket: "coinfoli.appspot.com",
   messagingSenderId: "993908064513"
 };
->>>>>>> 4e39091bf8cf0188a7f77a8c53ec7e37bfec1573
 
 @NgModule({
   declarations: [
@@ -62,12 +56,9 @@ export const config = {
     SettingPage,
     TutorialPage,
     FolioPage,
-<<<<<<< HEAD
-    CoinsDetailPage
-=======
+    CoinsDetailPage,
     LoginPage,
     RegisterPage
->>>>>>> 4e39091bf8cf0188a7f77a8c53ec7e37bfec1573
   ],
   imports: [
     BrowserModule,
@@ -93,12 +84,9 @@ export const config = {
     SettingPage,
     TutorialPage,
     FolioPage,
-<<<<<<< HEAD
-    CoinsDetailPage
-=======
+    CoinsDetailPage,
     LoginPage,
     RegisterPage
->>>>>>> 4e39091bf8cf0188a7f77a8c53ec7e37bfec1573
   ],
   providers: [
     StatusBar,
