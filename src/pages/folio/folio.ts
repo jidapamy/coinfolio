@@ -94,7 +94,8 @@ export class FolioPage {
       change: this.cryptoMix[index].change,
       last_price: this.convertMoney(this.cryptoMix[index], type),
       volume_24hours: this.cryptoMix[index].volume_24hours,
-      nameCrypto: this.cryptoMix[index].nameCrypto
+      nameCrypto: this.cryptoMix[index].nameCrypto,
+      orderbook:this.cryptoMix[index].orderbook
     })
     // console.log(`[${index}] push: ${this.cryptoTotal[lastIndex + 1].secondary_currency}/${this.cryptoTotal[lastIndex + 1].primary_currency} price: ${this.cryptoTotal[lastIndex + 1].last_price}`);
   }

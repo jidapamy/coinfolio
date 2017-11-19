@@ -20,7 +20,7 @@ import { AddTransationPage } from '../add-transation/add-transation';
 export class HomePage {
   @ViewChild(Content) content: Content
   // crytoName: any[] = NAME;
-  cryptoNumbers: cryto[];
+  cryptoNumbers: cryto[]=[];
   cryptoMix: crytoMix[] = [];
   cryptoTotal: crytoMix[] = [];
   segment = 'THB';
@@ -71,6 +71,7 @@ export class HomePage {
         this.loopOfConvert('ETH');
         this.loopOfConvert('USD');
         this.changeMarket(this.segment)
+        console.dir(this.cryptoNumbers[0].orderbook.asks.highbid)
       })
   }
 
@@ -91,7 +92,8 @@ export class HomePage {
       change: this.cryptoMix[index].change,
       last_price: this.convertMoney(this.cryptoMix[index], type),
       volume_24hours: this.cryptoMix[index].volume_24hours,
-      nameCrypto: this.cryptoMix[index].nameCrypto
+      nameCrypto: this.cryptoMix[index].nameCrypto,
+      orderbook: this.cryptoMix[index].orderbook
     })
     // console.log(`[${index}] push: ${this.cryptoTotal[lastIndex + 1].secondary_currency}/${this.cryptoTotal[lastIndex + 1].primary_currency} price: ${this.cryptoTotal[lastIndex + 1].last_price}`);
   }
@@ -156,6 +158,7 @@ export class HomePage {
   }
 
   goToDetail(crypto){
+    console.log('nextPage:' + crypto.orderbook.asks.highbid)
     this.navCtrl.push(CoinsDetailPage,crypto);
     
   }

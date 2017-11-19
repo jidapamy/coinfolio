@@ -24,8 +24,15 @@ export class CoinsDetailPage {
   nameCoin: any;
   dataInicial: Date = new Date();;
   test: any;
-  asks: any[];
   asksDetail: any[] = [];
+  orderbook:any;
+  bids:any;
+  asks:any;
+  
+  volumeBid:any;
+  volumeAsk: any;
+  hightBid:any;
+  hightAsk: any;
 
   dateTimes: string;
 
@@ -39,6 +46,10 @@ export class CoinsDetailPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public provider: DatacoinProvider) {
     this.crypto = this.navParams.data
+    this.orderbook = this.crypto.orderbook;
+    this.bids = this.orderbook.bids;
+    this.asks = this.orderbook.asks;
+    
     //date format Ex.2017-10-19
     this.dateTimes = this.dataInicial.getFullYear() + '-' + this.dataInicial.getMonth() + '-' + this.dataInicial.getDate()
 
@@ -55,15 +66,15 @@ export class CoinsDetailPage {
 
           if (this.coins[i].pairing_id == this.crypto.pairing_id) {
             let coinsbox = this.coins[i];
-            console.dir('this.crypto.pairing_id: ' + this.crypto.pairing_id);
-            console.dir('index in coins >>: ' + i);
-            console.dir('coinsbox >>> ' + coinsbox.priceofday[0].price)
+            // console.dir('this.crypto.pairing_id: ' + this.crypto.pairing_id);
+            // console.dir('index in coins >>: ' + i);
+            // console.dir('coinsbox >>> ' + coinsbox.priceofday[0].price)
 
             for (let j = 0; j < coinsbox.priceofday.length; j++) {
               console.dir(' coinsbox.priceofday: ' + coinsbox.priceofday[j].price);
               this.priceOfDay.push(+coinsbox.priceofday[j].price);
               this.nameCoin = coinsbox.secondary_currency;
-              console.dir('DDDD: ' + this.priceOfDay);
+              // console.dir('DDDD: ' + this.priceOfDay);
             }
           }
 
@@ -72,24 +83,48 @@ export class CoinsDetailPage {
         console.log('TYPE:' + typeof (this.priceOfDay[0]))
         this.showGraph(this.priceOfDay.reverse())
         let array = [1, 2, 3, 4, 5, 6, 7, 8];
-        console.log(array.reverse())
-        console.log("Read park completely");
+        console.log(array.reverse());
+
+
+
+        this.volumeBid = (+this.bids.volume)
+        console.log(typeof this.volumeBid )
+        this.volumeAsk = (+this.asks.volume)
+        console.log(typeof this.volumeAsk)
+        
+        this.hightBid = (+this.bids.highbid)
+        console.log(typeof this.hightBid)
+        this.hightAsk = (+this.asks.highbid)
+
+
+        // console.log('this.volumeBid:' + this.volumeBid + ' typeof:' + typeof this.volumeBid)
+
+        this.volumeBid = this.decimalFormat(this.volumeBid);
+        this.volumeAsk = this.decimalFormat(this.volumeAsk);
+        this.hightBid = this.decimalFormat(this.hightBid);
+        this.hightAsk = this.decimalFormat(this.hightAsk);
+
+        // console.log('this.volumeBid:' + this.volumeBid + ' typeof:' + typeof this.volumeBid)
+
 
       })
-
+  
 
   }
 
-
-
-
-
-
-
-
-
   ionViewDidLoad() {
     console.log("ionViewDidLoad")
+  }
+
+  decimalFormat(param){
+    console.log('fecimal')
+    if (param < 1) {
+      param = param.toFixed(8);
+      return param
+    } else {
+      param = param.toFixed(2);
+      return param
+    }
   }
 
   showGraph(data) {

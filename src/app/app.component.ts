@@ -11,7 +11,6 @@ import { DetailsPage } from '../pages/details/details';
 import { NewsPage } from '../pages/news/news';
 import { NewsSourcePage } from '../pages/news-source/news-source';
 import { PrivacyPage } from '../pages/privacy/privacy';
-import { SelectCoinPage } from '../pages/select-coin/select-coin';
 import { SettingPage } from '../pages/setting/setting';
 import { TutorialPage } from '../pages/tutorial/tutorial';
 import { FolioPage } from '../pages/folio/folio';

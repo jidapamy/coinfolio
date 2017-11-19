@@ -95,10 +95,12 @@ export class DatacoinProvider {
 				change: crypto[i].change,
 				last_price: crypto[i].last_price,
 				volume_24hours: crypto[i].volume_24hours,
-				nameCrypto: NAME[i]
+				nameCrypto: NAME[i],
+				orderbook: crypto[i].orderbook
 			}
-			//   console.log('Sussess ' + i + '----- name :' + newCrypto[i].nameCrypto);
+			  console.log('Sussess ' + i + '----- name :' + newCrypto[i].nameCrypto);
 		}
+		console.log('newCrypto[2]'+newCrypto[2].orderbook.bids.volume);
 	}
 
 
@@ -224,7 +226,10 @@ export class cryto {
 	last_price: string
 	volume_24hours: any
 	// nameCrypto:any[]
-	orderbooks:orderbook[]
+	orderbook: {
+					bids: { total: any, volume: any, highbid: any },
+					asks: { total: any, volume: any, highbid: any }
+				}
 
 }
 
@@ -238,10 +243,17 @@ export class asks {
 	volume: any
 	highbid: any
 }
+// export class orderbook {
+// 	bids: bids
+// 	asks: asks
+// }
+
 export class orderbook {
-	bids: bids[]
-	asks: asks[]
+	bids: { total: any, volume: any, highbid: any}
+	asks: { total: any, volume: any, highbid: any}
 }
+
+
 export class cryptoNumbers {
 	// number:string='1';
 	crytos: cryto[]
@@ -255,7 +267,7 @@ export class crytoMix {
 	last_price: any;
 	volume_24hours: any
 	nameCrypto: any;
-	// orderbooks: orderbook[];
+	orderbook: orderbook;
 
 }
 
