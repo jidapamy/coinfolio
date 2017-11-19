@@ -216,6 +216,18 @@ export class categories {
 	3: any;
 }
 
+export class cryto {
+	pairing_id: any
+	primary_currency: any
+	secondary_currency: any
+	change: number
+	last_price: string
+	volume_24hours: any
+	// nameCrypto:any[]
+	orderbooks:orderbook[]
+
+}
+
 export class bids {
 	total: any
 	volume: any
@@ -226,20 +238,9 @@ export class asks {
 	volume: any
 	highbid: any
 }
-// export class {
-// 	bids : bids[]
-// 	asks : asks[]
-// }
-export class cryto {
-	pairing_id: any
-	primary_currency: any
-	secondary_currency: any
-	change: number
-	last_price: string
-	volume_24hours: any
-	// nameCrypto:any[]
-	// orderbooks:orderbook[]
-
+export class orderbook {
+	bids: bids[]
+	asks: asks[]
 }
 export class cryptoNumbers {
 	// number:string='1';
