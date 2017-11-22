@@ -2,25 +2,49 @@
   <ion-header>
     <ion-toolbar>
       <ion-title>
-         <p style="text-align:center">
-            <ion-icon name="contact"></ion-icon>
-            <span style="padding-left: 1.5%;"> Mymy</span>
-         </p>
+        <p style="text-align:center">
+          <ion-icon name="contact"></ion-icon>
+          <span style="padding-left: 1.5%;">{{username}}</span>
+        </p>
       </ion-title>
     </ion-toolbar>
   </ion-header>
 
   <ion-content>
-    <ion-list>
-      <button class="designItem"  menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
+    <!--login-->
+    <ion-list *ngIf="username!=''">
+      <button class="designItem" menuClose ion-item *ngFor="let p of pagesForLogin" (click)="openPage(p)">
         <ion-label class="iconFix"><ion-icon name="{{p.icon}}"></ion-icon></ion-label>
         <ion-label> {{p.title}} </ion-label>
       </button>
     </ion-list>
+
+    <!--not login-->
+    <ion-list *ngIf="username==''">
+      <button class="designItem" menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
+        <ion-label class="iconFix"><ion-icon name="{{p.icon}}"></ion-icon></ion-label>
+        <ion-label> {{p.title}} </ion-label>
+      </button>
+    </ion-list>
+
+
+    <p style="color:beige">Username : {{username}}</p>
+    <button ion-button block color="bgyellow" (click)="testMymy()">Test</button>
+    
   </ion-content>
-  <!-- <ion-footer>
-      <button ion-button menuClose block outline color="danger">Logout</button>
-  </ion-footer> -->
+
+
+  <!--login-->
+  <ion-footer  *ngIf="username!=''">
+    <button ion-button menuClose block color="danger" (click)="logout()">Logout</button>
+  </ion-footer>
+
+  <!--not login-->
+  <ion-footer *ngIf="username==''">
+    <button ion-button menuClose block color="bgyellow" (click)="login()">Login</button>
+  </ion-footer>
+
+
 </ion-menu>
 
 <!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->

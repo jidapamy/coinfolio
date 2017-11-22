@@ -4,6 +4,9 @@ import { DatacoinProvider, cryptoNumbers, cryto, asks, bids, NAME, crytoMix } fr
 import { Content } from 'ionic-angular';
 import { CoinsDetailPage } from '../coins-detail/coins-detail';
 import { AddTransationPage } from '../add-transation/add-transation';
+import { MyApp } from '../../app/app.component';
+
+// import { Storage } from '@ionic/storage';
 
 
 /**
@@ -28,6 +31,8 @@ export class HomePage {
   rateEth: any = 0; // 1 ETC = 10600 THB
   rateUsd: any = 0; // 1 USD = 34 THB
   coins: crytoMix[] = [];
+  username:any;
+  myApp:MyApp;
   // ETH: crytoMix[]=[];
   // USD: crytoMix[] = [];
   // THB: crytoMix[] = [];
@@ -157,6 +162,17 @@ export class HomePage {
     slidingItem.close();
   }
 
+  ngOnInit() {
+    // this.provider.getUsername().then((item)=>{
+    //   this.username = item;
+    // });
+    this.username =this.provider.getUsername()
+    console.log('Home::'+this.username);
+  }
+
+  callMenu(){
+  //  this.navCtrl.setRoot(MyApp);
+  }
   goToDetail(crypto){
     console.log('nextPage:' + crypto.orderbook.asks.highbid)
     this.navCtrl.push(CoinsDetailPage,crypto);

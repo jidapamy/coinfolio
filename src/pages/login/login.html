@@ -13,15 +13,40 @@
 
 
 <ion-content padding>
-<ion-list>
-  <ion-item>
-    <ion-label stacked>Username</ion-label>
-    <ion-input type="text"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label stacked>Password</ion-label>
-    <ion-input color="bgyellow" type="password"></ion-input>
-  </ion-item>
-</ion-list>
-<button ion-button full color="bgyellow">Login</button>
+  <ion-card *ngIf="invalid">
+    <ion-card-content>
+      <ion-icon name="warning"></ion-icon>
+      <b>Error : </b>Invalid username or password. Please try again.
+    </ion-card-content>
+  </ion-card>
+  
+<!--   
+  
+  <ion-card>
+          <ion-card-header>
+            <b>Error : </b>Invalid username or password. Please try again
+          </ion-card-header>
+        </ion-card> -->
+  <form [formGroup]="loginForm" (ngSubmit)="logIn()">
+    <ion-list>
+      <!-- <ion-item *ngIf="!invalid"> -->
+       
+        <!-- <p>Error: Invalid username or password. Please try again</p> -->
+      <!-- </ion-item> -->
+      <ion-item>
+        <ion-label stacked> Username 
+          <span class="error">{{errorUsername}}</span>
+        </ion-label>
+        <ion-input [(ngModel)]="username" type="text" (focusout)="afterKeyUsername()" formControlName="username"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>Password
+          <span class="error">{{errorPassword}}</span>
+        </ion-label>
+        <ion-input [(ngModel)]="password" (focusout)="afterKeyPassword()" type="Password" formControlName="password"></ion-input>
+      </ion-item>
+    </ion-list>
+    <button ion-button full color="bgyellow">Login</button>
+  </form>
+  <p (click)="register()">Sign Up for Coinfolio</p>
 </ion-content>

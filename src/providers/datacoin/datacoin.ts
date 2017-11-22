@@ -22,11 +22,27 @@ import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/databa
 export class DatacoinProvider {
 	// myCoins: any[] = [];
 	myCoins: FirebaseListObservable<any[]>;
+	username: any='';
 	constructor(public http: Http,
 		public storage: Storage,
 		public angularfire: AngularFireDatabase) {
 		console.log('Hello DatacoinProvider Provider');
-		this.myCoins = angularfire.list('/myCoins');
+		// this.myCoins = angularfire.list('/myCoins');
+		console.log('moduleeeeนอก then' + this.username)
+		// console.log('setUsername:' + this.username)
+		
+		this.storage.ready().then(() => {
+			this.storage.get('userLogin')
+			.then((data) => {
+				 if (data) {
+				    this.username = data;
+					console.log('moduleeee'+this.username)
+
+				}
+			});
+		});
+
+
 		// this.storage.ready().then(() => {
 		// 	this.storage.get('myCoins').then((data) => {
 		// 		if (data) {
@@ -37,19 +53,43 @@ export class DatacoinProvider {
 		// });
 	}
 
+	setUsername(username){
+		this.username = username;
+		console.log('save:'+this.username)
+		this.storage.set('userLogin', this.username); 
+
+	}
+
+	getUsername():Promise<any> {
+		return this.username;
+	}
+
 	loadBX(): Observable<cryptoNumbers[]> {
 		return this.http.get("/api")
 			.map(response => {
 				return response.json()
 			});
 	}
+	
 	loadNews(): Observable<newsData[]> {
-
 		return this.http.get('https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fcointelegraph.com%2Frss&api_key=ss1px1umuunducpxqlhspjeyh18k9hfweenrq8ds')
 			.map(response => {
 				return response.json();
 			});
 	}
+
+	addTransaction(dataTransaction) {
+		console.log('addTransaction')
+		//   console.dir('dataTransaction:>> ' + dataTransaction.coin.pairing_id)
+
+		this.myCoins.push(dataTransaction);
+		//   this.storage.set('myCoins', this.myCoins);
+	}
+
+	getTransaction() {
+		//   return this.myCoins;
+	}
+	
 	loadStatistics(): Observable<tempStatisticsCoins[]> {
 		return this.http.get('DataCoinPriceOfDay.json')
 			.map(response => {
@@ -252,8 +292,6 @@ export class orderbook {
 	bids: { total: any, volume: any, highbid: any}
 	asks: { total: any, volume: any, highbid: any}
 }
-
-
 export class cryptoNumbers {
 	// number:string='1';
 	crytos: cryto[]
