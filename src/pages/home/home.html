@@ -7,12 +7,12 @@
 <ion-header>
 
   <ion-navbar>
-    <button end ion-button menuToggle>
+    <button end ion-button menuToggle (click)="callMenu()">
       <ion-icon name="md-more"></ion-icon>
     </button>
     <ion-title style="padding-left: 12%;">Home</ion-title>
   </ion-navbar>
-  <ion-item style="background-color: #151A1D;">
+  <ion-item style="background-color: #151A1D;" *ngIf="username!=''">
     <ion-label class="frontFixedLabel">
       <p class="aboveFixedLabel">Total Portfolio Value</p>
       <span class="underFixedLabel"><span style="font-size:17px">THB </span><span style="font-size:30px">42896.71</span></span>
