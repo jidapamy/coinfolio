@@ -162,7 +162,6 @@ export class HomePage {
     slidingItem.close();
   }
 
-<<<<<<< HEAD
   ngOnInit() {
     // this.provider.getUsername().then((item)=>{
     //   this.username = item;
@@ -173,12 +172,11 @@ export class HomePage {
 
   callMenu(){
   //  this.navCtrl.setRoot(MyApp);
-=======
+  }
   goToDetail(crypto){
     console.log('nextPage:' + crypto.orderbook.asks.highbid)
     this.navCtrl.push(CoinsDetailPage,crypto);
     
->>>>>>> 01f0afd2a7de63b529de0d363873973fa3d7d8fa
   }
 
 }

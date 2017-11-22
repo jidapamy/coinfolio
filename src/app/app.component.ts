@@ -27,12 +27,9 @@ export class MyApp {
 
   rootPage: any = HomePage;
   // rootPage: any = LoginPage;
-<<<<<<< HEAD
   username:any='';
   test:any='';
   test2:any='';
-=======
->>>>>>> 01f0afd2a7de63b529de0d363873973fa3d7d8fa
 
   pagesForLogin: Array<{icon:string;title: string, component: any}>;
   pages: Array<{ icon: string; title: string, component: any }>;

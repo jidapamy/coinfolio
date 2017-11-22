@@ -53,7 +53,6 @@ export class DatacoinProvider {
 		// });
 	}
 
-<<<<<<< HEAD
 	setUsername(username){
 		this.username = username;
 		console.log('save:'+this.username)
@@ -65,27 +64,19 @@ export class DatacoinProvider {
 		return this.username;
 	}
 
-=======
->>>>>>> 01f0afd2a7de63b529de0d363873973fa3d7d8fa
 	loadBX(): Observable<cryptoNumbers[]> {
 		return this.http.get("/api")
 			.map(response => {
 				return response.json()
 			});
 	}
-<<<<<<< HEAD
-
+	
 	loadNews(): Observable<newsData[]> {
-=======
-	loadNews(): Observable<newsData[]> {
-
->>>>>>> 01f0afd2a7de63b529de0d363873973fa3d7d8fa
 		return this.http.get('https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fcointelegraph.com%2Frss&api_key=ss1px1umuunducpxqlhspjeyh18k9hfweenrq8ds')
 			.map(response => {
 				return response.json();
 			});
 	}
-<<<<<<< HEAD
 
 	addTransaction(dataTransaction) {
 		console.log('addTransaction')
@@ -97,7 +88,8 @@ export class DatacoinProvider {
 
 	getTransaction() {
 		//   return this.myCoins;
-=======
+	}
+	
 	loadStatistics(): Observable<tempStatisticsCoins[]> {
 		return this.http.get('DataCoinPriceOfDay.json')
 			.map(response => {
@@ -132,7 +124,6 @@ export class DatacoinProvider {
 		console.log(`url: ${url}`)
 		return this.http.get('api/' + 'orderbook/?/orderbook/?pairing=' + pairing_id)
 			.map(response => response.json().asks);
->>>>>>> 01f0afd2a7de63b529de0d363873973fa3d7d8fa
 	}
 
 	addName(newCrypto, crypto) {
@@ -144,26 +135,6 @@ export class DatacoinProvider {
 				change: crypto[i].change,
 				last_price: crypto[i].last_price,
 				volume_24hours: crypto[i].volume_24hours,
-<<<<<<< HEAD
-				nameCrypto: NAME[i]
-			}
-			//   console.log('Sussess ' + i + '----- name :' + newCrypto[i].nameCrypto);
-		}
-	}
-
-	// ionViewWillEnter(){
-	// 	console.log('00000000000000ionViewLoaded')
-	// 	this.storage.ready().then(() => {
-	// 		this.storage.get('userLogin')
-	// 			.then((data) => {
-	// 				if (data) {
-	// 					this.username = data;
-	// 					console.log('moduleeee' + this.username)
-	// 				}
-	// 			});
-	// 	});
-	// }
-=======
 				nameCrypto: NAME[i],
 				orderbook: crypto[i].orderbook
 			}
@@ -215,7 +186,6 @@ export class tempbookorderBidBox {
 
 } export class tempbookorderAsksBox {
 	box: tempbookorderBidItem[];
->>>>>>> 01f0afd2a7de63b529de0d363873973fa3d7d8fa
 
 }
 
@@ -288,8 +258,6 @@ export class categories {
 	3: any;
 }
 
-<<<<<<< HEAD
-=======
 export class cryto {
 	pairing_id: any
 	primary_currency: any
@@ -305,7 +273,6 @@ export class cryto {
 
 }
 
->>>>>>> 01f0afd2a7de63b529de0d363873973fa3d7d8fa
 export class bids {
 	total: any
 	volume: any
@@ -320,28 +287,11 @@ export class asks {
 // 	bids: bids
 // 	asks: asks
 // }
-<<<<<<< HEAD
-export class cryto {
-	pairing_id: any
-	primary_currency: any
-	secondary_currency: any
-	change: number
-	last_price: string
-	volume_24hours: any
-	// nameCrypto:any[]
-	// orderbooks:orderbook[]
-=======
->>>>>>> 01f0afd2a7de63b529de0d363873973fa3d7d8fa
 
 export class orderbook {
 	bids: { total: any, volume: any, highbid: any}
 	asks: { total: any, volume: any, highbid: any}
 }
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 01f0afd2a7de63b529de0d363873973fa3d7d8fa
 export class cryptoNumbers {
 	// number:string='1';
 	crytos: cryto[]
