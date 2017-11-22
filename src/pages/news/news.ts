@@ -87,6 +87,15 @@ export class NewsPage {
 
     // Inject scripts, css and more with browser.X
   }
+  
+  
+  
+  
+  
+  
+  
+  
+  
   doRefresh(refresher) {
     console.log("5555555");
 

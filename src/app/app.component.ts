@@ -23,7 +23,7 @@ import { LoginPage } from '../pages/login/login';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = HomePage;
+  rootPage: any = SettingPage;
   // rootPage: any = LoginPage;
 
   pages: Array<{icon:string;title: string, component: any}>;
