@@ -53,6 +53,7 @@ export class DatacoinProvider {
 		// });
 	}
 
+<<<<<<< HEAD
 	setUsername(username){
 		this.username = username;
 		console.log('save:'+this.username)
@@ -64,19 +65,27 @@ export class DatacoinProvider {
 		return this.username;
 	}
 
+=======
+>>>>>>> 01f0afd2a7de63b529de0d363873973fa3d7d8fa
 	loadBX(): Observable<cryptoNumbers[]> {
 		return this.http.get("/api")
 			.map(response => {
 				return response.json()
 			});
 	}
+<<<<<<< HEAD
 
 	loadNews(): Observable<newsData[]> {
+=======
+	loadNews(): Observable<newsData[]> {
+
+>>>>>>> 01f0afd2a7de63b529de0d363873973fa3d7d8fa
 		return this.http.get('https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fcointelegraph.com%2Frss&api_key=ss1px1umuunducpxqlhspjeyh18k9hfweenrq8ds')
 			.map(response => {
 				return response.json();
 			});
 	}
+<<<<<<< HEAD
 
 	addTransaction(dataTransaction) {
 		console.log('addTransaction')
@@ -88,6 +97,42 @@ export class DatacoinProvider {
 
 	getTransaction() {
 		//   return this.myCoins;
+=======
+	loadStatistics(): Observable<tempStatisticsCoins[]> {
+		return this.http.get('DataCoinPriceOfDay.json')
+			.map(response => {
+				return response.json();
+			});
+	}
+
+
+	loadOrderbook(pairing_id): Observable<tempbookorder[]> {
+		console.log(`loadBids: ${pairing_id}`);
+		console.log('/orderbook/?/orderbook/?pairing=' + pairing_id);
+		let url = `/api${pairing_id}`
+		console.log(`url: ${url}`)
+		return this.http.get('api/' + 'orderbook/?/orderbook/?pairing=' + pairing_id)
+			.map(response => {
+				return response.json()
+			});
+	}
+
+	loadBids(pairing_id): Observable<any[]> {
+		console.log(`loadBids: ${pairing_id}`);
+		console.log('/orderbook/?/orderbook/?pairing=' + pairing_id);
+		let url = `/api${pairing_id}`
+		console.log(`url: ${url}`)
+		return this.http.get('api/' + 'orderbook/?/orderbook/?pairing=' + pairing_id)
+			.map(response => response.json().bids);
+	}
+	loadAsks(pairing_id): Observable<any[]> {
+		console.log(`loadBids: ${pairing_id}`);
+		console.log('/orderbook/?/orderbook/?pairing=' + pairing_id);
+		let url = `/api${pairing_id}`
+		console.log(`url: ${url}`)
+		return this.http.get('api/' + 'orderbook/?/orderbook/?pairing=' + pairing_id)
+			.map(response => response.json().asks);
+>>>>>>> 01f0afd2a7de63b529de0d363873973fa3d7d8fa
 	}
 
 	addName(newCrypto, crypto) {
@@ -99,6 +144,7 @@ export class DatacoinProvider {
 				change: crypto[i].change,
 				last_price: crypto[i].last_price,
 				volume_24hours: crypto[i].volume_24hours,
+<<<<<<< HEAD
 				nameCrypto: NAME[i]
 			}
 			//   console.log('Sussess ' + i + '----- name :' + newCrypto[i].nameCrypto);
@@ -117,10 +163,94 @@ export class DatacoinProvider {
 	// 			});
 	// 	});
 	// }
+=======
+				nameCrypto: NAME[i],
+				orderbook: crypto[i].orderbook
+			}
+			  console.log('Sussess ' + i + '----- name :' + newCrypto[i].nameCrypto);
+		}
+		console.log('newCrypto[2]'+newCrypto[2].orderbook.bids.volume);
+	}
+
+
+
+
+
+
+} 
+
+
+
+
+
+
+export class tempStatisticsCoins {
+	coins: tempStatisticsCoinsDetail[]; // 
+
+
+}
+export class tempStatisticsCoinsDetail {
+	pairing_id: any;
+	secondary_currency: any;
+	priceofday: detailOfDate[];
+
+}
+// export class boxCoinPerDay {
+// 	dates: detailOfDate;
+// } 
+
+export class detailOfDate {
+	date: any;
+	price: any;
+}
+
+
+
+
+
+
+export class tempbookorderBidBox {
+	box: tempbookorderBidItem[];
+
+
+} export class tempbookorderAsksBox {
+	box: tempbookorderBidItem[];
+>>>>>>> 01f0afd2a7de63b529de0d363873973fa3d7d8fa
+
+}
+
+export class tempbookorder {
+	bids: tempbookorderBidItem[];
+	asks: tempbookorderAsksItem[];
 
 
 }
 
+export class tempbookorderBidItem {
+	Item: tempbookorderBid[];
+
+}
+export class tempbookorderAsksItem {
+	Item: tempbookorderAsks[];
+
+}
+
+
+export class Bids {
+	total: any
+	volume: any
+	highbid: any
+}
+
+
+export class tempbookorderBid {
+	price: any[];
+	amount: any[];
+}
+export class tempbookorderAsks {
+	price: any[];
+	amount: any[];
+}
 export class newsData {
 	status: any;
 	feed: feeds[];
@@ -158,6 +288,24 @@ export class categories {
 	3: any;
 }
 
+<<<<<<< HEAD
+=======
+export class cryto {
+	pairing_id: any
+	primary_currency: any
+	secondary_currency: any
+	change: number
+	last_price: string
+	volume_24hours: any
+	// nameCrypto:any[]
+	orderbook: {
+					bids: { total: any, volume: any, highbid: any },
+					asks: { total: any, volume: any, highbid: any }
+				}
+
+}
+
+>>>>>>> 01f0afd2a7de63b529de0d363873973fa3d7d8fa
 export class bids {
 	total: any
 	volume: any
@@ -168,10 +316,11 @@ export class asks {
 	volume: any
 	highbid: any
 }
-// export class {
-// 	bids : bids[]
-// 	asks : asks[]
+// export class orderbook {
+// 	bids: bids
+// 	asks: asks
 // }
+<<<<<<< HEAD
 export class cryto {
 	pairing_id: any
 	primary_currency: any
@@ -181,8 +330,18 @@ export class cryto {
 	volume_24hours: any
 	// nameCrypto:any[]
 	// orderbooks:orderbook[]
+=======
+>>>>>>> 01f0afd2a7de63b529de0d363873973fa3d7d8fa
 
+export class orderbook {
+	bids: { total: any, volume: any, highbid: any}
+	asks: { total: any, volume: any, highbid: any}
 }
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 01f0afd2a7de63b529de0d363873973fa3d7d8fa
 export class cryptoNumbers {
 	// number:string='1';
 	crytos: cryto[]
@@ -196,7 +355,7 @@ export class crytoMix {
 	last_price: any;
 	volume_24hours: any
 	nameCrypto: any;
-	// orderbooks: orderbook[];
+	orderbook: orderbook;
 
 }
 

@@ -3,6 +3,8 @@ import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 
+
+
 /**
  * Generated class for the SettingPage page.
  *
@@ -15,6 +17,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   templateUrl: 'setting.html',
 })
 export class SettingPage {
+<<<<<<< HEAD
   signupForm: FormGroup;
   errorUsername: string = '';
   errorPassword: string = '';
@@ -34,10 +37,15 @@ export class SettingPage {
     });
 
   }
+=======
+  
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad SettingPage');
+>>>>>>> 01f0afd2a7de63b529de0d363873973fa3d7d8fa
+
+  constructor(public navCtrl: NavController, public navParams: NavParams){
+    
   }
+  
 
   validate(): boolean {
 
@@ -107,3 +115,7 @@ export class SettingPage {
   }
 
 }
+
+
+
+

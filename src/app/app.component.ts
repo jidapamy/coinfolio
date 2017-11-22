@@ -11,7 +11,6 @@ import { DetailsPage } from '../pages/details/details';
 import { NewsPage } from '../pages/news/news';
 import { NewsSourcePage } from '../pages/news-source/news-source';
 import { PrivacyPage } from '../pages/privacy/privacy';
-import { SelectCoinPage } from '../pages/select-coin/select-coin';
 import { SettingPage } from '../pages/setting/setting';
 import { TutorialPage } from '../pages/tutorial/tutorial';
 import { FolioPage } from '../pages/folio/folio';
@@ -28,9 +27,12 @@ export class MyApp {
 
   rootPage: any = HomePage;
   // rootPage: any = LoginPage;
+<<<<<<< HEAD
   username:any='';
   test:any='';
   test2:any='';
+=======
+>>>>>>> 01f0afd2a7de63b529de0d363873973fa3d7d8fa
 
   pagesForLogin: Array<{icon:string;title: string, component: any}>;
   pages: Array<{ icon: string; title: string, component: any }>;

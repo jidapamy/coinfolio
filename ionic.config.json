@@ -1,5 +1,5 @@
 {
-  "name": "Project_Crypto",
+  "name": "coinfolio",
   "app_id": "",
   "type": "ionic-angular",
   "integrations": {
@@ -9,6 +9,10 @@
     {
       "path": "/api",
       "proxyUrl": "https://bx.in.th/api"
+    },
+    {
+      "path": "/orderbook/?pairing=1",
+      "proxyUrl": "https://bx.in.th/api/orderbook/?pairing=1"
     }
   ]
 }

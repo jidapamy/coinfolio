@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams, ItemSliding, ModalController } from 'ionic-angular';
 import { DatacoinProvider, cryptoNumbers, cryto, asks, bids, NAME, crytoMix } from '../../providers/datacoin/datacoin';
 import { Content } from 'ionic-angular';
+import { CoinsDetailPage } from '../coins-detail/coins-detail';
 import { AddTransationPage } from '../add-transation/add-transation';
 import { MyApp } from '../../app/app.component';
 
@@ -22,7 +23,7 @@ import { MyApp } from '../../app/app.component';
 export class HomePage {
   @ViewChild(Content) content: Content
   // crytoName: any[] = NAME;
-  cryptoNumbers: cryto[];
+  cryptoNumbers: cryto[]=[];
   cryptoMix: crytoMix[] = [];
   cryptoTotal: crytoMix[] = [];
   segment = 'THB';
@@ -75,6 +76,7 @@ export class HomePage {
         this.loopOfConvert('ETH');
         this.loopOfConvert('USD');
         this.changeMarket(this.segment)
+        console.dir(this.cryptoNumbers[0].orderbook.asks.highbid)
       })
   }
 
@@ -95,7 +97,8 @@ export class HomePage {
       change: this.cryptoMix[index].change,
       last_price: this.convertMoney(this.cryptoMix[index], type),
       volume_24hours: this.cryptoMix[index].volume_24hours,
-      nameCrypto: this.cryptoMix[index].nameCrypto
+      nameCrypto: this.cryptoMix[index].nameCrypto,
+      orderbook: this.cryptoMix[index].orderbook
     })
     // console.log(`[${index}] push: ${this.cryptoTotal[lastIndex + 1].secondary_currency}/${this.cryptoTotal[lastIndex + 1].primary_currency} price: ${this.cryptoTotal[lastIndex + 1].last_price}`);
   }
@@ -159,6 +162,7 @@ export class HomePage {
     slidingItem.close();
   }
 
+<<<<<<< HEAD
   ngOnInit() {
     // this.provider.getUsername().then((item)=>{
     //   this.username = item;
@@ -169,6 +173,12 @@ export class HomePage {
 
   callMenu(){
   //  this.navCtrl.setRoot(MyApp);
+=======
+  goToDetail(crypto){
+    console.log('nextPage:' + crypto.orderbook.asks.highbid)
+    this.navCtrl.push(CoinsDetailPage,crypto);
+    
+>>>>>>> 01f0afd2a7de63b529de0d363873973fa3d7d8fa
   }
 
 }

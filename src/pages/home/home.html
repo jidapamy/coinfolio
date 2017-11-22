@@ -241,9 +241,9 @@
     </ion-list>  -->
 
 
-    <ion-list >
-      <ion-item-sliding #slidingItem  *ngFor="let crypto of coins" >
-        <ion-item  style="padding-right: 2%;">
+    <ion-list>
+      <ion-item-sliding #slidingItem *ngFor="let crypto of coins" >
+        <ion-item (click)="goToDetail(crypto)" style="padding-right: 2%;">
           <ion-avatar item-start>
             <img class="imgSize" src="https://d2v7vc3vnopnyy.cloudfront.net/img/coins/{{ crypto.secondary_currency }}.png" />
           </ion-avatar>
@@ -275,6 +275,12 @@
 
       </ion-item-sliding>
     </ion-list>
+
+    <!-- <ion-list >
+      <ion-item *ngFor="let crypto of coins" (click)="goToDetail(crypto)">
+        {{crypto.orderbook.asks.highbid}}
+      </ion-item>
+    </ion-list> -->
 
 
 

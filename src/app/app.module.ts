@@ -11,10 +11,10 @@ import { DetailsPage } from '../pages/details/details';
 import { NewsPage } from '../pages/news/news';
 import { NewsSourcePage } from '../pages/news-source/news-source';
 import { PrivacyPage } from '../pages/privacy/privacy';
-import { SelectCoinPage } from '../pages/select-coin/select-coin';
 import { SettingPage } from '../pages/setting/setting';
 import { TutorialPage } from '../pages/tutorial/tutorial';
 import { FolioPage } from '../pages/folio/folio';
+import { CoinsDetailPage } from '../pages/coins-detail/coins-detail';
 import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
 
@@ -29,6 +29,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { DatacoinProvider } from '../providers/datacoin/datacoin';
 import { IonicStorageModule } from '@ionic/storage';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
+
 
 export const config = {
   apiKey: "AIzaSyCqUaUXncsFJqpFi4LnTa_ak3iI3SzNJ0M",
@@ -50,10 +51,10 @@ export const config = {
     NewsPage,
     NewsSourcePage,
     PrivacyPage,
-    SelectCoinPage,
     SettingPage,
     TutorialPage,
     FolioPage,
+    CoinsDetailPage,
     LoginPage,
     RegisterPage
   ],
@@ -77,10 +78,10 @@ export const config = {
     NewsPage,
     NewsSourcePage,
     PrivacyPage,
-    SelectCoinPage,
     SettingPage,
     TutorialPage,
     FolioPage,
+    CoinsDetailPage,
     LoginPage,
     RegisterPage
   ],
