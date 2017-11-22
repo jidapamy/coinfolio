@@ -6,6 +6,9 @@ import { CoinsDetailPage } from '../coins-detail/coins-detail';
 import { AddTransationPage } from '../add-transation/add-transation';
 import { MyApp } from '../../app/app.component';
 
+import { NgZone } from '@angular/core';
+import { Events } from 'ionic-angular';
+
 // import { Storage } from '@ionic/storage';
 
 
@@ -21,6 +24,8 @@ import { MyApp } from '../../app/app.component';
   templateUrl: 'home.html',
 })
 export class HomePage {
+
+
   @ViewChild(Content) content: Content
   // crytoName: any[] = NAME;
   cryptoNumbers: cryto[]=[];
@@ -39,10 +44,11 @@ export class HomePage {
   // BTC: crytoMix[] = [];
   
   constructor(public navCtrl: NavController,
-    public navParams: NavParams,
-    public provider: DatacoinProvider,
-    public modalCtrl: ModalController) {
-    this.mixNameCoins()
+              public navParams: NavParams,
+              public provider: DatacoinProvider,
+              public modalCtrl: ModalController){
+             
+    this.mixNameCoins();
   }
 
   ionViewDidLoad() {
@@ -173,6 +179,7 @@ export class HomePage {
   callMenu(){
   //  this.navCtrl.setRoot(MyApp);
   }
+  
   goToDetail(crypto){
     console.log('nextPage:' + crypto.orderbook.asks.highbid)
     this.navCtrl.push(CoinsDetailPage,crypto);
