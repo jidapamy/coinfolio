@@ -246,17 +246,11 @@ export class HomePage {
 
   goToDetail(crypto) {
     console.log('nextPage:' + crypto.orderbook.asks.highbid)
-<<<<<<< HEAD
-    this.navCtrl.setRoot(CoinsDetailPage, crypto);
-    // this.navCtrl.push(CoinsDetailPage,crypto);
-    
-=======
     this.navCtrl.push(CoinsDetailPage, crypto);
   }
 
   goToMyCoins(){
     this.navCtrl.setRoot(FolioPage);
->>>>>>> 913136eddb3acedbdf4a476954f15e6f72ea8070
   }
   
 }

@@ -60,6 +60,7 @@ export class FolioPage {
                   last_price: this.cryptoMix[i].last_price,
                   volume_24hours: this.cryptoMix[i].volume_24hours,
                   nameCrypto: this.cryptoMix[i].nameCrypto,
+                  orderbook: this.cryptoMix[i].orderbook,
                   totalQuantity: this.myCoinsList[j].totalQuantity,
                   totalPrice: this.myCoinsList[j].totalPrice
                 })

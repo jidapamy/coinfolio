@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild} from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { DatacoinProvider, tempStatisticsCoinsDetail, tempStatisticsCoins, tempbookorderBidItem, tempbookorderBid, tempbookorder, cryptoNumbers, cryto, orderbook, asks, bids, NAME, crytoMix } from '../../providers/datacoin/datacoin';
 import Highcharts from 'highcharts/highstock';
@@ -7,6 +7,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { Screenshot } from '@ionic-native/screenshot';
 import { HomePage } from '../home/home';
+import { FolioPage } from '../folio/folio';
+import { Content } from 'ionic-angular';
 
 /**
  * Generated class for the DetailsPage page.
@@ -20,9 +22,10 @@ import { HomePage } from '../home/home';
   templateUrl: 'details.html',
 })
 export class DetailsPage {
+  @ViewChild(Content) content: Content
   crypto: any;
   priceperday: any;
-
+  segment = 'details';
   priceOfDay: any[] = [];
   nameCoin: any;
   dataInicial: Date = new Date();;
@@ -439,5 +442,15 @@ export class DetailsPage {
       });
 
   }
+  goToFolio() {
+    this.navCtrl.setRoot(FolioPage);
+  }
 
+  refreshPage(){
+    console.log('refresh')
+   
+        this.content.resize();
+
+        
+  }
 }
