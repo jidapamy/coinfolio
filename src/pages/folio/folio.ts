@@ -6,24 +6,26 @@ import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/databa
 @Component({
   selector: 'page-folio',
   templateUrl: 'folio.html'
-}) 
+})
 export class FolioPage {
   myCoins: FirebaseListObservable<any[]>;
-  
+
   cryptoNumbers: cryto[];
   cryptoMix: crytoMix[] = [];
   cryptoTotal: crytoMix[] = [];
   rateBtc: any = 0;
-  array:any[]=[];
-  cryptoRecent:any[]=[];
+  myCoinsList: any[] = [];
+  // array: any[] = [];
+  cryptoRecent: any[] = [];
 
-  myfolio:any;
+  myfolio: any;
   constructor(public navCtrl: NavController,
-              public provider:DatacoinProvider,
-              public angularfire: AngularFireDatabase,
-            ) {
-    console.log('constructor FolioPage');     
-    this.myCoins = angularfire.list('/myCoins');
+    public provider: DatacoinProvider,
+    public angularfire: AngularFireDatabase,
+  ) {
+    console.log('constructor FolioPage');
+    console.log(this.provider.getMycoinsPath());
+    this.myCoins = angularfire.list(this.provider.getMycoinsPath());
     this.provider.loadBX().subscribe(data => {
       this.cryptoNumbers = Object.keys(data).map(key => data[key]);
       console.dir(this.cryptoNumbers)
@@ -33,19 +35,18 @@ export class FolioPage {
         this.provider.addName(this.cryptoMix, this.cryptoNumbers);
 
         for (let i = 0; i < this.cryptoMix.length; i++) {
-          if (this.cryptoMix[i].secondary_currency == 'BTC') {
+          if (this.cryptoMix[i].secondary_currency == 'BTC') { // เอา BTC มาแปลงเป็น THB ทั้งหมด
             this.rateBtc = this.cryptoMix[i].last_price;
             console.log('price ' + this.cryptoMix[i].secondary_currency + ' ' + this.rateBtc);
           }
         }
         this.loopOfConvert('THB');
-        this.myCoins.forEach(item => {
-          this.array = Object.keys(item).map(key => item[key]);
-          this.cryptoRecent = [];
-          console.log('array length:' + this.array.length)
-          for (let j = 0; j < this.array.length; j++) {
+        this.myCoins.subscribe(data => {
+          this.myCoinsList = data;
+          console.log(this.myCoinsList)
+          for (let j = 0; j < this.myCoinsList.length; j++) {
             for (let i = 0; i < this.cryptoMix.length; i++) {
-              if (this.cryptoMix[i].pairing_id == this.array[j].pairing_id) {
+              if (this.cryptoMix[i].pairing_id == this.myCoinsList[j].pairing_id) {
                 let length = this.cryptoRecent.length - 1;
                 this.cryptoRecent.push({
                   pairing_id: this.cryptoMix[i].pairing_id,
@@ -55,23 +56,50 @@ export class FolioPage {
                   last_price: this.cryptoMix[i].last_price,
                   volume_24hours: this.cryptoMix[i].volume_24hours,
                   nameCrypto: this.cryptoMix[i].nameCrypto,
-                  totalQuantity: this.array[j].totalQuantity,
-                  totalPrice: this.array[j].totalPrice
+                  totalQuantity: this.myCoinsList[j].totalQuantity,
+                  totalPrice: this.myCoinsList[j].totalPrice
                 })
                 console.log('push:' + this.cryptoRecent[length + 1].pairing_id)
 
               }
             }
           }
-          console.log('this.cryptoRecent:' + this.cryptoRecent.length)
-
-        });
-        console.dir('this.cryptoRecent:' + this.cryptoRecent)
-
+        })
 
 
 
       })
+
+
+    // this.myCoins.forEach(item => {
+    //   this.array = Object.keys(item).map(key => item[key]);
+    //   this.cryptoRecent = [];
+    //   console.log('array length:' + this.array.length)
+    //   for (let j = 0; j < this.array.length; j++) {
+    //     for (let i = 0; i < this.cryptoMix.length; i++) {
+    //       if (this.cryptoMix[i].pairing_id == this.array[j].pairing_id) {
+    //         let length = this.cryptoRecent.length - 1;
+    //         this.cryptoRecent.push({
+    //           pairing_id: this.cryptoMix[i].pairing_id,
+    //           primary_currency: this.cryptoMix[i].primary_currency,
+    //           secondary_currency: this.cryptoMix[i].secondary_currency,
+    //           change: this.cryptoMix[i].change,
+    //           last_price: this.cryptoMix[i].last_price,
+    //           volume_24hours: this.cryptoMix[i].volume_24hours,
+    //           nameCrypto: this.cryptoMix[i].nameCrypto,
+    //           totalQuantity: this.array[j].totalQuantity,
+    //           totalPrice: this.array[j].totalPrice
+    //         })
+    //         console.log('push:' + this.cryptoRecent[length + 1].pairing_id)
+
+    //       }
+    //     }
+    //   }
+    //   console.log('this.cryptoRecent:' + this.cryptoRecent.length)
+
+    // });
+    // console.dir('this.cryptoRecent:' + this.cryptoRecent)
+    // })
   }
 
   ionViewDidLoad() {
@@ -95,7 +123,7 @@ export class FolioPage {
       last_price: this.convertMoney(this.cryptoMix[index], type),
       volume_24hours: this.cryptoMix[index].volume_24hours,
       nameCrypto: this.cryptoMix[index].nameCrypto,
-      orderbook:this.cryptoMix[index].orderbook
+      orderbook: this.cryptoMix[index].orderbook
     })
     // console.log(`[${index}] push: ${this.cryptoTotal[lastIndex + 1].secondary_currency}/${this.cryptoTotal[lastIndex + 1].primary_currency} price: ${this.cryptoTotal[lastIndex + 1].last_price}`);
   }
@@ -110,7 +138,7 @@ export class FolioPage {
     } else if (coin.primary_currency == 'BTC') { // แปลงจากเงิน BTC
       if (type == 'THB') {
         price = (coin.last_price * this.rateBtc);
-      } 
+      }
     }
 
     if (price < 1) {
@@ -121,5 +149,5 @@ export class FolioPage {
     return priceDecimal;
   }
 
-  
+
 }
