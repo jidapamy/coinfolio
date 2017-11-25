@@ -14,7 +14,7 @@
 
 
 <ion-content padding>
-  <form class="list" [formGroup]="addTransaction" (ngSubmit)="saveAlert()">
+  
       <ion-list>
         <ion-item>
           <ion-label class="fixedLeft">
@@ -26,23 +26,23 @@
         </ion-item>
         
       </ion-list>
-
+<form class="list" [formGroup]="addTransaction" (ngSubmit)="saveAlert()">
       <ion-list>
         <ion-item>
           <ion-label class="fixedLeft">CSET THRESHOLD TARGETS</ion-label>
         </ion-item>
         <ion-item>
           <ion-label class="fixedLeft">Ablove</ion-label>
-          <ion-input class="fixedRight" item-right type="number"    formControlName="ablove" [(ngModel)]="priceAblove" ></ion-input>
+          <ion-input class="fixedRight" item-right type="number"  alert="ablove" [(ngModel)]="priceAblove" ></ion-input>
         </ion-item>
         <ion-item>
           <ion-label class="fixedLeft">Current</ion-label>
-          <ion-input disabled class="fixedRight" disble item-right min="0" type="number"   formControlName="current" [(ngModel)]="cryptoNumbers"></ion-input>
+          <ion-input disabled class="fixedRight" disble item-right min="0" type="number"  alert="current" [(ngModel)]="cryptoNumbers"></ion-input>
         </ion-item>
 
         <ion-item>
           <ion-label class="fixedLeft">Below</ion-label>
-          <ion-input class="fixedRight" item-right type="number"  formControlName="below" [(ngModel)]="priceBlow"></ion-input>
+          <ion-input class="fixedRight" item-right type="number"  alert="below" [(ngModel)]="priceBlow"></ion-input>
         </ion-item>
       </ion-list>
       <ion-list>

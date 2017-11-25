@@ -10,10 +10,8 @@ import { Screenshot } from '@ionic-native/screenshot';
 // import { SocialSharing } from '@ionic-native/social-sharing';
 // import { Storage } from '@ionic/storage';
 
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { Storage } from '@ionic/storage';
-// import { SpinnerDialog } from '@ionic-native/spinner-dialog';
-import { LoadingController } from 'ionic-angular';
-
 
 /**
  * Generated class for the HomePage page.
@@ -29,6 +27,9 @@ import { LoadingController } from 'ionic-angular';
 export class HomePage {
   @ViewChild(Content) content: Content
   // crytoName: any[] = NAME;
+
+  usersData: FirebaseListObservable<any[]>;
+  usersArray:any[]=[];
   cryptoNumbers: cryto[] = [];
   cryptoMix: crytoMix[] = [];
   cryptoTotal: crytoMix[] = [];
@@ -39,7 +40,6 @@ export class HomePage {
   coins: crytoMix[] = [];
   username: any;
   myApp: MyApp;
-  loader:any
   // ETH: crytoMix[]=[];
   // USD: crytoMix[] = [];
   // THB: crytoMix[] = [];
@@ -53,18 +53,41 @@ export class HomePage {
     public modalCtrl: ModalController,
     public storage: Storage,
     private screenshot: Screenshot,
-) {
+    public angularfire: AngularFireDatabase) {
 
     this.mixNameCoins();
-    this.username='';
-    this.storage.ready().then(() => {
-      this.provider.getUsername().then((data) => {
-        this.username = data
-        console.log('constructor: ' + this.username)
-        this.content.resize();
+    // this.username = '';
+    // this.storage.ready().then(() => {
+    //   this.provider.getUsername().then((data) => {
+    //     this.username = data
+    //     console.log('constructor: ' + this.username)
+    //     this.content.resize();
+    //   });
+    // });
+
+    this.usersData = this.provider.userData;
+    this.usersData.subscribe((data) => {
+      this.usersArray = data
+      this.username = '';
+      this.storage.ready().then(() => {
+        this.provider.getUsername().then((data) => {
+          this.username = data
+          for (let i = 0; i < this.usersArray.length; i++) {
+            if (this.usersArray[i].username == this.username) {
+              console.log('Key User:' + this.usersArray[i].$key + '/Username:' + this.usersArray[i].username)
+              this.provider.userKey = this.usersArray[i].$key;
+              break;
+            }
+          }
+          console.log('constructor: ' + this.username)
+          this.content.resize();
+        });
       });
     });
+
     console.log('Home Constructor');
+
+
 
   }
 
@@ -75,7 +98,6 @@ export class HomePage {
   mixNameCoins() {
     this.provider.loadBX().subscribe(data => {
       this.cryptoNumbers = Object.keys(data).map(key => data[key]);
-      // this.loader.dismiss();
       // console.dir(this.cryptoNumbers)
     },
       error => { console.log("error: " + error); },

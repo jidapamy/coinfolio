@@ -58,22 +58,22 @@ export class AddTransationPage {
       this.usersArray = data
       console.dir(this.usersArray)
 
-      let usernameLogin
-      this.storage.ready().then(() => {
-        this.provider.getUsername().then((data) => {
-          usernameLogin = data;
-          for (let i = 0; i < this.usersArray.length; i++) {
-            if (this.usersArray[i].username == usernameLogin) {
-              console.log('Key User:' + this.usersArray[i].$key + '/Username:' + this.usersArray[i].username)
-              this.provider.userKey = this.usersArray[i].$key;
+      // let usernameLogin
+      // this.storage.ready().then(() => {
+      //   this.provider.getUsername().then((data) => {
+      //     usernameLogin = data;
+      //     for (let i = 0; i < this.usersArray.length; i++) {
+      //       if (this.usersArray[i].username == usernameLogin) {
+      //         console.log('Key User:' + this.usersArray[i].$key + '/Username:' + this.usersArray[i].username)
+      //         this.provider.userKey = this.usersArray[i].$key;
               this.mycoinsPath = this.provider.getMycoinsPath();
-              // this.myCoins = angularfire.list(this.);
-              break;
-            }
-          }
-          console.log(this.mycoinsPath)
-        });
-      });
+      //         // this.myCoins = angularfire.list(this.);
+      //         break;
+      //       }
+      //     }
+      //     console.log(this.mycoinsPath)
+      //   });
+      // });
     })
 
     this.addTransaction = this.builder.group({
@@ -129,7 +129,6 @@ export class AddTransationPage {
         this.addTransaction.value.note = ''
       }
       let dataAddTransaction = {
-        coin: { primary_currency: this.crypto.primary_currency, secondary_currency:this.crypto.secondary_currency},
         status: this.addTransaction.value.status,
         tradePrice: this.addTransaction.value.tradePrice,
         quantity: this.addTransaction.value.quantity,
@@ -140,24 +139,34 @@ export class AddTransationPage {
 
       let totalQuantity = this.addTransaction.value.quantity;
       let totalPrice = price;
-
-      totalQuantity = +totalQuantity;
+      
+      
       totalPrice = +totalPrice
+      if (totalQuantity.indexOf('.')==-1){
+        totalQuantity = (+totalQuantity)
+      }else{
+        totalQuantity = (+totalQuantity).toFixed(2)
+      }
+      console.log('totalQuantity:' + totalQuantity)
+      
 
-      let coin = {
-        pairing_id: this.crypto.pairing_id,
-        totalQuantity: totalQuantity.toFixed(2),
-        totalPrice: totalPrice.toFixed(2)
+      let coins = {
+        coin: { pairing_id:this.crypto.pairing_id,primary_currency: this.crypto.primary_currency, secondary_currency: this.crypto.secondary_currency},
+        totalQuantity: totalQuantity,
+        totalPrice: totalPrice
       }
 
       if (this.crypto.primary_currency == "BTC") {
         let rateBtc = this.provider.rateBtc;
-        coin.totalPrice = coin.totalPrice * rateBtc;
+        coins.totalPrice = coins.totalPrice * rateBtc;
       } else if (this.crypto.primary_currency == "ETH") {
         let rateEth = this.provider.rateEth;
-        coin.totalPrice = coin.totalPrice * rateEth;
+        coins.totalPrice = coins.totalPrice * rateEth;
       } else if (this.crypto.primary_currency == "USD") {
-        coin.totalPrice = coin.totalPrice * 34;
+        coins.totalPrice = coins.totalPrice * 34;
+      } else if (this.crypto.primary_currency == "THB") {
+        coins.totalPrice = coins.totalPrice;
+        console.log('THB' + coins.totalPrice)
       }
 
       let myCoin: any[] // array เก็บต่าของ coins ของตัวเอง
@@ -174,8 +183,10 @@ export class AddTransationPage {
       let coinAlready:any;
       
       for (let i = 0; i < myCoin.length; i++) {
-        console.log(`${myCoin[i].pairing_id} == ${coin.pairing_id}`)
-        if (myCoin[i].pairing_id == coin.pairing_id) {
+        console.log(`${myCoin[i].coin.pairing_id} == ${coins.coin.pairing_id}`)
+        if (myCoin[i].coin.pairing_id == coins.coin.pairing_id && 
+            myCoin[i].coin.secondary_currency == coins.coin.secondary_currency &&
+            myCoin[i].coin.primary_currency == coins.coin.primary_currency) {
           already = true;
           // this.keyCoinAlready = myCoin[i].$key;
           coinAlready = myCoin[i];
@@ -190,16 +201,16 @@ export class AddTransationPage {
         console.log('already')
         let totalQuantity;
         let totalPrice;
-        console.log(`coinAlready.totalQuantity ${coinAlready.totalQuantity} + coin.totalQuantity ${coin.totalQuantity}`)
-        console.log(`coinAlready.totalPrice ${coinAlready.totalPrice} + coin.totalPrice ${coin.totalPrice}`)
+        console.log(`coinAlready.totalQuantity ${coinAlready.totalQuantity} + coin.totalQuantity ${coins.totalQuantity}`)
+        console.log(`coinAlready.totalPrice ${coinAlready.totalPrice} + coin.totalPrice ${coins.totalPrice}`)
         console.log('totalQuantity:' + totalQuantity + ' totalPrice:' + totalPrice)
         console.log('KEY:' + coinAlready.$key)
         if (dataAddTransaction.status=='buy'){
-          totalQuantity = ((+coinAlready.totalQuantity) + (+coin.totalQuantity));
-          totalPrice = ((+coinAlready.totalPrice) + (+coin.totalPrice))
+          totalQuantity = ((+coinAlready.totalQuantity) + (+coins.totalQuantity));
+          totalPrice = ((+coinAlready.totalPrice) + (+coins.totalPrice))
         } else if (dataAddTransaction.status == 'sell'){
-          totalQuantity = ((+coinAlready.totalQuantity) - (+coin.totalQuantity));
-          totalPrice = ((+coinAlready.totalPrice) - (+coin.totalPrice))
+          totalQuantity = ((+coinAlready.totalQuantity) - (+coins.totalQuantity));
+          totalPrice = ((+coinAlready.totalPrice) - (+coins.totalPrice))
         } else if (dataAddTransaction.status == 'watch') {
           totalQuantity = (+coinAlready.totalQuantity);
           totalPrice = (+coinAlready.totalPrice);
@@ -207,12 +218,15 @@ export class AddTransationPage {
         this.transactionData.push(dataAddTransaction);
         this.myCoinsData.update(coinAlready.$key, { totalQuantity: totalQuantity, totalPrice: totalPrice})
       } else {  // เหรียญใหม่
-        if (dataAddTransaction.status == 'watch' || dataAddTransaction.status == 'sell') {
-          coin.totalPrice =0
-          coin.totalQuantity=0
+        if (dataAddTransaction.status == 'watch') {
+          coins.totalPrice =0
+          coins.totalQuantity=0
+        } else if (dataAddTransaction.status == 'sell'){
+          coins.totalPrice = 0 - coins.totalPrice
+          coins.totalQuantity = coins.totalQuantity
         }
         console.log('add')
-        this.myCoinsData.push(coin);
+        this.myCoinsData.push(coins);
         this.myCoinsData.subscribe(data => {
           myCoin = data;
         })

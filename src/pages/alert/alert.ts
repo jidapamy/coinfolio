@@ -17,24 +17,32 @@ import { DatacoinProvider, cryptoNumbers, cryto, asks, bids, NAME, crytoMix } fr
 export class AlertPage {
   cryptoNumbers: any;
   chooseCrypto:any;
-  priceAblove:any;
+  priceAbove:any;
   priceBlow: any;
+  secondary:any;
+  
 
-  addTransaction: FormGroup;
+
+  alert: FormGroup;
   constructor(public builder: FormBuilder, public navCtrl: NavController, public navParams: NavParams) {
     this.chooseCrypto = this.navParams.data;
-    this.cryptoNumbers = (this.chooseCrypto.last_price).toFixed(8);
-
-    this.addTransaction = this.builder.group({
-      'ablove': [0, Validators.required],
+    // this.secondary = ""+this.chooseCrypto.secondary_currency + "/" + this.chooseCrypto.primary_currency+"";
+    
+    if(this.chooseCrypto.last_price > 1){
+    this.cryptoNumbers = (this.chooseCrypto.last_price).toFixed(2);
+    }else{
+      this.cryptoNumbers = (this.chooseCrypto.last_price).toFixed(8);
+    }
+    this.alert = this.builder.group({
+      'above': [0, Validators.required],
       'below': [0, Validators.required],
       'current':[]
     });
       if (this.chooseCrypto.last_price>1){
-      this.priceAblove = (+this.chooseCrypto.last_price) + 0.01;
+      this.priceAbove = (+this.chooseCrypto.last_price) + 0.01;
       this.priceBlow = (+this.chooseCrypto.last_price) - 0.01;
       }else{
-      this.priceAblove = ((+this.chooseCrypto.last_price) + 0.00000001).toFixed(8);
+      this.priceAbove = ((+this.chooseCrypto.last_price) + 0.00000001).toFixed(8);
       this.priceBlow = ((+this.chooseCrypto.last_price) - 0.00000001).toFixed(8);
       
       }
@@ -45,12 +53,12 @@ export class AlertPage {
     console.log('ionViewDidLoad AlertPage');
   }
   validate(): any {
-    if (this.addTransaction.valid) {
+    if (this.alert.valid) {
       return true;
     }
 
-    let controlAblove = this.addTransaction.controls['ablove'];
-    let controlBelow = this.addTransaction.controls['below'];
+    let controlAblove = this.alert.controls['ablove'];
+    let controlBelow = this.alert.controls['below'];
     if (controlAblove.invalid) {
       if (controlAblove.errors['required']) {
       }

@@ -25,7 +25,7 @@ export class FolioPage {
     public angularfire: AngularFireDatabase,
   ) {
     console.log('constructor FolioPage');
-    console.log(this.provider.getMycoinsPath());
+    console.log(this.provider.mycoinsPath);
     this.myCoins = angularfire.list(this.provider.getMycoinsPath());
     this.provider.loadBX().subscribe(data => {
       this.cryptoNumbers = Object.keys(data).map(key => data[key]);
@@ -44,10 +44,11 @@ export class FolioPage {
         this.loopOfConvert('THB');
         this.myCoins.subscribe(data => {
           this.myCoinsList = data;
+          console.log('this.myCoins.subscribe length:'+this.myCoinsList.length)
           console.log(this.myCoinsList)
           for (let j = 0; j < this.myCoinsList.length; j++) {
             for (let i = 0; i < this.cryptoMix.length; i++) {
-              if (this.cryptoMix[i].pairing_id == this.myCoinsList[j].pairing_id) {
+              if (this.cryptoMix[i].pairing_id == this.myCoinsList[j].coin.pairing_id) {
                 let length = this.cryptoRecent.length - 1;
                 this.cryptoRecent.push({
                   pairing_id: this.cryptoMix[i].pairing_id,
