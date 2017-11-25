@@ -65,7 +65,8 @@ export class AddTransationPage {
           for (let i = 0; i < this.usersArray.length; i++) {
             if (this.usersArray[i].username == usernameLogin) {
               console.log('Key User:' + this.usersArray[i].$key + '/Username:' + this.usersArray[i].username)
-              this.mycoinsPath = this.provider.getMycoinsPath(this.usersArray[i].$key);
+              this.provider.userKey = this.usersArray[i].$key;
+              this.mycoinsPath = this.provider.getMycoinsPath();
               // this.myCoins = angularfire.list(this.);
               break;
             }
@@ -74,11 +75,6 @@ export class AddTransationPage {
         });
       });
     })
-    // if (this.crypto.primary_currency == 'USD') {
-    //   this.tradePrice = this.crypto.last_price * 34;
-    // } else if (this.crypto.primary_currency == 'BTC') {
-
-    // }
 
     this.addTransaction = this.builder.group({
       'status': ['', Validators.required],
@@ -133,6 +129,7 @@ export class AddTransationPage {
         this.addTransaction.value.note = ''
       }
       let dataAddTransaction = {
+        coin: { primary_currency: this.crypto.primary_currency, secondary_currency:this.crypto.secondary_currency},
         status: this.addTransaction.value.status,
         tradePrice: this.addTransaction.value.tradePrice,
         quantity: this.addTransaction.value.quantity,

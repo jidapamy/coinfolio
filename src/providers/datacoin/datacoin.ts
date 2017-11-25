@@ -24,6 +24,7 @@ export class DatacoinProvider {
 	myCoinsData: FirebaseListObservable<any[]>;
 	transactionData: FirebaseListObservable<any[]>;
 
+	userKey:any;
 	mycoinsPath:any;
 	transactionPath:any;
 
@@ -61,8 +62,8 @@ export class DatacoinProvider {
 		});
 	}
 
-	getMycoinsPath(userKey){
-		this.mycoinsPath = this.pathFirebase + '/' + userKey + '/myCoins';
+	getMycoinsPath(){ //myCoin ของ User ตามที่ login
+		this.mycoinsPath = this.pathFirebase + '/' + this.userKey + '/myCoins';
 		return this.mycoinsPath;
 	}
 
