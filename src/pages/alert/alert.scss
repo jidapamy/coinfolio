@@ -45,7 +45,10 @@ page-alert {
         display: inline-block;
         margin:-3px;
     }
-
+    .item-md [item-left], .item-md [item-right], .item-md [item-start], .item-md [item-end] {
+    margin: 9px -9px 7px 0;
+    text-align: right;
+    }
 
     // .list .item-input.ng-valid.item-input-has-value:not(.input-has-focus):not(.item-input-has-focus):last-child, .list-md .item-input.ng-valid.input-has-value:not(.input-has-focus):not(.item-input-has-focus):last-child {
     //     border-bottom: 0px #F0B808;
