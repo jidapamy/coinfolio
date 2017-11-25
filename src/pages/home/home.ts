@@ -8,6 +8,7 @@ import { MyApp } from '../../app/app.component';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { Storage } from '@ionic/storage';
 import { HeaderPage } from '../header/header';
+import { FolioPage } from '../folio/folio';
 /**
  * Generated class for the HomePage page.
  *
@@ -24,6 +25,10 @@ export class HomePage {
   // crytoName: any[] = NAME;
 
   usersData: FirebaseListObservable<any[]>;
+  myCoinsData: FirebaseListObservable<any[]>;
+  totalPrice: any = 0;
+
+
   usersArray:any[]=[];
   cryptoNumbers: cryto[] = [];
   cryptoMix: crytoMix[] = [];
@@ -48,6 +53,7 @@ export class HomePage {
     public angularfire: AngularFireDatabase) {
 
     this.mixNameCoins();
+  
     // this.username = '';
     // this.storage.ready().then(() => {
     //   this.provider.getUsername().then((data) => {
@@ -72,7 +78,7 @@ export class HomePage {
     //         }
     //       }
     //       console.log('constructor: ' + this.username)
-    //       this.content.resize();
+          // this.content.resize();
     //     });
     //   });
     // });
@@ -213,7 +219,10 @@ export class HomePage {
   goToDetail(crypto) {
     console.log('nextPage:' + crypto.orderbook.asks.highbid)
     this.navCtrl.push(CoinsDetailPage, crypto);
+  }
 
+  goToMyCoins(){
+    this.navCtrl.setRoot(FolioPage);
   }
 
   ionViewDidEnter() {

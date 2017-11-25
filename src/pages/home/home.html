@@ -13,8 +13,7 @@
     </button>
     <ion-title style="padding-left: 12%;">Home</ion-title>
   </ion-navbar>
-  <page-header *ngIf="username!=''"></page-header>
-
+  <page-header *ngIf="username!=''" (click)="goToMyCoins()"></page-header>
 
   <ion-segment  [(ngModel)]="segment" >
     <ion-segment-button value="THB" (click)="changeMarket('THB')" >
