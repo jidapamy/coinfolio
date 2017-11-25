@@ -7,7 +7,7 @@ import { AddTransationPage } from '../add-transation/add-transation';
 import { MyApp } from '../../app/app.component';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { Storage } from '@ionic/storage';
-
+import { HeaderPage } from '../header/header';
 /**
  * Generated class for the HomePage page.
  *
@@ -57,25 +57,25 @@ export class HomePage {
     //   });
     // });
 
-    this.usersData = this.provider.userData;
-    this.usersData.subscribe((data) => {
-      this.usersArray = data
-      this.username = '';
-      this.storage.ready().then(() => {
-        this.provider.getUsername().then((data) => {
-          this.username = data
-          for (let i = 0; i < this.usersArray.length; i++) {
-            if (this.usersArray[i].username == this.username) {
-              console.log('Key User:' + this.usersArray[i].$key + '/Username:' + this.usersArray[i].username)
-              this.provider.userKey = this.usersArray[i].$key;
-              break;
-            }
-          }
-          console.log('constructor: ' + this.username)
-          this.content.resize();
-        });
-      });
-    });
+    // this.usersData = this.provider.userData;
+    // this.usersData.subscribe((data) => {
+    //   this.usersArray = data
+    //   this.username = '';
+    //   this.storage.ready().then(() => {
+    //     this.provider.getUsername().then((data) => {
+    //       this.username = data
+    //       for (let i = 0; i < this.usersArray.length; i++) {
+    //         if (this.usersArray[i].username == this.username) {
+    //           console.log('Key User:' + this.usersArray[i].$key + '/Username:' + this.usersArray[i].username)
+    //           this.provider.userKey = this.usersArray[i].$key;
+    //           break;
+    //         }
+    //       }
+    //       console.log('constructor: ' + this.username)
+    //       this.content.resize();
+    //     });
+    //   });
+    // });
 
     console.log('Home Constructor');
 

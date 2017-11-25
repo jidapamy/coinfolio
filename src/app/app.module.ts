@@ -15,7 +15,7 @@ import { FolioPage } from '../pages/folio/folio';
 import { CoinsDetailPage } from '../pages/coins-detail/coins-detail';
 import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
-
+import { HeaderPage } from '../pages/header/header';
 import { PasscodePage } from '../pages/passcode/passcode';
 import { PrivacyPage } from '../pages/privacy/privacy';
 import { TutorialPage } from '../pages/tutorial/tutorial';
@@ -64,7 +64,8 @@ export const config = {
     LoginPage,
     RegisterPage,
     PasscodePage,
-    FeedbackPage
+    FeedbackPage,
+    HeaderPage
   ],
   imports: [
     BrowserModule,
@@ -94,7 +95,8 @@ export const config = {
     LoginPage,
     RegisterPage,
     PasscodePage,
-    FeedbackPage
+    FeedbackPage,
+    HeaderPage
   ],
   providers: [
     StatusBar,
