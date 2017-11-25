@@ -1,4 +1,3 @@
-
 <!--
   Generated template for the HomePage page.
 
@@ -6,16 +5,10 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-<!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' bx.in.th"> -->
   <ion-navbar>
-   
-    <button end ion-button menuToggle (click)="callMenu()">
+    <button end ion-button menuToggle>
       <ion-icon name="md-more"></ion-icon>
     </button>
-    <!-- <button ion-button  (click)="screenShot()">
-      <ion-icon name="md-camera"></ion-icon>
-    </button> -->
-    
     <ion-title style="padding-left: 12%;">Home</ion-title>
   </ion-navbar>
   <ion-item style="background-color: #151A1D;" *ngIf="username!=''">
@@ -26,10 +19,12 @@
     <ion-label class="endFixedLabel" style="margin-top: 3px;">
       <p class="aboveFixedLabel" style="margin-bottom: 5px;">24hr Change</p>
       <p class="underFixedLabel" style="font-size:14px">-T฿2202.97</p>
+      <p style="color:red">{{username}}</p>
     </ion-label>
   </ion-item>
-  <ion-segment  [(ngModel)]="segment" >
-    <ion-segment-button value="THB" (click)="changeMarket('THB')" >
+
+  <ion-segment [(ngModel)]="segment">
+    <ion-segment-button value="THB" (click)="changeMarket('THB')">
       THB Markets
     </ion-segment-button>
     <ion-segment-button value="BTC" (click)="changeMarket('BTC')">
@@ -41,30 +36,15 @@
     <ion-segment-button value="USD" (click)="changeMarket('USD')">
       USDT Markets
     </ion-segment-button>
-
-
-    <!-- <ion-segment-button value="THB">
-      THB Markets
-    </ion-segment-button>
-    <ion-segment-button value="BTC" >
-      BTC Markets
-    </ion-segment-button>
-    <ion-segment-button value="ETH">
-      ETH Markets
-    </ion-segment-button>
-    <ion-segment-button value="USD">
-      USDT Markets
-    </ion-segment-button> -->
   </ion-segment>
 </ion-header>
 
 
 <ion-content padding>
-  
+
   <!-- <span *ngIf="segment=='THB'"> 
   <ion-list>
       <ion-item-sliding #slidingItem *ngFor="let crypto of THB">
-        <ion-item style="padding-right: 2%;">
             <ion-avatar item-start>
               <img class="imgSize" src="https://d2v7vc3vnopnyy.cloudfront.net/img/coins/{{ crypto.secondary_currency }}.png" />
             </ion-avatar>
@@ -102,7 +82,7 @@
     </ion-list> -->
 
 
-   <!-- <ion-list class="top-left tableColor">
+  <!-- <ion-list class="top-left tableColor">
       <ion-item  style="padding-right: 2%;"  *ngFor="let crypto of THB">
           <ion-avatar item-start >
             <img class="imgSize" src="https://d2v7vc3vnopnyy.cloudfront.net/img/coins/{{ crypto.secondary_currency }}.png" />
@@ -216,11 +196,11 @@
     </ion-list>
   </span>
    ///////////////////// -->
-  
 
 
 
-<!-- 
+
+  <!-- 
     <ion-list class="top-left tableColor">
       <ion-item style="padding-right: 2%;" class="bgColor" *ngFor="let crypto of coins">
           <ion-avatar item-start >
@@ -248,42 +228,42 @@
     </ion-list>  -->
 
 
-    <ion-list>
-      <ion-item-sliding #slidingItem *ngFor="let crypto of coins" >
-        <ion-item (click)="goToDetail(crypto)" style="padding-right: 2%;">
-          <ion-avatar item-start>
-            <img class="imgSize" src="https://d2v7vc3vnopnyy.cloudfront.net/img/coins/{{ crypto.secondary_currency }}.png" />
-          </ion-avatar>
-          <ion-label class="fixedLeft">
-            {{ crypto.secondary_currency }} <br>
-            <span class="fontsize bottons">{{crypto.nameCrypto}}</span>
-          </ion-label>
-          <ion-label class="fixedRight">
-            <span [ngClass]="{rateCurrency:crypto.change<0}">
+  <ion-list>
+    <ion-item-sliding #slidingItem *ngFor="let crypto of coins">
+      <ion-item (click)="goToDetail(crypto)" style="padding-right: 2%;">
+        <ion-avatar item-start>
+          <img class="imgSize" src="https://d2v7vc3vnopnyy.cloudfront.net/img/coins/{{ crypto.secondary_currency }}.png" />
+        </ion-avatar>
+        <ion-label class="fixedLeft">
+          {{ crypto.secondary_currency }} <br>
+          <span class="fontsize bottons">{{crypto.nameCrypto}}</span>
+        </ion-label>
+        <ion-label class="fixedRight">
+          <span [ngClass]="{rateCurrency:crypto.change<0}">
                 {{crypto.last_price}} {{crypto.primary_currency}}
             <br>
             <span *ngIf="crypto.change<0" [ngClass]="{ratedownCurrency:crypto.change<0}">
                   {{crypto.change}}%
                   <span><ion-icon name="md-arrow-dropdown"></ion-icon></span>
-            </span>
-            <span *ngIf="crypto.change>=0" [ngClass]="{rateupCurrency:crypto.change>=0}">
+          </span>
+          <span *ngIf="crypto.change>=0" [ngClass]="{rateupCurrency:crypto.change>=0}">
                 <span> +{{crypto.change}} </span>
-            <ion-icon name="md-arrow-dropup"></ion-icon>
-            </span>
-            </span>
-          </ion-label>
-        </ion-item>
+          <ion-icon name="md-arrow-dropup"></ion-icon>
+          </span>
+          </span>
+        </ion-label>
+      </ion-item>
 
-        <ion-item-options side="left">
-          <button ion-button icon-only (click)="addTransaction(slidingItem,crypto)" color="bgyellow">
+      <ion-item-options side="left">
+        <button ion-button icon-only (click)="addTransaction(slidingItem,crypto)" color="bgyellow">
 	 	 			  <ion-icon color="light" name="add-circle"></ion-icon>
 	 	 		  </button>
-        </ion-item-options>
+      </ion-item-options>
 
-      </ion-item-sliding>
-    </ion-list>
+    </ion-item-sliding>
+  </ion-list>
 
-    <!-- <ion-list >
+  <!-- <ion-list >
       <ion-item *ngFor="let crypto of coins" (click)="goToDetail(crypto)">
         {{crypto.orderbook.asks.highbid}}
       </ion-item>

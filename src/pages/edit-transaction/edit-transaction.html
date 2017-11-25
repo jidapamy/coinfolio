@@ -60,7 +60,7 @@
         <ion-list>
           <ion-item>
             <ion-label class="fixedLeft">Trade Date</ion-label>
-            <ion-datetime class="datetimeColor" displayFormat="MMM/DD/YYYY" pickerFormat="MMMM DD YYYY"  ></ion-datetime>
+            <ion-datetime class="datetimeColor" displayFormat="MMM/DD/YYYY" pickerFormat="MMMM DD YYYY" [(ngModel)]="myDate" ></ion-datetime>
           </ion-item>
           <!-- <ion-item>
             <ion-label class="fixedLeft">Note</ion-label>
@@ -68,7 +68,7 @@
           </ion-item>  -->
         </ion-list>
         <ion-list>
-          <button type="submit" full ion-button color="bgyellow">Save</button>
+          <button type="submit" full ion-button color="bgyellow" (click)="getStatusDate()">Save</button>
         </ion-list> 
      
 </ion-content>

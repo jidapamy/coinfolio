@@ -19,7 +19,7 @@ export class EditTransactionPage {
   
   
 
-  
+  myDate: String = new Date().toISOString();
 
 
 
@@ -38,6 +38,8 @@ export class EditTransactionPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad AddTransationPage');
   }
-
+  getStatusDate(){
+    console.log(this.myDate);
+  }
   
 }

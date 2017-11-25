@@ -18,6 +18,8 @@ import { LoginPage } from '../pages/login/login';
 import { EditTransactionPage } from '../pages/edit-transaction/edit-transaction';
 import { DatacoinProvider } from '../providers/datacoin/datacoin';
 import { PasscodePage } from '../pages/passcode/passcode';
+import { Content } from 'ionic-angular';
+
 
 @Component({
   templateUrl: 'app.html'
@@ -27,9 +29,11 @@ export class MyApp {
 
   rootPage: any = HomePage;
   // rootPage: any = LoginPage;
+  // rootPage: any = TutorialPage;
   username:any='';
   test:any='';
   test2:any='';
+  @ViewChild(Content) content: Content
 
   pagesForLogin: Array<{icon:string;title: string, component: any}>;
   pages: Array<{ icon: string; title: string, component: any }>;
@@ -40,8 +44,11 @@ export class MyApp {
               public provider: DatacoinProvider,
             ) {
     this.initializeApp();
-    this.username = provider.getUsername();
-    console.log('Menu Constuctor '+ this.username);
+    this.provider.getUsername().then((data) => {
+      this.username = data;
+      this.content.resize();
+      console.log('Menu Constructor: ' + this.username)
+    })
 
     // used for an example of ngFor and navigation
     this.pagesForLogin = [
@@ -81,6 +88,9 @@ export class MyApp {
 
   initializeApp() {
     this.platform.ready().then(() => {
+      console.log('OKKK')
+      this.content.resize();
+      
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
@@ -98,6 +108,9 @@ export class MyApp {
     this.provider.setUsername('');
     this.username='';
     this.nav.setRoot(HomePage);
+    this.content.resize();
+    
+    
   }
 
   login(){
@@ -107,11 +120,33 @@ export class MyApp {
   }
 
   ngOnInit() {
+    this.provider.getUsername().then((data) => {
+      this.username = data;
+      this.content.resize();
+      console.log('ngOnInit refresh: ' + this.username);
+      // this.doRefresh(event);
+      // console.log(this.content)
+    })
     // this.username = this.provider.getUsername();
     // console.log('Menu : ' + this.username)
   }
 
-  testMymy(){
-    this.username = this.provider.getUsername();
+  ionViewWillEnter(){
+    this.content.resize();
+    console.log('ionViewWillEnter : ' + this.username)
+  }
+
+
+  doRefresh(refresher) {
+    console.log("5555555");
+    setTimeout(() => {
+      this.content.resize();
+      refresher.complete();
+      console.log('refresher')
+      console.log('USername refresh: '+this.username)
+    }, 500);
+
+
+
   }
 }

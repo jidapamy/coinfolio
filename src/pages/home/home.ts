@@ -10,6 +10,10 @@ import { Screenshot } from '@ionic-native/screenshot';
 // import { SocialSharing } from '@ionic-native/social-sharing';
 // import { Storage } from '@ionic/storage';
 
+import { Storage } from '@ionic/storage';
+// import { SpinnerDialog } from '@ionic-native/spinner-dialog';
+import { LoadingController } from 'ionic-angular';
+
 
 /**
  * Generated class for the HomePage page.
@@ -25,7 +29,7 @@ import { Screenshot } from '@ionic-native/screenshot';
 export class HomePage {
   @ViewChild(Content) content: Content
   // crytoName: any[] = NAME;
-  cryptoNumbers: cryto[]=[];
+  cryptoNumbers: cryto[] = [];
   cryptoMix: crytoMix[] = [];
   cryptoTotal: crytoMix[] = [];
   segment = 'THB';
@@ -33,8 +37,9 @@ export class HomePage {
   rateEth: any = 0; // 1 ETC = 10600 THB
   rateUsd: any = 0; // 1 USD = 34 THB
   coins: crytoMix[] = [];
-  username:any;
-  myApp:MyApp;
+  username: any;
+  myApp: MyApp;
+  loader:any
   // ETH: crytoMix[]=[];
   // USD: crytoMix[] = [];
   // THB: crytoMix[] = [];
@@ -42,14 +47,25 @@ export class HomePage {
   screen: any;
   state: boolean = false;
   
-  constructor(
-    
-    private screenshot: Screenshot,
-    public navCtrl: NavController,
+  constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public provider: DatacoinProvider,
-    public modalCtrl: ModalController) {
-    this.mixNameCoins()
+    public modalCtrl: ModalController,
+    public storage: Storage,
+    private screenshot: Screenshot,
+) {
+
+    this.mixNameCoins();
+    this.username='';
+    this.storage.ready().then(() => {
+      this.provider.getUsername().then((data) => {
+        this.username = data
+        console.log('constructor: ' + this.username)
+        this.content.resize();
+      });
+    });
+    console.log('Home Constructor');
+
   }
 
   ionViewDidLoad() {
@@ -59,21 +75,22 @@ export class HomePage {
   mixNameCoins() {
     this.provider.loadBX().subscribe(data => {
       this.cryptoNumbers = Object.keys(data).map(key => data[key]);
-      console.dir(this.cryptoNumbers)
+      // this.loader.dismiss();
+      // console.dir(this.cryptoNumbers)
     },
       error => { console.log("error: " + error); },
       () => {
-        this.provider.addName(this.cryptoMix,this.cryptoNumbers);
-        
+        this.provider.addName(this.cryptoMix, this.cryptoNumbers);
+
         this.rateUsd = 34;
         for (let i = 0; i < this.cryptoMix.length; i++) {
           if (this.cryptoMix[i].secondary_currency == 'BTC') {
             this.rateBtc = this.cryptoMix[i].last_price;
-            console.log('price ' + this.cryptoMix[i].secondary_currency + ' ' + this.rateBtc);
+            // console.log('price ' + this.cryptoMix[i].secondary_currency + ' ' + this.rateBtc);
           }
           if (this.cryptoMix[i].secondary_currency == 'ETH' && this.cryptoMix[i].primary_currency == 'THB') {
             this.rateEth = this.cryptoMix[i].last_price;
-            console.log('ETH:price ' + this.cryptoMix[i].secondary_currency + ' ' + this.rateEth);
+            // console.log('ETH:price ' + this.cryptoMix[i].secondary_currency + ' ' + this.rateEth);
           }
         }
         // console.log("Read park completely");
@@ -83,7 +100,7 @@ export class HomePage {
         this.loopOfConvert('ETH');
         this.loopOfConvert('USD');
         this.changeMarket(this.segment)
-        console.dir(this.cryptoNumbers[0].orderbook.asks.highbid)
+        // console.dir(this.cryptoNumbers[0].orderbook.asks.highbid)
       })
   }
 
@@ -193,14 +210,11 @@ export class HomePage {
     // this.provider.getUsername().then((item)=>{
     //   this.username = item;
     // });
-    this.username =this.provider.getUsername()
-    console.log('Home::'+this.username);
+    this.username = this.provider.getUsername()
+    console.log('Home::' + this.username);
   }
 
-  callMenu(){
-  //  this.navCtrl.setRoot(MyApp);
-  }
-  goToDetail(crypto){
+  goToDetail(crypto) {
     console.log('nextPage:' + crypto.orderbook.asks.highbid)
     this.navCtrl.setRoot(CoinsDetailPage, crypto);
     // this.navCtrl.push(CoinsDetailPage,crypto);

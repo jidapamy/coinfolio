@@ -90,13 +90,7 @@ export class NewsPage {
   doRefresh(refresher) {
     console.log("5555555");
 
-    // this.items.length = 0;
-
-
-
-
-
-
+   
     setTimeout(() => {
       console.log('Async operation has ended');
       this.items.length = 0;

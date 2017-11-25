@@ -5,6 +5,10 @@ page-add-transation {
         // background-color: #05191d;
         font-size:16px;
     }
+    .item-md [item-left], .item-md [item-right], .item-md [item-start], .item-md [item-end] {
+    margin: 9px -9px 7px 0;
+    text-align: right;
+    }
     .item {
         padding-left: 10px;
         padding-right: 0px;
