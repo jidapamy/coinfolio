@@ -66,7 +66,7 @@ export class LoginPage {
       password: ['', Validators.required],
     })
   }
-
+ 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
   }
@@ -123,12 +123,13 @@ export class LoginPage {
       });
 
       this.arrayCheck = [];
-      this.users.forEach(item => {
-        this.arrayCheck = Object.keys(item).map(key => item[key]);
+      this.users.subscribe(item => {
+        this.arrayCheck = item;
         console.log('shows Foreach: ' + this.arrayCheck.length);
         for (let i = 0; i < this.arrayCheck.length; i++) {
           console.log('>>>>>' + this.arrayCheck[i].username + '/' + this.arrayCheck[i].password)
           if (this.arrayCheck[i].username == this.username && this.arrayCheck[i].password == this.password) {
+            this.provider.userKey = this.arrayCheck[i].$key;
             setTimeout(() => {
               alertComplete.present().then(() => {
                 setTimeout(() => { 
