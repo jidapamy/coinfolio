@@ -17,9 +17,9 @@
 <ion-content padding>
 	<div #scrollMe style="overflow: auto; height: 100%;" >
 		<ion-list no-lines style="margin-right: -5%;">
-			<ion-item *ngFor="let chat of chatting" class="positionChat">
+			<ion-item *ngFor="let chat of chats | async" class="positionChat">
 				<ion-label style="color:white">
-					<span style="font-size:15px"><b>{{chat.username}} :</b></span> <span class="nameCoinsSet">{{chat.message}} </span>
+					<span style="font-size:15px"><b>{{chat.username}} :</b></span> <span class="nameCoinsSet">{{chat.messages}} </span>
 				</ion-label>
 			</ion-item>
 		</ion-list>

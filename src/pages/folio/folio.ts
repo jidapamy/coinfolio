@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { DatacoinProvider, cryptoNumbers, cryto, asks, bids, NAME, crytoMix } from '../../providers/datacoin/datacoin';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
-
+import { EditTransactionPage } from '../edit-transaction/edit-transaction';
+import { AlertPage } from '../alert/alert';
 @Component({
   selector: 'page-folio',
   templateUrl: 'folio.html'
@@ -39,6 +40,7 @@ export class FolioPage {
           }
         }
         this.loopOfConvert('THB');
+
         this.myCoins.forEach(item => {
           this.array = Object.keys(item).map(key => item[key]);
           this.cryptoRecent = [];
@@ -121,5 +123,15 @@ export class FolioPage {
     return priceDecimal;
   }
 
+
+
+  goToAlert() {
+    this.navCtrl.push(AlertPage);
+  }
+
+openEdittransactiom(){
+this.navCtrl.push(EditTransactionPage);
+  } 
   
+
 }

@@ -5,6 +5,8 @@ import Highcharts from 'highcharts/highstock';
 import * as HighCharts from 'highcharts';
 import { Pipe, PipeTransform } from '@angular/core';
 import { DatePipe } from '@angular/common';
+import { Screenshot } from '@ionic-native/screenshot';
+import { HomePage } from '../home/home';
 /**
  * Generated class for the CoinsDetailPage page.
  *
@@ -36,6 +38,9 @@ export class CoinsDetailPage {
 
   dateTimes: string;
 
+  screen: any;
+  state: boolean = false;
+
 
   itemBids: tempbookorderBidItem[] = [];
   tempbookorderBid: tempbookorderBid[]
@@ -44,7 +49,7 @@ export class CoinsDetailPage {
   coins: tempStatisticsCoinsDetail[];
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public provider: DatacoinProvider) {
+  constructor(private screenshot: Screenshot,public navCtrl: NavController, public navParams: NavParams, public provider: DatacoinProvider) {
     this.crypto = this.navParams.data
     this.orderbook = this.crypto.orderbook;
     this.bids = this.orderbook.bids;
@@ -111,6 +116,30 @@ export class CoinsDetailPage {
   
 
   }
+  
+
+  goToHomePage() {
+    this.navCtrl.setRoot(HomePage);
+    // this.navCtrl.push(CoinsDetailPage,crypto);
+
+  }
+
+
+  reset() {
+    var self = this;
+    setTimeout(function () {
+      self.state = false;
+    }, 1000);
+  }
+
+  screenShot() {
+    this.screenshot.save('jpg', 80).then(res => {
+      this.screen = res.filePath;
+      this.state = true;
+      this.reset();
+    });
+  }
+
 
   ionViewDidLoad() {
     console.log("ionViewDidLoad")

@@ -7,7 +7,7 @@ import _ from 'lodash';
 import { OnInit } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
-
+import { Platform } from 'ionic-angular';
 
 
 /*
@@ -23,7 +23,11 @@ export class DatacoinProvider {
 	// myCoins: any[] = [];
 	myCoins: FirebaseListObservable<any[]>;
 	username: any='';
+	private headers = new Headers({ 'Content-Type': 'application/json' });
+	private apiUrl = "/api";
+
 	constructor(public http: Http,
+		public platform: Platform,
 		public storage: Storage,
 		public angularfire: AngularFireDatabase) {
 		console.log('Hello DatacoinProvider Provider');
@@ -31,6 +35,12 @@ export class DatacoinProvider {
 		console.log('moduleeeeนอก then' + this.username)
 		// console.log('setUsername:' + this.username)
 		
+		if (this.platform.is('cordova')) {                // <<< is Cordova available?
+			this.apiUrl = 'https://bx.in.th/api';
+		}	
+
+
+
 		this.storage.ready().then(() => {
 			this.storage.get('userLogin')
 			.then((data) => {
@@ -42,6 +52,10 @@ export class DatacoinProvider {
 			});
 		});
 
+		
+
+
+		
 
 		// this.storage.ready().then(() => {
 		// 	this.storage.get('myCoins').then((data) => {
@@ -65,7 +79,7 @@ export class DatacoinProvider {
 	}
 
 	loadBX(): Observable<cryptoNumbers[]> {
-		return this.http.get("/api")
+		return this.http.get(this.apiUrl)
 			.map(response => {
 				return response.json()
 			});

@@ -5,7 +5,9 @@ import { Content } from 'ionic-angular';
 import { CoinsDetailPage } from '../coins-detail/coins-detail';
 import { AddTransationPage } from '../add-transation/add-transation';
 import { MyApp } from '../../app/app.component';
-
+import { EditTransactionPage } from '../edit-transaction/edit-transaction';
+import { Screenshot } from '@ionic-native/screenshot';
+// import { SocialSharing } from '@ionic-native/social-sharing';
 // import { Storage } from '@ionic/storage';
 
 
@@ -37,8 +39,13 @@ export class HomePage {
   // USD: crytoMix[] = [];
   // THB: crytoMix[] = [];
   // BTC: crytoMix[] = [];
+  screen: any;
+  state: boolean = false;
   
-  constructor(public navCtrl: NavController,
+  constructor(
+    
+    private screenshot: Screenshot,
+    public navCtrl: NavController,
     public navParams: NavParams,
     public provider: DatacoinProvider,
     public modalCtrl: ModalController) {
@@ -79,6 +86,25 @@ export class HomePage {
         console.dir(this.cryptoNumbers[0].orderbook.asks.highbid)
       })
   }
+
+  
+  reset() {
+    var self = this;
+    setTimeout(function () {
+      self.state = false;
+    }, 1000);
+  }
+
+  screenShot() {
+    this.screenshot.save('jpg', 80).then(res => {
+      this.screen = res.filePath;
+      this.state = true;
+      this.reset();
+    });
+  }
+
+
+
 
 
   loopOfConvert(type) {
@@ -158,6 +184,7 @@ export class HomePage {
 
   addTransaction(slidingItem: ItemSliding, crypto: any): void {
     let modal = this.modalCtrl.create(AddTransationPage, crypto);
+    // let modal2 = this.modalCtrl.create(EditTransactionPage, crypto);
     modal.present();
     slidingItem.close();
   }
@@ -175,8 +202,9 @@ export class HomePage {
   }
   goToDetail(crypto){
     console.log('nextPage:' + crypto.orderbook.asks.highbid)
-    this.navCtrl.push(CoinsDetailPage,crypto);
+    this.navCtrl.setRoot(CoinsDetailPage, crypto);
+    // this.navCtrl.push(CoinsDetailPage,crypto);
     
   }
-
+  
 }

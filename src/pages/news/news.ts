@@ -31,9 +31,9 @@ export class NewsPage {
   link: any;
   description: any;
 
-  url: string;  
+  url: string;
   constructor(private inAppBrowser: InAppBrowser, public http: Http, public navCtrl: NavController, public provider: DatacoinProvider) {
-    
+
     this.provider.loadNews().subscribe(data => {
       this.news = data;
       // this.news = data; Object.keys(data).map(key => data[key]);
@@ -87,25 +87,16 @@ export class NewsPage {
 
     // Inject scripts, css and more with browser.X
   }
-  
-  
-  
-  
-  
-  
-  
-  
-  
   doRefresh(refresher) {
     console.log("5555555");
 
     // this.items.length = 0;
 
-    
-    
-    
-    
-    
+
+
+
+
+
     setTimeout(() => {
       console.log('Async operation has ended');
       this.items.length = 0;

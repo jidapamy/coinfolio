@@ -6,11 +6,16 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' bx.in.th">
+<!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' bx.in.th"> -->
   <ion-navbar>
+   
     <button end ion-button menuToggle (click)="callMenu()">
       <ion-icon name="md-more"></ion-icon>
     </button>
+    <!-- <button ion-button  (click)="screenShot()">
+      <ion-icon name="md-camera"></ion-icon>
+    </button> -->
+    
     <ion-title style="padding-left: 12%;">Home</ion-title>
   </ion-navbar>
   <ion-item style="background-color: #151A1D;" *ngIf="username!=''">
@@ -55,6 +60,7 @@
 
 
 <ion-content padding>
+  
   <!-- <span *ngIf="segment=='THB'"> 
   <ion-list>
       <ion-item-sliding #slidingItem *ngFor="let crypto of THB">

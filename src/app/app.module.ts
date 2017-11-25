@@ -35,6 +35,10 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 import { EmailComposer } from '@ionic-native/email-composer';
 import { FingerprintAIO } from '@ionic-native/fingerprint-aio';
+import { EditTransactionPage } from '../pages/edit-transaction/edit-transaction';
+import { Screenshot } from '@ionic-native/screenshot';
+import { Camera, CameraOptions } from '@ionic-native/camera';
+import { SocialSharing } from '@ionic-native/social-sharing';
 
 
 export const config = {
@@ -64,7 +68,8 @@ export const config = {
     LoginPage,
     RegisterPage,
     PasscodePage,
-    FeedbackPage
+    FeedbackPage,
+    EditTransactionPage,
   ],
   imports: [
     BrowserModule,
@@ -74,6 +79,8 @@ export const config = {
     IonicStorageModule.forRoot(),
     AngularFireModule.initializeApp(config),
     AngularFireDatabaseModule,
+    
+    
     
   ],
   bootstrap: [IonicApp],
@@ -94,7 +101,8 @@ export const config = {
     LoginPage,
     RegisterPage,
     PasscodePage,
-    FeedbackPage
+    FeedbackPage,
+    EditTransactionPage,
   ],
   providers: [
     StatusBar,
@@ -102,7 +110,10 @@ export const config = {
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     DatacoinProvider,
     InAppBrowser, EmailComposer,
-    FingerprintAIO
+    FingerprintAIO,
+    Screenshot,
+    Camera,
+    SocialSharing
   ]
 })
 export class AppModule {}

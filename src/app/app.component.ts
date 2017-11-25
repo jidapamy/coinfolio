@@ -15,9 +15,9 @@ import { SettingPage } from '../pages/setting/setting';
 import { TutorialPage } from '../pages/tutorial/tutorial';
 import { FolioPage } from '../pages/folio/folio';
 import { LoginPage } from '../pages/login/login';
-
+import { EditTransactionPage } from '../pages/edit-transaction/edit-transaction';
 import { DatacoinProvider } from '../providers/datacoin/datacoin';
-
+import { PasscodePage } from '../pages/passcode/passcode';
 
 @Component({
   templateUrl: 'app.html'
@@ -25,7 +25,7 @@ import { DatacoinProvider } from '../providers/datacoin/datacoin';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = SettingPage;
+  rootPage: any = HomePage;
   // rootPage: any = LoginPage;
   username:any='';
   test:any='';

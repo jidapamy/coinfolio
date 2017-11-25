@@ -9,18 +9,19 @@ page-coins-detail {
         background-color: #151A1D;
         
     }
-    table{
-    // border: 1px solid #878787;
-    // border-radius:100px;
-        
     
-    }
     td{
         padding:1%;
         padding-right:10%;
         
         
     }
+    .bar-button, .bar-button-default.bar-button, .bar-button-clear {
+    color: #FFB405;
+    font-size: 13px;
+    }
+
+
 
     .label {
         margin: 0;

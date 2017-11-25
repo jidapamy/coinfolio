@@ -115,9 +115,9 @@
       </ion-item-sliding>
     </ion-list> -->
 
-    <ion-list>
+    <ion-list >
       <ion-item-sliding #slidingItem *ngFor="let crypto of cryptoRecent">
-        <ion-item style="padding-right: 2%;">
+        <ion-item style="padding-right: 2%;" (click)="openEdittransactiom()">
           <ion-label class="fixedLeft" style="margin: 0;">
             <ion-avatar item-start>
               <img class="imgSize" src="https://d2v7vc3vnopnyy.cloudfront.net/img/coins/{{ crypto.secondary_currency }}.png" alige="bottom"
@@ -145,8 +145,8 @@
         </ion-item>
 
         <ion-item-options side="left">
-          <button ion-button icon-only (click)="removeTask(slidingItem,task)" color="bgyellow">
-	 	 			  <ion-icon color="light" name="add-circle"></ion-icon>
+          <button ion-button icon-only (click)="goToAlert()" color="bgyellow">
+	 	 			  <ion-icon color="light" name="md-notifications"></ion-icon>
 	 	 		  </button>
         </ion-item-options>
 

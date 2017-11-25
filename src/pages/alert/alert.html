@@ -14,5 +14,44 @@
 
 
 <ion-content padding>
+      <ion-list>
+        <ion-item>
+          <ion-label class="fixedLeft">
+            Trading Pair
+          </ion-label>
+          <ion-label class="fixedRight">
 
+          </ion-label>
+        </ion-item>
+        
+      </ion-list>
+
+      <ion-list>
+        <ion-item>
+          <ion-label class="fixedLeft">CSET THRESHOLD TARGETS</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label class="fixedLeft">Ablove</ion-label>
+          <ion-input class="fixedRight" item-right type="number" placeholder="500" value="500"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="fixedLeft">Current</ion-label>
+          <ion-input class="fixedRight" item-right min="0" type="number" placeholder="0" value="1"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label class="fixedLeft">Below</ion-label>
+          <ion-input class="fixedRight" item-right type="number" placeholder="500" value="500"></ion-input>
+        </ion-item>
+      </ion-list>
+      <ion-list>
+        
+        <!-- <ion-item>
+            <ion-label class="fixedLeft">Note</ion-label>
+            <ion-input class="fixedRight"  ></ion-input>
+          </ion-item>  -->
+      </ion-list>
+      <ion-list>
+        <button type="submit" full ion-button color="bgyellow">Save</button>
+      </ion-list>
 </ion-content>

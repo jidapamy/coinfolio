@@ -6,8 +6,33 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>coinsDetail</ion-title>
+  <ion-navbar hideBackButton>
+    <ion-buttons left (click)="goToHomePage()">
+      <button ion-button icon-only>
+        <ion-icon name="arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>CoinsDetail </ion-title>
+    
+    <ion-buttons right (click)="screenShot()">
+      <button ion-button icon-only>
+        <ion-icon  name="camera"></ion-icon>
+      </button>
+    </ion-buttons>
+    
+
+
+    <!-- <button end ion-button menuToggle (click)="screenShot()">
+      <ion-icon name="md-camera"></ion-icon>
+    </button> -->
+
+    <!-- <button start ion-button menuToggle (click)="goToHomePage()">
+      <ion-icon name="md-arrow-back"></ion-icon>
+    </button> -->
+    
+    
+    
+    
   </ion-navbar>
 
 </ion-header>
