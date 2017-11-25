@@ -24,19 +24,12 @@ export class DatacoinProvider {
 	myCoinsData: FirebaseListObservable<any[]>;
 	transactionData: FirebaseListObservable<any[]>;
 
-
 	mycoinsPath:any;
 	transactionPath:any;
-	// userList: any[];
-	// myCoinsList: any[] = []
-	// transactionList: any[] = []
-	
-	// userKey:any;
-	// myCoinKey:any;
-	// transaction:any;
-
 
 	username: any='';
+	rateBtc: any = 0;
+	rateEth: any = 0;
 
 	constructor(public http: Http,
 		public storage: Storage,

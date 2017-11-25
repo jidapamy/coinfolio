@@ -79,10 +79,12 @@ export class HomePage {
         for (let i = 0; i < this.cryptoMix.length; i++) {
           if (this.cryptoMix[i].secondary_currency == 'BTC') {
             this.rateBtc = this.cryptoMix[i].last_price;
+            this.provider.rateBtc = this.rateBtc;
             // console.log('price ' + this.cryptoMix[i].secondary_currency + ' ' + this.rateBtc);
           }
           if (this.cryptoMix[i].secondary_currency == 'ETH' && this.cryptoMix[i].primary_currency == 'THB') {
             this.rateEth = this.cryptoMix[i].last_price;
+            this.provider.rateEth = this.rateEth;
             // console.log('ETH:price ' + this.cryptoMix[i].secondary_currency + ' ' + this.rateEth);
           }
         }
@@ -191,9 +193,6 @@ export class HomePage {
     console.log('nextPage:' + crypto.orderbook.asks.highbid)
     this.navCtrl.push(CoinsDetailPage, crypto);
 
-  }
-  updateStatusLogin(){
-    // this.navCtrl.setRoot(MyApp);
   }
 
   ionViewDidEnter(){
