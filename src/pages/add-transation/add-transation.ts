@@ -151,7 +151,7 @@ export class AddTransationPage {
       
 
       let coins = {
-        coin: { pairing_id:this.crypto.pairing_id,primary_currency: this.crypto.primary_currency, secondary_currency: this.crypto.secondary_currency},
+        coin: { change: this.crypto.change, last_price: this.crypto.last_price, nameCrypto: this.crypto.nameCrypto, orderbook: this.crypto.orderbook, pairing_id: this.crypto.pairing_id, primary_currency: this.crypto.primary_currency, secondary_currency: this.crypto.secondary_currency, volume_24hours: this.crypto.volume_24hours},
         totalQuantity: totalQuantity,
         totalPrice: totalPrice
       }

@@ -69,11 +69,8 @@ export const config = {
     RegisterPage,
     PasscodePage,
     FeedbackPage,
-<<<<<<< HEAD
     EditTransactionPage,
-=======
     HeaderPage
->>>>>>> c5b3db1f877689039247c0b2c961f80313ec341e
   ],
   imports: [
     BrowserModule,
@@ -106,11 +103,8 @@ export const config = {
     RegisterPage,
     PasscodePage,
     FeedbackPage,
-<<<<<<< HEAD
     EditTransactionPage,
-=======
     HeaderPage
->>>>>>> c5b3db1f877689039247c0b2c961f80313ec341e
   ],
   providers: [
     StatusBar,

@@ -1,0 +1,18 @@
+{
+  "name": "coinfolio",
+  "app_id": "",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  },
+  "proxies": [
+    {
+      "path": "/api",
+      "proxyUrl": "https://bx.in.th/api"
+    },
+    {
+      "path": "/orderbook/?pairing=1",
+      "proxyUrl": "https://bx.in.th/api/orderbook/?pairing=1"
+    }
+  ]
+}

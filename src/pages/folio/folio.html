@@ -108,7 +108,7 @@
 
     <ion-list >
       <ion-item-sliding #slidingItem *ngFor="let crypto of cryptoRecent">
-        <ion-item style="padding-right: 2%;" (click)="openEdittransactiom()">
+        <ion-item style="padding-right: 2%;" (click)="openDetailsPage(crypto)">
           <ion-label class="fixedLeft" style="margin: 0;">
             <ion-avatar item-start>
               <img class="imgSize" src="https://d2v7vc3vnopnyy.cloudfront.net/img/coins/{{ crypto.secondary_currency }}.png" alige="bottom"

@@ -2,13 +2,10 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { DatacoinProvider, cryptoNumbers, cryto, asks, bids, NAME, crytoMix } from '../../providers/datacoin/datacoin';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
-<<<<<<< HEAD
 import { EditTransactionPage } from '../edit-transaction/edit-transaction';
 import { AlertPage } from '../alert/alert';
-=======
 import { HeaderPage } from '../header/header';
-
->>>>>>> c5b3db1f877689039247c0b2c961f80313ec341e
+import { DetailsPage } from '../details/details';
 @Component({
   selector: 'page-folio',
   templateUrl: 'folio.html'
@@ -162,8 +159,8 @@ export class FolioPage {
     this.navCtrl.push(AlertPage, crypto);
   }
 
-openEdittransactiom(){
-this.navCtrl.push(EditTransactionPage);
+  openDetailsPage(crypto){
+    this.navCtrl.push(DetailsPage,crypto);
   } 
   
 

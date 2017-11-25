@@ -26,7 +26,7 @@ export class AlertPage {
   alert: FormGroup;
   constructor(public builder: FormBuilder, public navCtrl: NavController, public navParams: NavParams) {
     this.chooseCrypto = this.navParams.data;
-    // this.secondary = ""+this.chooseCrypto.secondary_currency + "/" + this.chooseCrypto.primary_currency+"";
+    this.secondary = this.chooseCrypto.secondary_currency + "/" + this.chooseCrypto.primary_currency;
     
     if(this.chooseCrypto.last_price > 1){
     this.cryptoNumbers = (this.chooseCrypto.last_price).toFixed(2);
@@ -39,8 +39,8 @@ export class AlertPage {
       'current':[]
     });
       if (this.chooseCrypto.last_price>1){
-      this.priceAbove = (+this.chooseCrypto.last_price) + 0.01;
-      this.priceBlow = (+this.chooseCrypto.last_price) - 0.01;
+        this.priceAbove = ((+this.chooseCrypto.last_price) + 0.01).toFixed(2);
+        this.priceBlow = ((+this.chooseCrypto.last_price) - 0.01).toFixed(2);
       }else{
       this.priceAbove = ((+this.chooseCrypto.last_price) + 0.00000001).toFixed(8);
       this.priceBlow = ((+this.chooseCrypto.last_price) - 0.00000001).toFixed(8);

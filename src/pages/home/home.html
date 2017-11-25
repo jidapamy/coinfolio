@@ -11,22 +11,8 @@
     </button>
     <ion-title style="padding-left: 12%;">Home</ion-title>
   </ion-navbar>
-<<<<<<< HEAD
-  <ion-item style="background-color: #151A1D;" *ngIf="username!=''">
-    <ion-label class="frontFixedLabel">
-      <p class="aboveFixedLabel">Total Portfolio Value</p>
-      <span class="underFixedLabel"><span style="font-size:17px">THB </span><span style="font-size:30px">42896.71</span></span>
-    </ion-label>
-    <ion-label class="endFixedLabel" style="margin-top: 3px;">
-      <p class="aboveFixedLabel" style="margin-bottom: 5px;">24hr Change</p>
-      <p class="underFixedLabel" style="font-size:14px">-T฿2202.97</p>
-      <p style="color:red">{{username}}</p>
-    </ion-label>
-  </ion-item>
-=======
   <page-header *ngIf="username!=''"></page-header>
 
->>>>>>> c5b3db1f877689039247c0b2c961f80313ec341e
 
   <ion-segment [(ngModel)]="segment">
     <ion-segment-button value="THB" (click)="changeMarket('THB')">
