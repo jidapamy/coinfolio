@@ -42,23 +42,25 @@
       </ion-item>
     </ion-list>
      
-    <ion-list >
+    <ion-list>
       <ion-item>
         <ion-label class="fixedLeft">Current Price</ion-label> 
         <ion-label class="fixedRight"><img class="imgSize" src="https://d2v7vc3vnopnyy.cloudfront.net/img/coins/{{crypto.secondary_currency}}.png"/>&nbsp;&nbsp;{{ crypto.secondary_currency }}</ion-label>
       </ion-item>
       <ion-item>
         <ion-label class="fixedLeft">Trade Price {{errorTradePrice}}</ion-label>
-        <ion-input class="fixedRight" [(ngModel)]="price" item-right type="number" placeholder="{{crypto.last_price}}" value="{{crypto.last_price}}" formControlName="tradePrice"></ion-input>
+        <ion-input *ngIf="status!='watch'"class="fixedRight" [(ngModel)]="price" item-right type="number" placeholder="{{crypto.last_price}}" value="{{crypto.last_price}}" formControlName="tradePrice"></ion-input>
+        <ion-input *ngIf="status=='watch'" class="fixedRight" disabled [(ngModel)]="price" item-right type="number" placeholder="{{crypto.last_price}}" value="{{crypto.last_price}}" formControlName="tradePrice"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label class="fixedLeft">Enter Quantity</ion-label>
-        <ion-input class="fixedRight" [(ngModel)]="quantity" formControlName="quantity" item-right min="0" type="number" placeholder="enter quantity" value=0></ion-input>
+        <ion-input *ngIf="status!='watch'" class="fixedRight" [(ngModel)]="quantity" formControlName="quantity" item-right min="0" type="number" placeholder="enter quantity" value=0></ion-input>
+        <ion-input *ngIf="status=='watch'" disabled class="fixedRight" [(ngModel)]="quantity" formControlName="quantity" item-right min="0" type="number" placeholder="enter quantity" value=0></ion-input>
       </ion-item>
       
       <ion-item>
         <ion-label class="fixedLeft">Total Value</ion-label>
-        <ion-label class="fixedRight"> {{price * quantity}}</ion-label>
+        <ion-label class="fixedRight" > {{price * quantity}}</ion-label>
       </ion-item>
     </ion-list> 
     <ion-list>
