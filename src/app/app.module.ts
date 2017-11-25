@@ -10,13 +10,16 @@ import { ChatPage } from '../pages/chat/chat';
 import { DetailsPage } from '../pages/details/details';
 import { NewsPage } from '../pages/news/news';
 import { NewsSourcePage } from '../pages/news-source/news-source';
-import { PrivacyPage } from '../pages/privacy/privacy';
 import { SettingPage } from '../pages/setting/setting';
-import { TutorialPage } from '../pages/tutorial/tutorial';
 import { FolioPage } from '../pages/folio/folio';
 import { CoinsDetailPage } from '../pages/coins-detail/coins-detail';
 import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
+
+import { PasscodePage } from '../pages/passcode/passcode';
+import { PrivacyPage } from '../pages/privacy/privacy';
+import { TutorialPage } from '../pages/tutorial/tutorial';
+import { FeedbackPage } from '../pages/feedback/feedback';
 
 import { HttpModule } from '@angular/http' ;
 import { FormsModule } from '@angular/forms' ;
@@ -30,6 +33,9 @@ import { DatacoinProvider } from '../providers/datacoin/datacoin';
 import { IonicStorageModule } from '@ionic/storage';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 
+import { EmailComposer } from '@ionic-native/email-composer';
+import { FingerprintAIO } from '@ionic-native/fingerprint-aio';
+import { SpinnerDialog } from '@ionic-native/spinner-dialog';
 
 export const config = {
   apiKey: "AIzaSyCqUaUXncsFJqpFi4LnTa_ak3iI3SzNJ0M",
@@ -56,7 +62,9 @@ export const config = {
     FolioPage,
     CoinsDetailPage,
     LoginPage,
-    RegisterPage
+    RegisterPage,
+    PasscodePage,
+    FeedbackPage
   ],
   imports: [
     BrowserModule,
@@ -65,7 +73,8 @@ export const config = {
     FormsModule,
     IonicStorageModule.forRoot(),
     AngularFireModule.initializeApp(config),
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
+    
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -83,14 +92,18 @@ export const config = {
     FolioPage,
     CoinsDetailPage,
     LoginPage,
-    RegisterPage
+    RegisterPage,
+    PasscodePage,
+    FeedbackPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     DatacoinProvider,
-    InAppBrowser
+    InAppBrowser, EmailComposer,
+    FingerprintAIO,
+    SpinnerDialog
   ]
 })
 export class AppModule {}

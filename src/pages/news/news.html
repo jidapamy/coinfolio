@@ -22,7 +22,7 @@
       refreshingText="Refreshing..." style="fill:aliceblue">
     </ion-refresher-content>
   </ion-refresher>
-  <ion-card *ngFor='let item of items' (click)="openWebpage(item)" class="size" style="margin-top:0%;">
+  <ion-card *ngFor='let item of items' (click)="openweb(item)" class="size" style="margin-top:0%;">
     <!-- <a href="{{item.link}}" > -->
     <img src="{{item.enclosure}}" />
     <ion-card-content>

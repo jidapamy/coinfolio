@@ -29,6 +29,7 @@ export class LoginPage {
   users: FirebaseListObservable<any[]>;
   // public users: firebase.database.Reference = firebase.database().ref('/users');
   arrayCheck: any[] = [];
+  usersInFirebase : any[]=[];
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -37,17 +38,25 @@ export class LoginPage {
     public alertCtrl: AlertController,
     public provider: DatacoinProvider) {
     this.users = angularfire.list('/users');
+
+    
+    // this.users.subscribe(data => { this.usersInFirebase = data },
+    //                      error => { console.log("error: " + error); },
+    //                      () => { console.log('SHOW:'+this.usersInFirebase)} 
+    //                     )
+
+    // console.log('Length: '+this.usersInFirebase.length);
     // this.callArrayfromFirebase(this.arrayCheck);
 
 
-    // this.users.on('value', itemSnapshot => {
+    // this.users.on('value', itemSnapshot  => {
     //   this.arrayCheck = [];
     //   itemSnapshot.forEach(itemSnap => {
     //     this.users.push(itemSnap.val());
     //     return false;
     //   });
     // });
-    console.log('length: ' + this.arrayCheck.length);
+    // console.log('length: ' + this.arrayCheck.length);
 
 
 
@@ -126,25 +135,16 @@ export class LoginPage {
                   alertComplete.dismiss();
                   this.provider.setUsername(this.username);
                   this.navCtrl.push(MyApp) 
-                  
                 }, 1700);
               }).catch(() => {
                 alertComplete.dismiss();
               });
-            }, 300);
-          } 
-          else {
+            }, 0);
+            break;
+          }else {
+            console.log('invalid')
             this.invalid=true
-          //   setTimeout(() => {
-          //     alertError.present().then(() => {
-          //       setTimeout(() => { alertError.dismiss() }, 1700);
-          //     }).catch(() => {
-          //       alertError.dismiss();
-          //     });
-          //   }, 300);
-
-
-
+          
           }
         }
       });

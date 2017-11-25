@@ -1,6 +1,7 @@
 import { Component, ViewChild, AfterViewChecked, ElementRef } from '@angular/core';
 import { NavController, NavParams,AlertController,MenuController} from 'ionic-angular';
-import { FormBuilder, FormGroup ,Validators } from '@angular/forms' 
+import { FormBuilder, FormGroup ,Validators } from '@angular/forms' ;
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 // import { Content } from 'ionic-angular';
 
 /**
@@ -22,16 +23,23 @@ export class ChatPage {
 	chattingNew : chatting[];
 	username:string = 'User1032';
 	message:string;
+	messages: string;
 	errorMessage:string='';
 	sendMessage:FormGroup;
-
+	
 	pages: any[];
-   
+	chats: FirebaseListObservable<any[]>;
+
+		
   	constructor(public builder:FormBuilder ,
   				public alertCtrl: AlertController,
   				public navCtrl: NavController, 
   				public navParams: NavParams,
-  				public menu: MenuController) {
+					public menu: MenuController,
+					public angularfire: AngularFireDatabase) {
+
+			this.chats = angularfire.list('/chats');
+			
 
   		this.pages = ['Home','List'];
     	menu.enable(true);
@@ -154,8 +162,15 @@ export class ChatPage {
     saveMsg() {
     	this.errorMessage = '';
 	  	if(this.validate()){
-	  		let msgDetail = this.sendMessage.value ;
-	  		this.addChatting(this.username,msgDetail);
+				let msgDetail = this.sendMessage.value ;
+				this.messages = this.sendMessage.value;
+				this.addChatting(this.username,msgDetail);
+
+				let chatTemp = {
+					Messages: this.messages,
+					Username: this.username
+				}
+				this.chats.push(chatTemp);
 	  	}else{
 	  		this.errorMessage = 'Please provide a message.';
 	  		console.log(this.errorMessage)
@@ -168,6 +183,7 @@ export class ChatPage {
 
 
 export class chatting {
+
 	username: string ;
   	message: string ;
 }

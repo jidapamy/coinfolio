@@ -12,7 +12,6 @@ import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/databa
 
 /*
   Generated class for the DatacoinProvider provider.
-
   See https://angular.io/guide/dependency-injection for more info on providers
   and Angular DI.
 */
@@ -20,48 +19,84 @@ import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/databa
 
 @Injectable()
 export class DatacoinProvider {
-	// myCoins: any[] = [];
-	myCoins: FirebaseListObservable<any[]>;
+	pathFirebase = '/users';
+	userData: FirebaseListObservable<any[]>;
+	myCoinsData: FirebaseListObservable<any[]>;
+	transactionData: FirebaseListObservable<any[]>;
+
+
+	mycoinsPath:any;
+	transactionPath:any;
+	// userList: any[];
+	// myCoinsList: any[] = []
+	// transactionList: any[] = []
+	
+	// userKey:any;
+	// myCoinKey:any;
+	// transaction:any;
+
+
 	username: any='';
+
 	constructor(public http: Http,
 		public storage: Storage,
 		public angularfire: AngularFireDatabase) {
 		console.log('Hello DatacoinProvider Provider');
-		// this.myCoins = angularfire.list('/myCoins');
-		console.log('moduleeeeนอก then' + this.username)
-		// console.log('setUsername:' + this.username)
-		
-		this.storage.ready().then(() => {
-			this.storage.get('userLogin')
-			.then((data) => {
-				 if (data) {
-				    this.username = data;
-					console.log('moduleeee'+this.username)
+		this.userData = angularfire.list(this.pathFirebase);
+		// this.userData.subscribe(data => {
+		// 	this.userList = data;
+		// 	console.log('User List length:'+this.userList.length)
+		// })
 
+		
+
+		// console.log('setUsername:' + this.username)
+
+
+		this.storage.ready().then(() => {
+			this.storage.get('userLogin').then((data) => {
+				if (data) {
+					this.username = data;
+					console.log('userLogin นะจ๊ะ อิอิ =='+this.username )
 				}
 			});
 		});
-
-
-		// this.storage.ready().then(() => {
-		// 	this.storage.get('myCoins').then((data) => {
-		// 		if (data) {
-		// 			this.myCoins = data;
-		// 			console.log('myCoins')
-		// 		}
-		// 	});
-		// });
 	}
 
+	getMycoinsPath(userKey){
+		this.mycoinsPath = this.pathFirebase + '/' + userKey + '/myCoins';
+		return this.mycoinsPath;
+	}
+
+	getTransactionPath(myCoinsKey) {
+		this.transactionPath = this.mycoinsPath + '/' + myCoinsKey + '/transaction';
+		return this.transactionPath;
+	}
+
+	
+
 	setUsername(username){
-		this.username = username;
-		console.log('save:'+this.username)
+		console.log('save:' + username)
+		this.username = username
 		this.storage.set('userLogin', this.username); 
 
 	}
 
-	getUsername():Promise<any> {
-		return this.username;
+	getUsername():Promise<any>{
+		// this.storage.ready().then(() => {
+		// 	console.log('myCoins นะจ๊ะ >> '+this.username);
+
+			// this.storage.get('userLogin').then((data) => {
+			// 	this.username = data
+			// 	console.log('getUsername'+this.username)
+			// 	return this.username;
+			// 	}
+			// );
+			
+		// });	
+		
+		return this.storage.get('userLogin')
+		
 	}
 
 	loadBX(): Observable<cryptoNumbers[]> {
@@ -81,8 +116,7 @@ export class DatacoinProvider {
 	addTransaction(dataTransaction) {
 		console.log('addTransaction')
 		//   console.dir('dataTransaction:>> ' + dataTransaction.coin.pairing_id)
-
-		this.myCoins.push(dataTransaction);
+		// this.myCoins.push(dataTransaction);
 		//   this.storage.set('myCoins', this.myCoins);
 	}
 
@@ -138,9 +172,8 @@ export class DatacoinProvider {
 				nameCrypto: NAME[i],
 				orderbook: crypto[i].orderbook
 			}
-			  console.log('Sussess ' + i + '----- name :' + newCrypto[i].nameCrypto);
+			//   console.log('Sussess ' + i + '----- name :' + newCrypto[i].nameCrypto);
 		}
-		console.log('newCrypto[2]'+newCrypto[2].orderbook.bids.volume);
 	}
 
 
