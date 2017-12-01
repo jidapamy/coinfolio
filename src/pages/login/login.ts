@@ -133,6 +133,7 @@ export class LoginPage {
         for (let i = 0; i < this.arrayCheck.length; i++) {
           console.log('>>>>>' + this.arrayCheck[i].username + '/' + this.arrayCheck[i].password)
           if (this.arrayCheck[i].username == this.username && this.arrayCheck[i].password == this.password) {
+            this.invalid = false;
             this.provider.userKey = this.arrayCheck[i].$key;
             setTimeout(() => {
               alertComplete.present().then(() => {
@@ -150,7 +151,6 @@ export class LoginPage {
           }else {
             console.log('invalid')
             this.invalid=true
-          
           }
         }
       });
@@ -175,9 +175,7 @@ export class LoginPage {
     this.menuControl.enable(false, 'notLogin');
   }
 
-  changeLogoutMenuControl() {
-    this.activeMenu = "notLogin"
-    this.menuControl.enable(true, this.activeMenu)
-    this.menuControl.enable(false, 'login');
+  goBack(){
+    this.navCtrl.pop()
   }
 }

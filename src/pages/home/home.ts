@@ -14,6 +14,8 @@ import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/databa
 import { Storage } from '@ionic/storage';
 import { HeaderPage } from '../header/header';
 import { FolioPage } from '../folio/folio';
+import { LoginPage } from '../login/login';
+
 /**
  * Generated class for the HomePage page.
  *
@@ -63,7 +65,7 @@ export class HomePage {
     public menuControl: MenuController) {
 
     this.mixNameCoins();
-    this.username = ''
+    // this.username = ''
     console.log('Home::' + this.username);
     // this.username = '';
     // this.storage.ready().then(() => {
@@ -234,14 +236,19 @@ export class HomePage {
 
   addTransaction(slidingItem: ItemSliding, crypto: any): void {
     let modal = this.modalCtrl.create(AddTransationPage, crypto);
-    // let modal2 = this.modalCtrl.create(EditTransactionPage, crypto);
-    modal.present();
+    if(this.username != ''){
+      modal.present();
+    }else{
+      this.navCtrl.push(LoginPage);
+    }
+    
     slidingItem.close();
   }
 
   ngOnInit() {
     this.provider.getUsername().then((item)=>{
       this.username = item;
+      this.content.resize();
     });
     
     // this.username = this.provider.getUsername()

@@ -25,6 +25,7 @@
 
 
 <!--login-->
+<!-- <span *ngIf="username!=''"> -->
 <ion-menu side="right" [content]="content" id="login">
   <ion-header>
     <ion-toolbar>
@@ -45,6 +46,7 @@
       <button ion-button menuClose block color="danger" (click)="logout()">Logout</button>
     </ion-footer>
 </ion-menu>
+<!-- </span> -->
 
 <!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
 <ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>

@@ -54,7 +54,16 @@ export class MyApp {
       this.username = data;
       this.content.resize();
       console.log('Menu Constructor: ' + this.username)
+      if(this.username!=''){
+        console.log('Menu Constructor: ' + this.username)
+        
+        this.activeMenu = "login"
+        this.menuControl.enable(true, this.activeMenu)
+        this.menuControl.enable(false, 'notLogin');
+      }
     })
+
+
 
     // used for an example of ngFor and navigation
     this.pagesForLogin = [
@@ -171,6 +180,11 @@ export class MyApp {
     this.activeMenu = "notLogin"
     this.menuControl.enable(true, this.activeMenu)
     this.menuControl.enable(false, 'login');
+  }
+  changeLoginMenuControl() {
+    this.activeMenu = "login"
+    this.menuControl.enable(true, this.activeMenu)
+    this.menuControl.enable(false, 'notLogin');
   }
 
 }

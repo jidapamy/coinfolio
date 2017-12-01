@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { NavController, Content } from 'ionic-angular';
 import { DatacoinProvider, cryptoNumbers, cryto, asks, bids, NAME, crytoMix } from '../../providers/datacoin/datacoin';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { EditTransactionPage } from '../edit-transaction/edit-transaction';
@@ -11,8 +11,10 @@ import { DetailsPage } from '../details/details';
   templateUrl: 'folio.html'
 })
 export class FolioPage {
-  myCoins: FirebaseListObservable<any[]>;
+  @ViewChild(Content) content: Content
 
+  myCoins: FirebaseListObservable<any[]>;
+  // username:any;
   cryptoNumbers: cryto[];
   cryptoMix: crytoMix[] = [];
   cryptoTotal: crytoMix[] = [];
@@ -46,7 +48,7 @@ export class FolioPage {
         this.loopOfConvert('THB');
         this.myCoins.subscribe(data => {
           this.myCoinsList = data;
-          console.log('this.myCoins.subscribe length:'+this.myCoinsList.length)
+          console.log('this.myCoins.subscribe length:' + this.myCoinsList.length)
           console.log(this.myCoinsList)
           for (let j = 0; j < this.myCoinsList.length; j++) {
             for (let i = 0; i < this.cryptoMix.length; i++) {
@@ -65,14 +67,11 @@ export class FolioPage {
                   totalPrice: this.myCoinsList[j].totalPrice
                 })
                 console.log('push:' + this.cryptoRecent[length + 1].pairing_id)
-
               }
             }
           }
+
         })
-
-
-
       })
 
 
@@ -160,9 +159,13 @@ export class FolioPage {
     this.navCtrl.push(AlertPage, crypto);
   }
 
-  openDetailsPage(crypto){
-    this.navCtrl.push(DetailsPage,crypto);
-  } 
-  
+  openDetailsPage(crypto) {
+    this.navCtrl.push(DetailsPage, crypto);
+  }
 
+  ngOnInit() {
+    this.provider.getUsername().then((item) => {
+      this.content.resize();
+    });
+  }
 }
