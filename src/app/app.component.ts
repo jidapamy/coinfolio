@@ -1,7 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+import { Nav, Platform, MenuController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { Storage } from '@ionic/storage';
 
 import { HomePage } from '../pages/home/home';
 import { AddTransationPage } from '../pages/add-transation/add-transation';
@@ -30,6 +31,7 @@ export class MyApp {
   rootPage: any = HomePage;
   // rootPage: any = LoginPage;
   // rootPage: any = TutorialPage;
+  activeMenu:string;
   username:any='';
   test:any='';
   test2:any='';
@@ -42,8 +44,12 @@ export class MyApp {
               public statusBar: StatusBar, 
               public splashScreen: SplashScreen,
               public provider: DatacoinProvider,
+              public storage: Storage,
+              public menuControl: MenuController
             ) {
     this.initializeApp();
+
+
     this.provider.getUsername().then((data) => {
       this.username = data;
       this.content.resize();
@@ -109,8 +115,7 @@ export class MyApp {
     this.username='';
     this.nav.setRoot(HomePage);
     this.content.resize();
-    
-    
+    this.changeLogoutMenuControl();
   }
 
   login(){
@@ -120,15 +125,30 @@ export class MyApp {
   }
 
   ngOnInit() {
-    this.provider.getUsername().then((data) => {
-      this.username = data;
-      this.content.resize();
-      console.log('ngOnInit refresh: ' + this.username);
-      // this.doRefresh(event);
-      // console.log(this.content)
-    })
+    // this.provider.getUsername().then((data) => {
+    //   this.username = data;
+    //   this.content.resize();
+    //   console.log('ngOnInit refresh: ' + this.username);
+    //   // this.doRefresh(event);
+    //   // console.log(this.content)
+    // })
     // this.username = this.provider.getUsername();
     // console.log('Menu : ' + this.username)
+
+      // this.provider.getUsername().then((item)=>{
+      //   this.username = item;
+      // });
+
+      // this.username = this.provider.getUsername()
+      // console.log('Home2::' + this.username);
+      // this.storage.ready().then(() => {
+      //   this.storage.get('userLogin').then((data) => {
+      //     if (data) {
+      //       this.username = data;
+      //     }
+      //   });
+      // });
+
   }
 
   ionViewWillEnter(){
@@ -145,8 +165,12 @@ export class MyApp {
       console.log('refresher')
       console.log('USername refresh: '+this.username)
     }, 500);
-
-
-
   }
+
+  changeLogoutMenuControl() {
+    this.activeMenu = "notLogin"
+    this.menuControl.enable(true, this.activeMenu)
+    this.menuControl.enable(false, 'login');
+  }
+
 }

@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController } from 'ionic-angular';
+import { NavController, NavParams, AlertController,MenuController } from 'ionic-angular';
 import { RegisterPage } from '../register/register';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { MyApp } from '../../app/app.component';
 import { DatacoinProvider } from '../../providers/datacoin/datacoin';
+
 
 // import firebase from 'firebase';
 
@@ -26,6 +27,7 @@ export class LoginPage {
   invalid:boolean;
   username: any;
   password: any;
+  activeMenu:string;
   users: FirebaseListObservable<any[]>;
   // public users: firebase.database.Reference = firebase.database().ref('/users');
   arrayCheck: any[] = [];
@@ -36,8 +38,10 @@ export class LoginPage {
     public formBuilder: FormBuilder,
     public angularfire: AngularFireDatabase,
     public alertCtrl: AlertController,
-    public provider: DatacoinProvider) {
+    public provider: DatacoinProvider,
+    public menuControl:MenuController) {
     this.users = angularfire.list('/users');
+    this.menuControl.swipeEnable(false);
 
     
     // this.users.subscribe(data => { this.usersInFirebase = data },
@@ -135,6 +139,7 @@ export class LoginPage {
                 setTimeout(() => { 
                   alertComplete.dismiss();
                   this.provider.setUsername(this.username);
+                  this.changeLoginMenuControl();
                   this.navCtrl.push(MyApp) 
                 }, 1700);
               }).catch(() => {
@@ -164,4 +169,15 @@ export class LoginPage {
     this.navCtrl.push(RegisterPage);
   }
 
+  changeLoginMenuControl() {
+    this.activeMenu = "login"
+    this.menuControl.enable(true, this.activeMenu)
+    this.menuControl.enable(false, 'notLogin');
+  }
+
+  changeLogoutMenuControl() {
+    this.activeMenu = "notLogin"
+    this.menuControl.enable(true, this.activeMenu)
+    this.menuControl.enable(false, 'login');
+  }
 }

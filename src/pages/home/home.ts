@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams, ItemSliding, ModalController } from 'ionic-angular';
+import { NavController, NavParams, ItemSliding, ModalController, MenuController} from 'ionic-angular';
 import { DatacoinProvider, cryptoNumbers, cryto, asks, bids, NAME, crytoMix } from '../../providers/datacoin/datacoin';
 import { Content } from 'ionic-angular';
 import { CoinsDetailPage } from '../coins-detail/coins-detail';
@@ -27,6 +27,7 @@ import { FolioPage } from '../folio/folio';
 })
 export class HomePage {
   @ViewChild(Content) content: Content
+  activeMenu:string;
   // crytoName: any[] = NAME;
 
   usersData: FirebaseListObservable<any[]>;
@@ -58,16 +59,18 @@ export class HomePage {
     public modalCtrl: ModalController,
     public storage: Storage,
     private screenshot: Screenshot,
-    public angularfire: AngularFireDatabase) {
+    public angularfire: AngularFireDatabase,
+    public menuControl: MenuController) {
 
     this.mixNameCoins();
-  
+    this.username = ''
+    console.log('Home::' + this.username);
     // this.username = '';
     // this.storage.ready().then(() => {
     //   this.provider.getUsername().then((data) => {
     //     this.username = data
     //     console.log('constructor: ' + this.username)
-    //     this.content.resize();
+        // this.content.resize();
     //   });
     // });
 
@@ -237,11 +240,19 @@ export class HomePage {
   }
 
   ngOnInit() {
-    // this.provider.getUsername().then((item)=>{
-    //   this.username = item;
+    this.provider.getUsername().then((item)=>{
+      this.username = item;
+    });
+    
+    // this.username = this.provider.getUsername()
+    // console.log('Home2::' + this.username);
+    // this.storage.ready().then(() => {
+    //   this.storage.get('userLogin').then((data) => {
+    //     if (data) {
+    //       this.username = data;
+    //     }
+    //   });
     // });
-    this.username = this.provider.getUsername()
-    console.log('Home::' + this.username);
   }
 
   goToDetail(crypto) {
@@ -252,5 +263,13 @@ export class HomePage {
   goToMyCoins(){
     this.navCtrl.setRoot(FolioPage);
   }
+
+  // changeMenuControl(){
+  //   this.activeMenu="notLogin"
+  //   this.menuControl.enable(true,this.activeMenu)
+  //   this.menuControl.enable(false,'login');
+  // }
+
+
   
 }
