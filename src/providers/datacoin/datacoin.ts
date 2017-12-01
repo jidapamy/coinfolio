@@ -67,10 +67,15 @@ export class DatacoinProvider {
 		return this.mycoinsPath;
 	}
 
-	getTransactionPath(myCoinsKey) {
-		this.transactionPath = this.mycoinsPath + '/' + myCoinsKey + '/transaction';
+	getTransactionPath(myCoinsKey) { // เพิ่ม Transition ใน coin ที่มีอยู่แล้ว
+		this.transactionPath = this.getMycoinsPath() + '/' + myCoinsKey + '/transaction';
 		return this.transactionPath;
 	}
+	
+// //////////////////////////////////////////////
+	// addTransaction(coin){
+	// 	this.transactionData = this.angularfire.list(this.pathFirebase + '/' + this.getMycoinsPath() + '/' + coin.key + '/transaction');
+	// }
 
 	
 
@@ -112,11 +117,15 @@ export class DatacoinProvider {
 			});
 	}
 
-	addTransaction(dataTransaction) {
-		console.log('addTransaction')
-		//   console.dir('dataTransaction:>> ' + dataTransaction.coin.pairing_id)
-		// this.myCoins.push(dataTransaction);
-		//   this.storage.set('myCoins', this.myCoins);
+	// addTransaction(dataTransaction) {
+	// 	console.log('addTransaction')
+	// 	//   console.dir('dataTransaction:>> ' + dataTransaction.coin.pairing_id)
+	// 	// this.myCoins.push(dataTransaction);
+	// 	//   this.storage.set('myCoins', this.myCoins);
+	// }
+
+	removedMycoin(){
+		this.myCoinsData = this.angularfire.list(this.pathFirebase);
 	}
 
 	getTransaction() {

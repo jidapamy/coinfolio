@@ -136,9 +136,14 @@
         </ion-item>
 
         <ion-item-options side="left">
-          <button ion-button icon-only (click)="goToAlert(crypto)" color="bgyellow">
+          <button ion-button icon-only (click)="goToAlert(slidingItem,crypto)" color="bgyellow">
 	 	 			  <ion-icon color="light" name="md-notifications"></ion-icon>
 	 	 		  </button>
+        </ion-item-options>
+        <ion-item-options side="right" class="dark">
+          <button ion-button icon-only (click)="removeFavorite(slidingItem,crypto)" color="danger">
+				 	 	<ion-icon name="ios-trash"></ion-icon>
+				 	</button>
         </ion-item-options>
 
       </ion-item-sliding>
