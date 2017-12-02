@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController } from 'ionic-angular';
-import { RegisterPage } from '../register/register';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NavController, NavParams, AlertController, MenuController } from 'ionic-angular';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
-import { MyApp } from '../../app/app.component';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 import { DatacoinProvider } from '../../providers/datacoin/datacoin';
+import { RegisterPage } from '../register/register';
+import { MyApp } from '../../app/app.component';
+
+
 
 // import firebase from 'firebase';
 
@@ -23,62 +26,30 @@ export class LoginPage {
   loginForm: FormGroup;
   errorUsername: string = '';
   errorPassword: string = '';
-  invalid:boolean;
-  username: any;
-  password: any;
-  users: FirebaseListObservable<any[]>;
-  // public users: firebase.database.Reference = firebase.database().ref('/users');
-  arrayCheck: any[] = [];
-  usersInFirebase : any[]=[];
+  invalid: boolean;
+  activeMenu: string;
+  allUsers: any[] = [];
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public formBuilder: FormBuilder,
     public angularfire: AngularFireDatabase,
     public alertCtrl: AlertController,
-    public provider: DatacoinProvider) {
-    this.users = angularfire.list('/users');
-
-    
-    // this.users.subscribe(data => { this.usersInFirebase = data },
-    //                      error => { console.log("error: " + error); },
-    //                      () => { console.log('SHOW:'+this.usersInFirebase)} 
-    //                     )
-
-    // console.log('Length: '+this.usersInFirebase.length);
-    // this.callArrayfromFirebase(this.arrayCheck);
-
-
-    // this.users.on('value', itemSnapshot  => {
-    //   this.arrayCheck = [];
-    //   itemSnapshot.forEach(itemSnap => {
-    //     this.users.push(itemSnap.val());
-    //     return false;
-    //   });
-    // });
-    // console.log('length: ' + this.arrayCheck.length);
-
-
-
+    public provider: DatacoinProvider,
+    public menuControl: MenuController) {
+    this.menuControl.swipeEnable(false);            // set Menu not active
+    this.provider.userData.subscribe(data => {
+      this.allUsers = data
+    })
 
     this.loginForm = this.formBuilder.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required],
+      'username': ['', Validators.required],
+      'password': ['', Validators.required],
     })
   }
- 
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
-  }
-
-  
-  callArrayfromFirebase(mymy) {
-    console.log('test')
-    this.users.forEach(item => {
-      mymy.push(item);
-      console.log('shows: ' + this.arrayCheck.length);
-    });
-    return mymy;
   }
 
   validate(): boolean {
@@ -108,7 +79,6 @@ export class LoginPage {
 
 
   logIn(): void {
-    console.log('CLick login :' + this.username + '/' + this.password)
     if (this.validate()) {
       console.log(this.loginForm.value);
       this.invalid = false;
@@ -117,40 +87,28 @@ export class LoginPage {
         subTitle: 'Your have been logged in! We hope your enjoy your time with CoinFolio'
       });
 
-      let alertError = this.alertCtrl.create({
-        title: 'Login Invalid',
-        // subTitle: 'Your have been logged in! We hope your enjoy your time with CoinFolio'
-      });
-
-      this.arrayCheck = [];
-      this.users.subscribe(item => {
-        this.arrayCheck = item;
-        console.log('shows Foreach: ' + this.arrayCheck.length);
-        for (let i = 0; i < this.arrayCheck.length; i++) {
-          console.log('>>>>>' + this.arrayCheck[i].username + '/' + this.arrayCheck[i].password)
-          if (this.arrayCheck[i].username == this.username && this.arrayCheck[i].password == this.password) {
-            this.provider.userKey = this.arrayCheck[i].$key;
-            setTimeout(() => {
-              alertComplete.present().then(() => {
-                setTimeout(() => { 
-                  alertComplete.dismiss();
-                  this.provider.setUsername(this.username);
-                  this.navCtrl.push(MyApp) 
-                }, 1700);
-              }).catch(() => {
+      // check user 
+      for (let i = 0; i < this.allUsers.length; i++) {
+        if (this.allUsers[i].username == this.loginForm.value.username && this.allUsers[i].password == this.loginForm.value.password) {
+          this.invalid = false;
+          this.provider.setUserLogin({ user: this.allUsers[i], key: this.allUsers[i].$key });
+          setTimeout(() => {
+            alertComplete.present().then(() => {
+              setTimeout(() => {
                 alertComplete.dismiss();
-              });
-            }, 0);
-            break;
-          }else {
-            console.log('invalid')
-            this.invalid=true
-          
-          }
+                this.changeLoginMenuControl();  // change status in Menu
+                this.navCtrl.push(MyApp)
+              }, 1700);
+            }).catch(() => {
+              alertComplete.dismiss();
+            });
+          }, 0);
+          break;
+        } else {
+          console.log('invalid')
+          this.invalid = true
         }
-      });
-      
-
+      }
     }
   }
 
@@ -164,5 +122,14 @@ export class LoginPage {
   register() {
     this.navCtrl.push(RegisterPage);
   }
+  
+  changeLoginMenuControl() {
+    this.activeMenu = "login"
+    this.menuControl.enable(true, this.activeMenu)
+    this.menuControl.enable(false, 'notLogin');
+  }
 
+  goBack() {
+    this.navCtrl.pop()
+  }
 }

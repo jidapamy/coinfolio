@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { DatacoinProvider, tempStatisticsCoinsDetail, tempStatisticsCoins, tempbookorderBidItem, tempbookorderBid, tempbookorder, cryptoNumbers, cryto, orderbook, asks, bids, NAME, crytoMix } from '../../providers/datacoin/datacoin';
+import { DatacoinProvider, tempStatisticsCoinsDetail, tempStatisticsCoins, tempbookorderBidItem, tempbookorderBid, tempbookorder, cryptoCurrency} from '../../providers/datacoin/datacoin';
 import Highcharts from 'highcharts/highstock';
 import * as HighCharts from 'highcharts';
 import { Pipe, PipeTransform } from '@angular/core';

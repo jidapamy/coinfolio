@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-buttons start (click)="goBack()">
+    <ion-buttons end (click)="goBack()">
       <button ion-button>
         <ion-icon name="close"></ion-icon>
       </button>
@@ -19,7 +19,7 @@
 
 
 <ion-content padding>
-  <form class="list" [formGroup]="addTransaction" (ngSubmit)="saveTransation()">
+  <form class="list" [formGroup]="addTransactionForm" (ngSubmit)="saveTransation()">
     <ion-list >
       <ion-item>
         <ion-label class="fixedLeft">

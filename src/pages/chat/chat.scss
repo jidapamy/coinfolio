@@ -42,7 +42,8 @@ page-chat {
   button{
 	 background-color:#F0B90B;
 	 padding: 4px 7px 4px 7px;
-	 font-size:20px;
+   font-size:20px;
+   border-radius: 0px
 	 
   }
 
@@ -64,7 +65,8 @@ page-chat {
   }
 
   .username{
-  	color:#F0B90B;
+    color:#F0B90B;
+    margin: 1%;
   	margin-left: 2.5%;
   	font-size: 15px;
 

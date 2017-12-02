@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, ViewController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { HomePage } from '../home/home';
-import { DatacoinProvider, cryptoNumbers, cryto, asks, bids, NAME, crytoMix } from '../../providers/datacoin/datacoin';
+import { DatacoinProvider } from '../../providers/datacoin/datacoin';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 /**
  * Generated class for the EditTransactionPage page.

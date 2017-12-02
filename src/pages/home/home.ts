@@ -1,19 +1,16 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams, ItemSliding, ModalController } from 'ionic-angular';
-import { DatacoinProvider, cryptoNumbers, cryto, asks, bids, NAME, crytoMix } from '../../providers/datacoin/datacoin';
-import { Content } from 'ionic-angular';
+import { NavController, NavParams, ItemSliding, ModalController, MenuController, Content} from 'ionic-angular';
+import { DatacoinProvider, cryptoCurrency,crypto } from '../../providers/datacoin/datacoin';
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { CoinsDetailPage } from '../coins-detail/coins-detail';
 import { AddTransationPage } from '../add-transation/add-transation';
 import { MyApp } from '../../app/app.component';
 import { EditTransactionPage } from '../edit-transaction/edit-transaction';
 import { Screenshot } from '@ionic-native/screenshot';
-// import { SocialSharing } from '@ionic-native/social-sharing';
-// import { Storage } from '@ionic/storage';
-
-import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
-import { Storage } from '@ionic/storage';
 import { HeaderPage } from '../header/header';
 import { FolioPage } from '../folio/folio';
+import { LoginPage } from '../login/login';
+
 /**
  * Generated class for the HomePage page.
  *
@@ -27,28 +24,20 @@ import { FolioPage } from '../folio/folio';
 })
 export class HomePage {
   @ViewChild(Content) content: Content
-  // crytoName: any[] = NAME;
-
   usersData: FirebaseListObservable<any[]>;
   myCoinsData: FirebaseListObservable<any[]>;
-  totalPrice: any = 0;
-
-
-  usersArray:any[]=[];
-  cryptoNumbers: cryto[] = [];
-  cryptoMix: crytoMix[] = [];
-  cryptoTotal: crytoMix[] = [];
   segment = 'THB';
+  user: any;
+
+  cryptoNumbers: crypto[] = [];
+  cryptoMix: cryptoCurrency[] = [];
+  cryptoTotal: cryptoCurrency[] = [];
+  coins: cryptoCurrency[] = [];
+  
   rateBtc: any = 0; // 1 BTC = 247900 THB
   rateEth: any = 0; // 1 ETC = 10600 THB
   rateUsd: any = 0; // 1 USD = 34 THB
-  coins: crytoMix[] = [];
-  username: any;
-  myApp: MyApp;
-  // ETH: crytoMix[]=[];
-  // USD: crytoMix[] = [];
-  // THB: crytoMix[] = [];
-  // BTC: crytoMix[] = [];
+
   screen: any;
   state: boolean = false;
   
@@ -56,45 +45,10 @@ export class HomePage {
     public navParams: NavParams,
     public provider: DatacoinProvider,
     public modalCtrl: ModalController,
-    public storage: Storage,
     private screenshot: Screenshot,
-    public angularfire: AngularFireDatabase) {
-
-    this.mixNameCoins();
-  
-    // this.username = '';
-    // this.storage.ready().then(() => {
-    //   this.provider.getUsername().then((data) => {
-    //     this.username = data
-    //     console.log('constructor: ' + this.username)
-    //     this.content.resize();
-    //   });
-    // });
-
-    // this.usersData = this.provider.userData;
-    // this.usersData.subscribe((data) => {
-    //   this.usersArray = data
-    //   this.username = '';
-    //   this.storage.ready().then(() => {
-    //     this.provider.getUsername().then((data) => {
-    //       this.username = data
-    //       for (let i = 0; i < this.usersArray.length; i++) {
-    //         if (this.usersArray[i].username == this.username) {
-    //           console.log('Key User:' + this.usersArray[i].$key + '/Username:' + this.usersArray[i].username)
-    //           this.provider.userKey = this.usersArray[i].$key;
-    //           break;
-    //         }
-    //       }
-    //       console.log('constructor: ' + this.username)
-          // this.content.resize();
-    //     });
-    //   });
-    // });
-
-    console.log('Home Constructor');
-
-
-
+    public angularfire: AngularFireDatabase,
+    public menuControl: MenuController) {
+    this.mixNameCoins(); // ใส่ชื่อให้ Crypto + แยก 4 market
   }
 
   ionViewDidLoad() {
@@ -104,55 +58,28 @@ export class HomePage {
   mixNameCoins() {
     this.provider.loadBX().subscribe(data => {
       this.cryptoNumbers = Object.keys(data).map(key => data[key]);
-      // console.dir(this.cryptoNumbers)
     },
       error => { console.log("error: " + error); },
       () => {
-        this.provider.addName(this.cryptoMix, this.cryptoNumbers);
-
-        this.rateUsd = 34;
+        this.provider.addName(this.cryptoMix, this.cryptoNumbers); 
+        this.rateUsd = 34; // ค่าเงิน USD
         for (let i = 0; i < this.cryptoMix.length; i++) {
           if (this.cryptoMix[i].secondary_currency == 'BTC') {
             this.rateBtc = this.cryptoMix[i].last_price;
             this.provider.rateBtc = this.rateBtc;
-            // console.log('price ' + this.cryptoMix[i].secondary_currency + ' ' + this.rateBtc);
           }
           if (this.cryptoMix[i].secondary_currency == 'ETH' && this.cryptoMix[i].primary_currency == 'THB') {
             this.rateEth = this.cryptoMix[i].last_price;
             this.provider.rateEth = this.rateEth;
-            // console.log('ETH:price ' + this.cryptoMix[i].secondary_currency + ' ' + this.rateEth);
           }
         }
-        // console.log("Read park completely");
-
         this.loopOfConvert('THB');
         this.loopOfConvert('BTC');
         this.loopOfConvert('ETH');
         this.loopOfConvert('USD');
         this.changeMarket(this.segment)
-        // console.dir(this.cryptoNumbers[0].orderbook.asks.highbid)
       })
   }
-
-  
-  reset() {
-    var self = this;
-    setTimeout(function () {
-      self.state = false;
-    }, 1000);
-  }
-
-  screenShot() {
-    this.screenshot.save('jpg', 80).then(res => {
-      this.screen = res.filePath;
-      this.state = true;
-      this.reset();
-    });
-  }
-
-
-
-
 
   loopOfConvert(type) {
     for (let i = 0; i < this.cryptoMix.length; i++) {
@@ -173,7 +100,6 @@ export class HomePage {
       nameCrypto: this.cryptoMix[index].nameCrypto,
       orderbook: this.cryptoMix[index].orderbook
     })
-    // console.log(`[${index}] push: ${this.cryptoTotal[lastIndex + 1].secondary_currency}/${this.cryptoTotal[lastIndex + 1].primary_currency} price: ${this.cryptoTotal[lastIndex + 1].last_price}`);
   }
 
   convertMoney(coin, type) {
@@ -184,7 +110,6 @@ export class HomePage {
         price = coin.last_price;
       } else if (type == 'BTC') {
         price = (coin.last_price / this.rateBtc);
-        // console.log(`BTC>>> ${price}`)
       } else if (type == 'ETH') {
         price = (coin.last_price / this.rateEth);
       } else if (type == 'USD') {
@@ -195,7 +120,6 @@ export class HomePage {
         price = (coin.last_price * this.rateBtc);
       } else if (type == 'BTC') {
         price = coin.last_price;
-        // console.log(`${coin.secondary_currency}/BTC>>> ${price}`)
       } else if (type == 'ETH') {
         price = ((coin.last_price * this.rateBtc) / this.rateEth);
       } else if (type == 'USD') {
@@ -203,6 +127,7 @@ export class HomePage {
       }
     }
 
+    // Decimal Format
     if (price < 1) {
       priceDecimal = price.toFixed(8);
     } else {
@@ -211,7 +136,7 @@ export class HomePage {
     return priceDecimal;
   }
 
-
+  // select segment
   changeMarket(type) {
     this.content.scrollToTop(300);
     this.segment = type;
@@ -229,28 +154,48 @@ export class HomePage {
     }
   }
 
-  addTransaction(slidingItem: ItemSliding, crypto: any): void {
+  goToAddTransaction(slidingItem: ItemSliding, crypto: any): void {
     let modal = this.modalCtrl.create(AddTransationPage, crypto);
-    // let modal2 = this.modalCtrl.create(EditTransactionPage, crypto);
-    modal.present();
+    if (this.user != ''){
+      modal.present();
+    }else{
+      this.navCtrl.push(LoginPage); // go to login for user not login
+    }
     slidingItem.close();
   }
 
   ngOnInit() {
-    // this.provider.getUsername().then((item)=>{
-    //   this.username = item;
-    // });
-    this.username = this.provider.getUsername()
-    console.log('Home::' + this.username);
+    this.provider.getUserLogin().then(data =>{
+      this.user = data;
+      this.content.resize();
+      console.log('ngOnInit')
+      console.dir(this.user)
+    })
+
   }
 
   goToDetail(crypto) {
-    console.log('nextPage:' + crypto.orderbook.asks.highbid)
     this.navCtrl.push(CoinsDetailPage, crypto);
   }
 
   goToMyCoins(){
     this.navCtrl.setRoot(FolioPage);
   }
+
+  reset() {
+    var self = this;
+    setTimeout(function () {
+      self.state = false;
+    }, 1000);
+  }
+
+  screenShot() {
+    this.screenshot.save('jpg', 80).then(res => {
+      this.screen = res.filePath;
+      this.state = true;
+      this.reset();
+    });
+  }
+
   
 }

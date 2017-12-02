@@ -1,30 +1,33 @@
-import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
-import { DatacoinProvider, cryptoNumbers, cryto, asks, bids, NAME, crytoMix } from '../../providers/datacoin/datacoin';
+import { Component, ViewChild } from '@angular/core';
+import { NavController, Content, ItemSliding } from 'ionic-angular';
+import { DatacoinProvider, cryptoCurrency, crypto } from '../../providers/datacoin/datacoin';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { EditTransactionPage } from '../edit-transaction/edit-transaction';
 import { AlertPage } from '../alert/alert';
 import { HeaderPage } from '../header/header';
 import { DetailsPage } from '../details/details';
+import { AlertController } from 'ionic-angular';
+
 @Component({
   selector: 'page-folio',
   templateUrl: 'folio.html'
 })
 export class FolioPage {
-  myCoins: FirebaseListObservable<any[]>;
+  @ViewChild(Content) content: Content
 
-  cryptoNumbers: cryto[];
-  cryptoMix: crytoMix[] = [];
-  cryptoTotal: crytoMix[] = [];
+  myCoins: FirebaseListObservable<any[]>;
+  cryptoNumbers: crypto[];
+  cryptoMix: cryptoCurrency[] = [];
+  cryptoTotal: cryptoCurrency[] = [];
   rateBtc: any = 0;
   myCoinsList: any[] = [];
-  // array: any[] = [];
   cryptoRecent: any[] = [];
 
   myfolio: any;
   constructor(public navCtrl: NavController,
     public provider: DatacoinProvider,
     public angularfire: AngularFireDatabase,
+    public alertCtrl: AlertController
   ) {
     console.log('constructor FolioPage');
     console.log(this.provider.mycoinsPath);
@@ -46,7 +49,7 @@ export class FolioPage {
         this.loopOfConvert('THB');
         this.myCoins.subscribe(data => {
           this.myCoinsList = data;
-          console.log('this.myCoins.subscribe length:'+this.myCoinsList.length)
+          console.log('this.myCoins.subscribe length:' + this.myCoinsList.length)
           console.log(this.myCoinsList)
           for (let j = 0; j < this.myCoinsList.length; j++) {
             for (let i = 0; i < this.cryptoMix.length; i++) {
@@ -65,14 +68,11 @@ export class FolioPage {
                   totalPrice: this.myCoinsList[j].totalPrice
                 })
                 console.log('push:' + this.cryptoRecent[length + 1].pairing_id)
-
               }
             }
           }
+
         })
-
-
-
       })
 
 
@@ -156,13 +156,44 @@ export class FolioPage {
 
 
 
-  goToAlert(crypto) {
+  goToAlert(slidingItem: ItemSliding, crypto: any) {
     this.navCtrl.push(AlertPage, crypto);
+    slidingItem.close();    
   }
 
-  openDetailsPage(crypto){
-    this.navCtrl.push(DetailsPage,crypto);
-  } 
-  
+  openDetailsPage(crypto) {
+    this.navCtrl.push(DetailsPage, crypto);
+  }
 
+  ngOnInit() {
+    this.provider.getUsername().then((item) => {
+      this.content.resize();
+    });
+  }
+
+  removeFavorite(slidingItem: ItemSliding, crypto: any) {
+    let confirm = this.alertCtrl.create({
+      title: 'Remove Coin',
+      message: 'Are you sure you want to remove this coin? Any holdings associated with this coin will also be removed.',
+      buttons: [
+        {
+          text: 'No',
+          handler: () => {
+            console.log('Disagree clicked');
+          }
+        },
+        {
+          text: 'Yes',
+          handler: () => {
+            console.log('Agree clicked');
+          }
+        }
+      ]
+    });
+    confirm.present();
+  
+    // this.getCrypto.removeFavoriteCrypto(crypto);
+    slidingItem.close();
+
+  }
 }

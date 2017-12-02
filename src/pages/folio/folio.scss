@@ -30,18 +30,18 @@ page-folio {
         text-align: right;
     }
     .fixedRight{
-        min-width: 40% !important;
-        max-width: 40% !important;
+        min-width: 39% !important;
+        max-width: 39% !important;
         text-align: right;
     }
     .fixedLeft{
-        min-width: 17% !important;
-        max-width: 17% !important;
+        min-width: 20% !important;
+        max-width: 20% !important;
         text-align: left;
     }
     .fixedMiddle{
-        min-width: 40% !important;
-        max-width: 40% !important;
+        min-width: 39% !important;
+        max-width: 39% !important;
         text-align: right;
     }
     // .item ion-avatar {
@@ -51,8 +51,7 @@ page-folio {
     .nameCoins{
         padding-top: 18%;
         color: #c9c9c9;
-        font-size: 16px;
-        padding-left: 11%;
+        font-size: 13px;
     }
 
     .bgColor{
@@ -76,7 +75,10 @@ page-folio {
     }
     .fontsize{
         font-size:13px;
-        color:rgb(131, 131, 131);
+        // color:rgb(131, 131, 131);
+        margin-top: 15%;
+        // font-weight: 600;
+        color: #FFF;
     }
     .tableColor{
         on-item:nth-child(even) {background: #CCC}
@@ -175,6 +177,14 @@ page-folio {
         background-color: #262D33;
         opacity: 1;
         padding: 0 6px;
+    }
+
+    .item ion-avatar ion-img, .item ion-avatar img {
+        border-radius: 50%;
+        overflow: hidden;
+        width: 40px;
+        height: 40px;
+        margin-left: 12%;
     }
 
     

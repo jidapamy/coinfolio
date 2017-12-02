@@ -113,7 +113,8 @@
             <ion-avatar item-start>
               <img class="imgSize" src="https://d2v7vc3vnopnyy.cloudfront.net/img/coins/{{ crypto.secondary_currency }}.png" alige="bottom"
               />
-              <p class="nameCoins"><b>{{ crypto.secondary_currency }}/{{ crypto.primary_currency }}</b></p>
+               <p class="fontsize bottons">{{ crypto.secondary_currency }}/{{ crypto.primary_currency }}</p>
+              <!-- <p class="nameCoins"><b>{{ crypto.secondary_currency }}/{{ crypto.primary_currency }}</b></p> -->
             </ion-avatar>
           </ion-label>
           <ion-label class="fixedMiddle">
@@ -136,9 +137,14 @@
         </ion-item>
 
         <ion-item-options side="left">
-          <button ion-button icon-only (click)="goToAlert(crypto)" color="bgyellow">
+          <button ion-button icon-only (click)="goToAlert(slidingItem,crypto)" color="bgyellow">
 	 	 			  <ion-icon color="light" name="md-notifications"></ion-icon>
 	 	 		  </button>
+        </ion-item-options>
+        <ion-item-options side="right" class="dark">
+          <button ion-button icon-only (click)="removeFavorite(slidingItem,crypto)" color="danger">
+				 	 	<ion-icon name="ios-trash"></ion-icon>
+				 	</button>
         </ion-item-options>
 
       </ion-item-sliding>
