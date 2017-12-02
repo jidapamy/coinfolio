@@ -168,6 +168,7 @@ export class HomePage {
     this.provider.getUserLogin().then(data =>{
       this.user = data;
       this.content.resize();
+      console.log('ngOnInit')
       console.dir(this.user)
     })
 
