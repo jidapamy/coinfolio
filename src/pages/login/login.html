@@ -19,22 +19,11 @@
       <b>Error : </b>Invalid username or password. Please try again.
     </ion-card-content>
   </ion-card>
-  
-<!--   
-  
-  <ion-card>
-          <ion-card-header>
-            <b>Error : </b>Invalid username or password. Please try again
-          </ion-card-header>
-        </ion-card> -->
+
   <form [formGroup]="loginForm" (ngSubmit)="logIn()">
     <ion-list>
-      <!-- <ion-item *ngIf="!invalid"> -->
-       
-        <!-- <p>Error: Invalid username or password. Please try again</p> -->
-      <!-- </ion-item> -->
       <ion-item>
-        <ion-label stacked> Username 
+        <ion-label stacked> Username
           <span class="error">{{errorUsername}}</span>
         </ion-label>
         <ion-input [(ngModel)]="username" type="text" (focusout)="afterKeyUsername()" formControlName="username"></ion-input>

@@ -23,44 +23,55 @@ export class HeaderPage {
   username:any;
   totalPrice:any=0;
   test:any;
+
+  userLogin:any;
+
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
               public provider: DatacoinProvider,
               public storage: Storage,
               public angularfire: AngularFireDatabase) {
-    this.usersData = this.provider.userData;
-    this.usersData.subscribe((data) => {
-      this.usersArray = data
-      this.username = '';
-      this.storage.ready().then(() => {
-        this.provider.getUsername().then((data) => {
-          this.username = data
-          for (let i = 0; i < this.usersArray.length; i++) {
-            if (this.usersArray[i].username == this.username) {
-              console.log('Key User:' + this.usersArray[i].$key + '/Username:' + this.usersArray[i].username)
-              this.provider.userKey = this.usersArray[i].$key;
-              this.provider.username = this.usersArray[i].username;
-              break;
-            }
-          }
-          let myCoins: any[];
-          let mycoinsPath = this.provider.getMycoinsPath();
-          this.myCoinsData = this.angularfire.list(mycoinsPath);
-          this.myCoinsData.subscribe(data => {
-            myCoins = data;
-          })
-          console.log('MyCoins: ' + myCoins.length)
-          this.totalPrice = 0;
-          for (let i = 0; i < myCoins.length; i++) {
-            let totalEachCoin = myCoins[i].totalPrice;
-            this.totalPrice += totalEachCoin
-          }
-          this.totalPrice = (+this.totalPrice).toFixed(2);
-          console.log('this.totalPrice: ' + this.totalPrice)
+      
+       this.provider.getUserLogin().then( data => {
+         this.userLogin = data;
+         console.log('Header')
+         this.username = this.userLogin.username
+         console.log(this.username)
+       })
 
-        });
-      });
-    });
+    // this.usersData = this.provider.userData;
+    // this.usersData.subscribe((data) => {
+    //   this.usersArray = data
+    //   this.username = '';
+    //   this.storage.ready().then(() => {
+    //     this.provider.getUsername().then((data) => {
+    //       this.username = data
+    //       for (let i = 0; i < this.usersArray.length; i++) {
+    //         if (this.usersArray[i].username == this.username) {
+    //           console.log('Key User:' + this.usersArray[i].$key + '/Username:' + this.usersArray[i].username)
+    //           this.provider.userKey = this.usersArray[i].$key;
+    //           this.provider.username = this.usersArray[i].username;
+    //           break;
+    //         }
+    //       }
+          // let myCoins = this.provider.getMycoins();  
+          // let mycoinsPath = this.provider.getMycoinsPath();
+          // this.myCoinsData = this.angularfire.list(mycoinsPath);
+          // this.myCoinsData.subscribe(data => {
+          //   myCoins = data;
+          // })
+          // console.log('MyCoins: ' + myCoins.length)
+          // this.totalPrice = 0;
+          // for (let i = 0; i < myCoins.length; i++) {
+          //   let totalEachCoin = myCoins[i].totalPrice;
+          //   this.totalPrice += totalEachCoin
+          // }
+          // this.totalPrice = (+this.totalPrice).toFixed(2);
+          // console.log('this.totalPrice: ' + this.totalPrice)
+
+        // });
+    //   });
+    // });
 
 
     // this.usersData = this.provider.userData;

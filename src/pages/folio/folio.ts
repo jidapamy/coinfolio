@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, Content, ItemSliding } from 'ionic-angular';
-import { DatacoinProvider, cryptoNumbers, cryto, asks, bids, NAME, crytoMix } from '../../providers/datacoin/datacoin';
+import { DatacoinProvider, cryptoCurrency, crypto } from '../../providers/datacoin/datacoin';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { EditTransactionPage } from '../edit-transaction/edit-transaction';
 import { AlertPage } from '../alert/alert';
@@ -17,9 +17,9 @@ export class FolioPage {
 
   myCoins: FirebaseListObservable<any[]>;
   // username:any;
-  cryptoNumbers: cryto[];
-  cryptoMix: crytoMix[] = [];
-  cryptoTotal: crytoMix[] = [];
+  cryptoNumbers: crypto[];
+  cryptoMix: cryptoCurrency[] = [];
+  cryptoTotal: cryptoCurrency[] = [];
   rateBtc: any = 0;
   myCoinsList: any[] = [];
   // array: any[] = [];
