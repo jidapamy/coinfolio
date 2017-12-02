@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController,MenuController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, MenuController } from 'ionic-angular';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -26,15 +26,9 @@ export class LoginPage {
   loginForm: FormGroup;
   errorUsername: string = '';
   errorPassword: string = '';
-  invalid:boolean;
-  username: any;
-  password: any;
-  activeMenu:string;
-  users: FirebaseListObservable<any[]>;
-  checkLogin: any[] = [];
-  usersInFirebase : any[]=[];
-
-  allUsers:any[];
+  invalid: boolean;
+  activeMenu: string;
+  allUsers: any[] = [];
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -42,16 +36,18 @@ export class LoginPage {
     public angularfire: AngularFireDatabase,
     public alertCtrl: AlertController,
     public provider: DatacoinProvider,
-    public menuControl:MenuController) {
-    this.users = angularfire.list('/users');
-    this.menuControl.swipeEnable(false);
+    public menuControl: MenuController) {
+    this.menuControl.swipeEnable(false);            // set Menu not active
+    this.provider.userData.subscribe(data => {
+      this.allUsers = data
+    })
 
     this.loginForm = this.formBuilder.group({
       'username': ['', Validators.required],
       'password': ['', Validators.required],
     })
   }
- 
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
   }
@@ -91,18 +87,16 @@ export class LoginPage {
         subTitle: 'Your have been logged in! We hope your enjoy your time with CoinFolio'
       });
 
-      this.checkLogin = [];
-      
-      this.allUsers = this.provider.getAllUSer();
+      // check user 
       for (let i = 0; i < this.allUsers.length; i++) {
         if (this.allUsers[i].username == this.loginForm.value.username && this.allUsers[i].password == this.loginForm.value.password) {
           this.invalid = false;
-          this.provider.setUserLogin(this.allUsers[i]);
+          this.provider.setUserLogin({ user: this.allUsers[i], key: this.allUsers[i].$key });
           setTimeout(() => {
             alertComplete.present().then(() => {
               setTimeout(() => {
                 alertComplete.dismiss();
-                this.changeLoginMenuControl();
+                this.changeLoginMenuControl();  // change status in Menu
                 this.navCtrl.push(MyApp)
               }, 1700);
             }).catch(() => {
@@ -115,36 +109,6 @@ export class LoginPage {
           this.invalid = true
         }
       }
-
-
-      // this.users.subscribe(item => {
-      //   this.checkLogin = item;
-      //   console.log('shows Foreach: ' + this.checkLogin.length);
-      //   for (let i = 0; i < this.checkLogin.length; i++) {
-      //     console.log('>>>>>' + this.checkLogin[i].username + '/' + this.checkLogin[i].password)
-      //     if (this.checkLogin[i].username == this.username && this.checkLogin[i].password == this.password) {
-      //       this.invalid = false;
-      //       this.provider.userKey = this.checkLogin[i].$key;
-      //       setTimeout(() => {
-      //         alertComplete.present().then(() => {
-      //           setTimeout(() => { 
-      //             alertComplete.dismiss();
-      //             this.provider.setUsername(this.username);
-      //             this.changeLoginMenuControl();
-      //             this.navCtrl.push(MyApp) 
-      //           }, 1700);
-      //         }).catch(() => {
-      //           alertComplete.dismiss();
-      //         });
-      //       }, 0);
-      //       break;
-      //     }else {
-      //       console.log('invalid')
-      //       this.invalid=true
-      //     }
-      //   }
-      // });
-
     }
   }
 
@@ -158,14 +122,14 @@ export class LoginPage {
   register() {
     this.navCtrl.push(RegisterPage);
   }
-
+  
   changeLoginMenuControl() {
     this.activeMenu = "login"
     this.menuControl.enable(true, this.activeMenu)
     this.menuControl.enable(false, 'notLogin');
   }
 
-  goBack(){
+  goBack() {
     this.navCtrl.pop()
   }
 }

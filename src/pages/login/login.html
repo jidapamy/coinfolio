@@ -26,13 +26,13 @@
         <ion-label stacked> Username
           <span class="error">{{errorUsername}}</span>
         </ion-label>
-        <ion-input [(ngModel)]="username" type="text" (focusout)="afterKeyUsername()" formControlName="username"></ion-input>
+        <ion-input type="text" (focusout)="afterKeyUsername()" formControlName="username"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label stacked>Password
           <span class="error">{{errorPassword}}</span>
         </ion-label>
-        <ion-input [(ngModel)]="password" (focusout)="afterKeyPassword()" type="Password" formControlName="password"></ion-input>
+        <ion-input (focusout)="afterKeyPassword()" type="Password" formControlName="password"></ion-input>
       </ion-item>
     </ion-list>
     <button ion-button full color="bgyellow">Login</button>

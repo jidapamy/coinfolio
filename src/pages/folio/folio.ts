@@ -16,13 +16,11 @@ export class FolioPage {
   @ViewChild(Content) content: Content
 
   myCoins: FirebaseListObservable<any[]>;
-  // username:any;
   cryptoNumbers: crypto[];
   cryptoMix: cryptoCurrency[] = [];
   cryptoTotal: cryptoCurrency[] = [];
   rateBtc: any = 0;
   myCoinsList: any[] = [];
-  // array: any[] = [];
   cryptoRecent: any[] = [];
 
   myfolio: any;

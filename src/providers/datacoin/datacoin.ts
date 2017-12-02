@@ -48,9 +48,12 @@ export class DatacoinProvider {
 
 		this.storage.ready().then(() => {
 			this.storage.get('userLogin').then((data) => {
+				console.log('userLogin Provider')
+				console.dir(data);
 				if (data) {
-					this.username = data;
-					console.log('userLogin นะจ๊ะ อิอิ =='+this.username )
+					this.userLogin = data.user;
+					this.userKey = data.key;
+					// console.log('userLogin นะจ๊ะ อิอิ ==' + this.userKey )
 				}
 			});
 		});
@@ -120,18 +123,25 @@ export class DatacoinProvider {
 		return this.storage.get('userLogin')
 	}
 
-	getAllUSer(){
-		let userList;
-		this.userData.subscribe(data =>{
-			userList = data
-		})
-		return userList;
-	}
+	// getAllUSer(){
+	// 	let userList:any[];
+	// 	this.userData.subscribe(data =>{
+	// 		userList = data
+	// 		// return userList;
+	// 	})
+	// 	return userList;
+	// }
 
 	setUserLogin(user){
 		// this.userLogin = user; 
-		console.log('Login: '+user.username)
+		// console.log('Login: '+user.username)
+		console.dir(user)
 		this.storage.set('userLogin', user); 
+		this.username = user.user.username
+		this.userKey = user.key
+		console.log('Set Username :'+this.username+'KEY: ' + this.userKey)
+		
+
 	}
 	getUserLogin(): Promise<any>{
 		return this.storage.get('userLogin')

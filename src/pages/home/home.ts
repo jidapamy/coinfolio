@@ -165,10 +165,6 @@ export class HomePage {
   }
 
   ngOnInit() {
-    // this.provider.getUsername().then((item)=>{
-    //   this.username = item;
-    //   this.content.resize();
-    // });
     this.provider.getUserLogin().then(data =>{
       this.user = data;
       this.content.resize();
