@@ -6,7 +6,7 @@ page-details {
         font-size:16px;
     }
     .BackgroundColorcoins{
-        background-color: #151A1D;
+        background-color: #262727;
         
     }
     
@@ -20,7 +20,10 @@ page-details {
     color: #FFB405;
     font-size: 13px;
     }
-
+    .imgSize{       
+        width:10%;
+        height:10%;
+    }
 
 
     .label {
@@ -59,11 +62,18 @@ page-details {
         text-align: right;
     }
     .fixedRight{
-        min-width: 50% !important;
-        max-width: 50% !important;
+        // min-width: 52% !important;
+        // max-width: 52% !important;
         text-align: right;
-        
+        padding-right:-50px;
     }
+   
+    // .fixedRight{
+    //     min-width: 50% !important;
+    //     max-width: 50% !important;
+    //     text-align: right;
+        
+    // }
     .fixedLeft{
         min-width: 47.5% !important;
         max-width: 47.5% !important;
@@ -169,11 +179,14 @@ page-details {
     //     contain: size style layout;
     //     margin-right: -4%;
     // }
-
+   
 
     .list {
-        margin-left: -5%;
-        margin-top: -4%;
+        // margin-left: -5%;
+        // margin-top: -4%;
+        min-width: 100% !important;
+    max-width: 100% !important;
+    text-align: left;
     }
 
 
@@ -219,5 +232,6 @@ page-details {
     .item ion-avatar[item-left], .item ion-thumbnail[item-left], .item ion-avatar[item-start], .item ion-thumbnail[item-start] {
     margin: 8px 16px 8px 8px;
 }
+
     
 }

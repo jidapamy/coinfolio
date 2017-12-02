@@ -40,7 +40,7 @@ export class AlertPage {
     });
       if (this.chooseCrypto.last_price>1){
         this.priceAbove = ((+this.chooseCrypto.last_price) + 0.01).toFixed(2);
-        this.priceBlow = ((+this.chooseCrypto.last_price) - 0.01).toFixed(2);
+        this.priceBlow = ((+this.chooseCrypto.last_price) - 0.01).toFixed(8);
       }else{
       this.priceAbove = ((+this.chooseCrypto.last_price) + 0.00000001).toFixed(8);
       this.priceBlow = ((+this.chooseCrypto.last_price) - 0.00000001).toFixed(8);

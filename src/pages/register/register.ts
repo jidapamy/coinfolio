@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController} from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
-
+ 
 /**
  * Generated class for the RegisterPage page.
  *
@@ -33,6 +33,12 @@ export class RegisterPage {
     public alertCtrl: AlertController) {
 
     this.users = angularfire.list('/users');
+    // this.users = angularfire.list('/users', {
+    //   query: {
+    //     orderByChild: 'username',
+    //     equalTo: 'jidapamy'
+    //   }
+    // });
     this.signupForm = this.formBuilder.group({
       username: ['', Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9]*'), Validators.minLength(8)])],
       password: ['', Validators.compose([Validators.required, Validators.minLength(8)])],

@@ -9,6 +9,8 @@ import { Screenshot } from '@ionic-native/screenshot';
 import { HomePage } from '../home/home';
 import { FolioPage } from '../folio/folio';
 import { Content } from 'ionic-angular';
+import { EditTransactionPage } from '../edit-transaction/edit-transaction';
+import { AddTransationPage } from '../add-transation/add-transation';
 
 /**
  * Generated class for the DetailsPage page.
@@ -121,7 +123,12 @@ export class DetailsPage {
 
   }
 
-
+  goTOEditTransactionPage(){
+    this.navCtrl.push(EditTransactionPage);
+  }
+  goTOAddTransationPage() {
+    this.navCtrl.push(AddTransationPage);
+  }
   goToHomePage() {
     this.navCtrl.setRoot(HomePage);
     // this.navCtrl.push(CoinsDetailPage,crypto);
@@ -163,7 +170,7 @@ export class DetailsPage {
   showGraph(data) {
     // ----
 
-
+    console.log("dataAAAAAAA :" + data);
     Highcharts.createElement('link', {
       href: 'https://fonts.googleapis.com/css?family=Unica+One',
       rel: 'stylesheet',
@@ -447,6 +454,9 @@ export class DetailsPage {
   }
 
   refreshPage(){
+    
+
+    
     console.log('refresh')
    
         this.content.resize();
