@@ -19,7 +19,6 @@
 <ion-content padding color="bgdark" >
   <ion-list class="colorBg">
     <ion-item class="bg-stype" (click)="goToFeedback()"><span class="spacebar"> Feedback </span></ion-item>
-    <ion-item class="bg-stype" (click)="goToEnablePasscodLock()"><span class="spacebar">Enable Passcod Lock</span></ion-item>
     <ion-item class="bg-stype" (click)="goToPrivacy()"><span class="spacebar">Terms Of Use & Privacy</span></ion-item>
     <ion-item class="bg-stype" (click)=" goToTutorail()"><span class="spacebar">Replay Tutorail</span></ion-item>
     
@@ -27,12 +26,12 @@
     
   </ion-list>
   <div class="left">
-  <ion-list >
-    <ion-item class="spacebarFiger" >
-      <ion-label><span class="spacebar">Frodo Baggins</span></ion-label>
-      <ion-toggle  value="foo" checked="false" [(ngModel)]="checked" ></ion-toggle>
-    </ion-item>
-    <hr>
-  </ion-list>
-</div>
+    <ion-list>
+      <ion-item class="spacebarFiger">
+        <ion-label><span class="spacebar">Fingerprint</span></ion-label>
+        <ion-toggle value="foo" checked="false" [(ngModel)]="checked"></ion-toggle>
+      </ion-item>
+      <hr>
+    </ion-list>
+  </div>
 </ion-content>

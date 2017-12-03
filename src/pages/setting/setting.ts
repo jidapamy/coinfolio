@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-
+import { FingerprintAIO } from '@ionic-native/fingerprint-aio';
 import { PasscodePage } from '../passcode/passcode';
 import { PrivacyPage } from '../privacy/privacy';
 import { TutorialPage } from '../tutorial/tutorial';
@@ -21,11 +21,10 @@ import { EmailComposer } from '@ionic-native/email-composer';
   templateUrl: 'setting.html',
 })
 export class SettingPage {
-  checked:boolean;
   checkedFiger: boolean;
   
 
-  constructor(private EmailComposer:EmailComposer,public navCtrl: NavController, public navParams: NavParams){
+  constructor(private faio: FingerprintAIO,private EmailComposer:EmailComposer,public navCtrl: NavController, public navParams: NavParams){
     
   }
   goToFeedback() {
@@ -40,17 +39,12 @@ export class SettingPage {
     };
     this.EmailComposer.open(email);
   }
-  goToEnablePasscodLock() {
-    this.navCtrl.push(PasscodePage);
-
-  }
   goToPrivacy() {
     this.navCtrl.push(PrivacyPage);
 
   }
   goToTutorail() {
     this.navCtrl.push(TutorialPage);
-    this.checked
 
   }
 

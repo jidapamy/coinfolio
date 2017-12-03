@@ -5,36 +5,46 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>tutorial</ion-title>
-  </ion-navbar>
+<!-- <link href="https://fonts.googleapis.com/css?family=Fredericka+the+Great" rel="stylesheet"> -->
+<link href="https://fonts.googleapis.com/css?family=Copse" rel="stylesheet">
+  
 
 </ion-header>
 
 
 <ion-content >
   
-    <ion-slides pager>
-        
+    <ion-slides pager (ionSlideDidChange)="slideChanged()">
+       
       <ion-slide>
-        <img src="img/1.jpg" >
+        <img src="img/1.png" >
       </ion-slide>
 
       <ion-slide>
-        <img src="img/2.jpg">
+        <img src="img/2.png">
       </ion-slide>
 
       <ion-slide>
-        <img src="img/3.jpg">
+        <img src="img/3.png">
       </ion-slide>
+
       <ion-slide>
-        <img src="img/4.jpg">
+        <img src="img/4.png">
       </ion-slide>
+
       <ion-slide>
-        <img src="img/5.jpg">
-        <button style="weidth:150px;higth:50px">SKIP</button>
+        <img src="img/5.png">
+      </ion-slide>
+
+      <ion-slide>
+        <img src="img/6.png">
+      </ion-slide>
+
+      <ion-slide>
+
+        <img src="img/7.png">
       </ion-slide>
 
     </ion-slides>
+  <button class="skips" (click)="skip()" id="skip">{{SkipMs}}</button>
 </ion-content>

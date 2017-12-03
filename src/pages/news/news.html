@@ -23,7 +23,6 @@
     </ion-refresher-content>
   </ion-refresher>
   <ion-card *ngFor='let item of items' (click)="openWebpage(item)" class="size" style="margin-top:0%;">
-    <!-- <a href="{{item.link}}" > -->
     <img src="{{item.enclosure}}" />
     <ion-card-content>
 
@@ -35,6 +34,5 @@
       <ion-icon name="md-person"></ion-icon>&nbsp;{{item.author}}
 
     </ion-card-content>
-    <!-- </a> -->
   </ion-card>
 </ion-content>

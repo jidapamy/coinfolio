@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform, MenuController } from 'ionic-angular';
+import { Nav, Platform, MenuController, ModalController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Storage } from '@ionic/storage';
@@ -45,7 +45,8 @@ export class MyApp {
               public splashScreen: SplashScreen,
               public provider: DatacoinProvider,
               public storage: Storage,
-              public menuControl: MenuController
+              public menuControl: MenuController,
+              public modalCtrl: ModalController
             ) {
     this.initializeApp();
 
@@ -186,5 +187,19 @@ export class MyApp {
     this.menuControl.enable(true, this.activeMenu)
     this.menuControl.enable(false, 'notLogin');
   }
+
+  ngAfterViewInit() {
+    let statusStorage;
+    this.provider.getDataTutorial().then(data => {
+      statusStorage = data;
+      console.log('statusStorage ' + statusStorage)
+      if (!statusStorage) {
+        let modal = this.modalCtrl.create(TutorialPage);
+        modal.present();
+      } else {
+        let modal = this.modalCtrl.create(HomePage);
+      }
+    })
+}
 
 }

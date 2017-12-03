@@ -1,7 +1,11 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { DatacoinProvider } from '../../providers/datacoin/datacoin';
+import { ViewChild } from '@angular/core';
+import { Slides } from 'ionic-angular';
 
+import { HomePage } from '../home/home';
 /**
  * Generated class for the TutorialPage page.
  *
@@ -14,20 +18,21 @@ import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/databa
   templateUrl: 'tutorial.html',
 })
 export class TutorialPage {
+  @ViewChild(Slides) slides: Slides;
   data: any;
-  users: FirebaseListObservable<any[]>;
   usersInFirebase:any[]=[]
   key:any[];
   user:any[];
-  constructor(public navCtrl: NavController, 
+  SkipMs:string="SKIP";
+
+  constructor(public navCtrl: NavController,
+              public provider: DatacoinProvider,
               public navParams: NavParams,
               public angularfire: AngularFireDatabase) {
 
-    this.users = angularfire.list('/users');
-    this.users.update('-KzgePivGfYHDl2kx4D8',{username:'msmdmsms'})
    
     console.log('Length: '+this.usersInFirebase.length);
-    // console.log('KEY:' + this.myCoins)
+    this.provider.setDataTutorial(true);
   }
 
   pushKey(userKey){
@@ -42,5 +47,17 @@ export class TutorialPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad TutorialPage');
   }
+  skip() {
+    this.navCtrl.setRoot(HomePage);
+  }
 
+  slideChanged() {
+    if (this.slides.isEnd()){
+      this.SkipMs = "Alright, I got it";
+    }else{
+      this.SkipMs = "SKIP";
+    }
+      
+  }
+  
 }

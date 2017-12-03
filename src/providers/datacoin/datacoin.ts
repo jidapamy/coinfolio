@@ -58,7 +58,28 @@ export class DatacoinProvider {
 			});
 		});
 
+
+
+		this.storage.ready().then(() => {
+			this.storage.get('tutorial').then((data) => {
+				console.log('tutoraial')
+				console.dir(data);
+			});
+		});
+		// this.storage.set('tutorial', false);
+		// this.setDataTutorial(false);
 	}
+
+	
+	getDataTutorial(){
+		return this.storage.get('tutorial')
+	}
+	setDataTutorial(boolean){
+		this.storage.set('tutorial', boolean)
+	}
+	
+
+	
 
 	
 
@@ -208,7 +229,7 @@ export class DatacoinProvider {
 		console.log(`loadBids: ${pairing_id}`);
 		console.log('/orderbook/?/orderbook/?pairing=' + pairing_id);
 		let url = `/api${pairing_id}`
-		console.log(`url: ${url}`)
+		console.log(`url: ${url}-`)
 		return this.http.get('api/' + 'orderbook/?/orderbook/?pairing=' + pairing_id)
 			.map(response => response.json().asks);
 	}
