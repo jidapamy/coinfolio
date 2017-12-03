@@ -22,6 +22,8 @@ import { PasscodePage } from '../pages/passcode/passcode';
 import { Content } from 'ionic-angular';
 
 
+
+
 @Component({
   templateUrl: 'app.html'
 })
@@ -29,7 +31,7 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any = HomePage;
-  // rootPage: any = LoginPage;
+  // rootPage: any = FolioPage;
   // rootPage: any = TutorialPage;
   activeMenu:string;
   username:any='';

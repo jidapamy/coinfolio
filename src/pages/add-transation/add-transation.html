@@ -35,9 +35,9 @@
           <span style="font-size: 10px;color: #e13838;">{{errorStatus}}</span>
         </ion-label>
         <ion-select [(ngModel)]="status" (ionChange)="chooseStatus()" interface="popover" formControlName="status">
-          <ion-option color="bgyellow" value="buy">BUY</ion-option>
-          <ion-option value="sell">SELL</ion-option>
-          <ion-option value="watch">WATCH ONLY</ion-option>
+          <ion-option color="bgyellow" value="Buy">BUY</ion-option>
+          <ion-option value="Sell">SELL</ion-option>
+          <ion-option value="Watch">WATCH ONLY</ion-option>
         </ion-select>
       </ion-item>
     </ion-list>
@@ -49,13 +49,13 @@
       </ion-item>
       <ion-item>
         <ion-label class="fixedLeft">Trade Price {{errorTradePrice}}</ion-label>
-        <ion-input *ngIf="status!='watch'"class="fixedRight" [(ngModel)]="price" item-right type="number" placeholder="{{crypto.last_price}}" value="{{crypto.last_price}}" formControlName="tradePrice"></ion-input>
-        <ion-input *ngIf="status=='watch'" class="fixedRight" disabled [(ngModel)]="price" item-right type="number" placeholder="{{crypto.last_price}}" value="{{crypto.last_price}}" formControlName="tradePrice"></ion-input>
+        <ion-input *ngIf="status!='Watch'"class="fixedRight" [(ngModel)]="price" item-right type="number" placeholder="{{crypto.last_price}}" value="{{crypto.last_price}}" formControlName="tradePrice"></ion-input>
+        <ion-input *ngIf="status=='Watch'" class="fixedRight" disabled [(ngModel)]="price" item-right type="number" placeholder="{{crypto.last_price}}" value="{{crypto.last_price}}" formControlName="tradePrice"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label class="fixedLeft">Enter Quantity</ion-label>
-        <ion-input *ngIf="status!='watch'" class="fixedRight" [(ngModel)]="quantity" formControlName="quantity" item-right min="0" type="number" placeholder="enter quantity" value=0></ion-input>
-        <ion-input *ngIf="status=='watch'" disabled class="fixedRight" [(ngModel)]="quantity" formControlName="quantity" item-right min="0" type="number" placeholder="enter quantity" value=0></ion-input>
+        <ion-input *ngIf="status!='Watch'" class="fixedRight" [(ngModel)]="quantity" formControlName="quantity" item-right min="0" type="number" placeholder="enter quantity" value=0></ion-input>
+        <ion-input *ngIf="status=='Watch'" disabled class="fixedRight" [(ngModel)]="quantity" formControlName="quantity" item-right min="0" type="number" placeholder="enter quantity" value=0></ion-input>
       </ion-item>
       
       <ion-item>

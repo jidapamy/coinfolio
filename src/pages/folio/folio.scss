@@ -75,7 +75,10 @@ page-folio {
     }
     .fontsize{
         font-size:13px;
-        color:rgb(131, 131, 131);
+        // color:rgb(131, 131, 131);
+        margin-top: 15%;
+        // font-weight: 600;
+        color: #FFF;
     }
     .tableColor{
         on-item:nth-child(even) {background: #CCC}
@@ -134,7 +137,7 @@ page-folio {
     }
     ion-icon {
         // display: inline-block;
-        font-size: 21px;
+        font-size: 14px;
     }
 
     .item ion-avatar[item-left], .item ion-thumbnail[item-left], .item ion-avatar[item-start], .item ion-thumbnail[item-start] {

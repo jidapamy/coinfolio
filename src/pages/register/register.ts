@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController} from 'ionic-angular';
+import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { DatacoinProvider } from '../../providers/datacoin/datacoin';
 
 /**
  * Generated class for the RegisterPage page.
@@ -20,32 +20,28 @@ export class RegisterPage {
   errorPassword: string = '';
   errorRepassword: string = '';
   errorEmailswap: string = '';
-  // errorTest: string = '';
-  // test:any;
-
   errorEmail: string = '';
-  users: FirebaseListObservable<any[]>;
+  usernameAlready: boolean;
+  errorMsgRegis : string;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public formBuilder: FormBuilder,
-    public angularfire: AngularFireDatabase,
-    public alertCtrl: AlertController) {
-
-    this.users = angularfire.list('/users');
+    public alertCtrl: AlertController,
+    public provider: DatacoinProvider) {
     this.signupForm = this.formBuilder.group({
       username: ['', Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9]*'), Validators.minLength(8)])],
       password: ['', Validators.compose([Validators.required, Validators.minLength(8)])],
       rePassword: ['', Validators.compose([Validators.required, Validators.minLength(8)])],
       email: ['', Validators.compose([Validators.required, Validators.pattern('^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$')])],
-      //'email': ['', Validators.compose([Validators.required, Validators.email])]
     })
+
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad RegisterPage');
   }
- 
+
   validate(): boolean {
 
     if (this.signupForm.valid) {
@@ -108,21 +104,43 @@ export class RegisterPage {
     this.errorEmailswap = '';
     if (this.validate()) {
       console.log(this.signupForm.value);
-      this.users.push({ username: this.signupForm.value.username,
-                        password: this.signupForm.value.password,
-                        email: this.signupForm.value.email,
-                      });
-      let alertComplete = this.alertCtrl.create({
+      let allUser = this.provider.getAllUSer();
+      let newUser = {
+        username: this.signupForm.value.username,
+        password: this.signupForm.value.password,
+        email: this.signupForm.value.email
+      }
+      for (let i = 0; i < allUser.length; i++) {
+        if (newUser.username == allUser[i].username && newUser.email == allUser[i].email  ) {
+          this.usernameAlready = true
+          this.errorMsgRegis = 'This username and email already!'
+          break;
+        } else if (newUser.username == allUser[i].username) {
+          this.usernameAlready = true
+          this.errorMsgRegis = 'This username already!'
+          break;
+        } else if (newUser.email == allUser[i].email) {
+          this.usernameAlready = true
+          this.errorMsgRegis = 'This email already!'
+          break;
+        }else {
+          this.usernameAlready = false
+        }
+      }
+
+      if(!this.usernameAlready){
+        this.provider.registerUser(newUser);
+        let alertComplete = this.alertCtrl.create({
           title: 'Registration Succesful',
           subTitle: 'Your have successfully registered for CoinFolio. See you in CoinFolio'
-      });
-      
-      alertComplete.present();
-      setTimeout(()=> {
-        alertComplete.dismiss();
+        });
+
+        alertComplete.present();
+        setTimeout(() => {
+          alertComplete.dismiss();
           this.navCtrl.pop()
-      }, 1700);
-      
+        }, 1700);
+      }
     }
   }
 
@@ -133,7 +151,7 @@ export class RegisterPage {
     this.errorPassword = '';
   }
   afterKeyRepassword() {
-    // this.errorRepassword = '';
+    this.errorRepassword = '';
   }
   afterKeyEmail() {
     this.errorEmail = '';
