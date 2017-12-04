@@ -105,8 +105,8 @@
       <ion-label class="fixedLeft topic">{{ crypto.myCoins.coin.secondary_currency }}/{{crypto.myCoins.coin.primary_currency}} Summary</ion-label>
       <ion-label class="fixedRightEnd">
         <p style="color:rgb(131, 131, 131);font-size: 13px">Profit / Lost*</p>
-        <button [ngClass]="{priceMinusSumary:result<0}" >{{result}} THB</button>
-        <button [ngClass]="{pricePlusSumary:result>=0}">{{result}} THB</button>
+        <button *ngIf="result<0" class="priceMinusSumary">{{result}} THB</button>
+        <button *ngIf="result>=0" class="pricePlusSumary">{{result}} THB</button>
       </ion-label>
     </ion-item>
     <ion-item style="padding-top: 4px;padding-bottom: 8px;background-color: #111314">
@@ -116,7 +116,7 @@
       </ion-label>
       <ion-label class="fixedMiddle">
         <p class="detailTopic">Market Value</p>
-        <p class="detailContent">{{crypto.myCoins.totalQuantity * crypto.cryptoCurrency.last_price}} THB</p>
+        <p class="detailContent">{{marketValue}} THB</p>
       </ion-label>
       <ion-label class="fixedLast" >
         <p class="detailTopic">Net Cost*</p>
@@ -124,7 +124,7 @@
       </ion-label>
     </ion-item>
   </ion-list>
-  <ion-grid style="border-bottom:0.5px solid rgba(255, 255, 255, 0.07)" *ngFor="let transaction of transactionList">
+  <ion-grid style="border-bottom:0.5px solid rgba(255, 255, 255, 0.07)" *ngFor="let transaction of transactionList" (click)="goTOEditTransactionPage(transaction)">
       <ion-row>
         <ion-col class="fixedfirst">
           <p class="toppicSummary">{{transaction.status}}</p>

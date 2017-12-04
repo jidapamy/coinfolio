@@ -91,6 +91,7 @@ export class DatacoinProvider {
 	}
 
 	updateAmountHolding(coin, totalQuantity, totalPrice) {
+		console.log('Update')
 		this.myCoinsData = this.angularfire.list(this.mycoinsPath);
 		this.myCoinsData.update(coin.$key, { totalQuantity: totalQuantity, totalPrice: totalPrice })
 	}
@@ -112,6 +113,13 @@ export class DatacoinProvider {
 			transaction = data;
 		})
 		return transaction;
+	}
+	updateTransaction(key,newTransaction){
+		console.log('Key :'+key)
+		console.dir(newTransaction)
+		this.transactionData.update(key, { date: newTransaction.date, note: newTransaction.note,
+										   quantity: newTransaction.quantity, status: newTransaction.status,
+										   total: newTransaction.total, tradePrice: newTransaction.tradePrice});
 	}
 
 	// Chat

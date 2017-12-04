@@ -60,6 +60,7 @@ export class DetailsPage {
   transactionList: transaction[] = [];
   thisCoins: any;
   result :any;
+  marketValue:any;
 
   // myCoins:my
 
@@ -74,7 +75,24 @@ export class DetailsPage {
     this.orderbook = this.crypto.cryptoCurrency.orderbook;
     this.bids = this.orderbook.bids;
     this.asks = this.orderbook.asks;
-    this.result = this.crypto.myCoins.totalPrice - (this.crypto.myCoins.totalQuantity * this.crypto.cryptoCurrency.last_price)
+    this.marketValue = this.crypto.myCoins.totalQuantity * this.crypto.cryptoCurrency.last_price
+    this.result = this.crypto.myCoins.totalPrice - this.marketValue
+    
+
+    this.marketValue = +this.marketValue
+    if (this.marketValue > 1){
+      this.marketValue = this.marketValue.toFixed(2)
+    }else{
+      this.marketValue = this.marketValue.toFixed(8)
+    }
+
+    this.result = +this.result
+    if (this.result < -100 || this.result > 1) {
+      this.result = this.result.toFixed(2)
+    } else {
+      this.result = this.result.toFixed(8)
+    }
+    console.log('Result '+this.result)
 
     console.dir(this.crypto);
 
@@ -177,8 +195,8 @@ export class DetailsPage {
 
 
   }
-  goTOEditTransactionPage() {
-    this.navCtrl.push(EditTransactionPage);
+  goTOEditTransactionPage(transaction) {
+    this.navCtrl.push(EditTransactionPage, { transaction: transaction, coin: this.crypto.myCoins});
   }
   goTOAddTransationPage() {
     this.navCtrl.push(AddTransationPage);
