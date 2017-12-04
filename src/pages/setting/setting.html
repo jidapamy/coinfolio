@@ -29,7 +29,7 @@
     <ion-list>
       <ion-item class="spacebarFiger">
         <ion-label><span class="spacebar">Fingerprint</span></ion-label>
-        <ion-toggle value="foo" checked="false" [(ngModel)]="checked"></ion-toggle>
+        <ion-toggle   checked="{{statusToggle}}" (click)="checkToggle()"></ion-toggle>
       </ion-item>
       <hr>
     </ion-list>

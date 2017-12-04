@@ -1,5 +1,5 @@
 import { Component, ViewChild, AfterViewChecked, ElementRef } from '@angular/core';
-import { NavController, NavParams, AlertController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, Content } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 
@@ -20,10 +20,11 @@ import { DatacoinProvider } from '../../providers/datacoin/datacoin';
 })
 export class ChatPage {
 	@ViewChild('scrollMe') private myScrollContainer: ElementRef;
+	@ViewChild(Content) content: Content
 	MAX_NUMBER = 100;
 	sendMessage: FormGroup;
 
-	chatsList:any[];
+	chatsList: any[] = [];
 	username: string;
 	message: string;
 	userLogin: boolean;
@@ -36,17 +37,27 @@ export class ChatPage {
 		public navParams: NavParams,
 		public angularfire: AngularFireDatabase,
 		public provider: DatacoinProvider) {
-		this.chatsList = this.provider.getChatData();
-		
-		// remove chat if over limit (MAX_NUMBER)
-		for (let i = 0; i < this.chatsList.length - this.MAX_NUMBER; i++) {
-			this.provider.removedChat(this.chatsList[i])
-		}
-		
+			console.log('COnstruc')
+		let intervel = setInterval(() => {        // fetch data BXCoin API
+			if (this.chatsList.length == 0) {
+				this.chatsList = this.provider.getChatData();
+			} else {
+				clearInterval(intervel);
+
+				//remove chat if over limit (MAX_NUMBER)
+				for (let i = 0; i < this.chatsList.length - this.MAX_NUMBER; i++) {
+					this.provider.removedChat(this.chatsList[i])
+				}
+				this.content.resize();
+			}
+
+		}, 300);
+
+
 		// username in chat
-		this.provider.getUsername().then((item) => {
-			if (item) {
-				this.username = item;
+		this.provider.getUsername().then((data) => {
+			if (data) {
+				this.username = data.user.username;
 				this.userLogin = true;
 			} else {
 				let random = Math.floor(Math.random() * (9999 - 1000) + 1000);
@@ -141,4 +152,10 @@ export class ChatPage {
 		}
 	}
 
+	// ngOnInit() {
+	// 	this.provider.getUserLogin().then(data => {
+	// 		this.username = data.username;
+	// 		this.content.resize();
+	// 	});
+	// }
 }

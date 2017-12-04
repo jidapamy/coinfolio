@@ -16,7 +16,7 @@ import { CoinsDetailPage } from '../pages/coins-detail/coins-detail';
 import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
 import { HeaderPage } from '../pages/header/header';
-import { PasscodePage } from '../pages/passcode/passcode';
+
 import { PrivacyPage } from '../pages/privacy/privacy';
 import { TutorialPage } from '../pages/tutorial/tutorial';
 import { FeedbackPage } from '../pages/feedback/feedback';
@@ -66,8 +66,7 @@ export const config = {
     FolioPage,
     CoinsDetailPage,
     LoginPage,
-    RegisterPage,
-    PasscodePage,
+    RegisterPage,   
     FeedbackPage,
     EditTransactionPage,
     HeaderPage
@@ -101,7 +100,6 @@ export const config = {
     CoinsDetailPage,
     LoginPage,
     RegisterPage,
-    PasscodePage,
     FeedbackPage,
     EditTransactionPage,
     HeaderPage

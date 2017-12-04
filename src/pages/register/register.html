@@ -13,6 +13,13 @@
 </ion-header>
 
 <ion-content padding>
+  <ion-card *ngIf="usernameAlready">
+    <ion-card-content>
+      <ion-icon name="warning"></ion-icon>
+      <b>Error : </b>{{errorMsgRegis}}
+    </ion-card-content>
+  </ion-card>
+
   <form [formGroup]="signupForm" (ngSubmit)="signUp()">
     <ion-list>
       <ion-item>

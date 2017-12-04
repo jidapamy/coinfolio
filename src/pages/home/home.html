@@ -33,7 +33,10 @@
 
 
 <ion-content padding>
+
+  
   <ion-list>
+    <ion-searchbar (ionInput)="searchQuotes(crypto)"></ion-searchbar>
     <ion-item-sliding #slidingItem *ngFor="let crypto of coins">
       <ion-item (click)="goToDetail(crypto)" >
         <ion-avatar item-start>

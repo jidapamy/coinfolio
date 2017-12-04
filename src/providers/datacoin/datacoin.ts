@@ -1,10 +1,7 @@
-// import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs';
-// import _ from 'lodash';
-// import { OnInit } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { Platform } from 'ionic-angular';
@@ -27,21 +24,27 @@ export class DatacoinProvider {
 
 	userLogin:any;
 	userKey:any;
+	coinsKey: any;
 	mycoinsPath:any;
 	transactionPath:any;
-
+	getNameCoinsBX:any[];
 	username: any='';
 	// private headers = new Headers({ 'Content-Type': 'application/json' });
 	private apiUrl = "/api";
 	rateBtc: any = 0;
 	rateEth: any = 0;
+	rateUsd : any =34;
+	cryptoWithName:any[]=[]
+	cryptoCurrency:any[]=[];
 
 	constructor(public http: Http,
 		public platform: Platform,
 		public storage: Storage,
 		public angularfire: AngularFireDatabase) {
 		console.log('Hello DatacoinProvider Provider');
-
+		this.mixNameCoins() 
+		console.log('this.cryptoCurrency นะจ๊ะ')
+		console.dir(this.cryptoCurrency)
 		if (this.platform.is('cordova')) {                // <<< is Cordova available?
 			this.apiUrl = 'https://bx.in.th/api';
 		}	
@@ -66,10 +69,25 @@ export class DatacoinProvider {
 				console.dir(data);
 			});
 		});
+
+
+		this.storage.ready().then(() => {
+			this.storage.get('Fingerprint').then((data) => {
+				console.log('Fingerprint')
+				console.dir(data);
+			});
+		});
 		// this.storage.set('tutorial', false);
 		// this.setDataTutorial(false);
 	}
 
+	getFingerprint(): Promise<any> {
+		return this.storage.get('Fingerprint')
+	}
+	setFingerprint(data) {
+		this.storage.set('Fingerprint', data)
+		console.log(data)
+	}
 	
 	getDataTutorial(){
 		return this.storage.get('tutorial')
@@ -113,10 +131,26 @@ export class DatacoinProvider {
 		this.myCoinsData.update(coin.$key, { totalQuantity: totalQuantity, totalPrice: totalPrice })
 	}
 
-	addTransactionAlreadyCoin(coin,transaction){
+	addTransactionAlreadyCoin(transaction){
 		console.log()
-		this.transactionData = this.angularfire.list(this.getMycoinsPath() + '/' + coin.$key + '/transaction');
+		this.transactionData = this.angularfire.list(this.getTransactionPath());
 		this.transactionData.push(transaction);
+	}
+
+	getTransactionPath() {
+		return this.getMycoinsPath() + '/' + this.coinsKey + '/transaction'
+	}
+
+	getTransactionOfCoin(){
+		let transaction;
+		this.transactionData = this.angularfire.list(this.getTransactionPath())
+		this.transactionData.subscribe(data => {
+			transaction = data;
+		})
+		return transaction;
+	}
+	removedMyCoins(coin) {
+		this.myCoinsData.remove(coin);
 	}
 
 	// Chat
@@ -145,14 +179,18 @@ export class DatacoinProvider {
 		return this.storage.get('userLogin')
 	}
 
-	// getAllUSer(){
-	// 	let userList:any[];
-	// 	this.userData.subscribe(data =>{
-	// 		userList = data
-	// 		// return userList;
-	// 	})
-	// 	return userList;
-	// }
+	registerUser(data){
+		this.userData.push(data)
+	}
+
+	getAllUSer(){
+		let userList:any[];
+		this.userData.subscribe(data =>{
+			userList = data
+			// return userList;
+		})
+		return userList;
+	}
 
 	setUserLogin(user){
 		// this.userLogin = user; 
@@ -170,7 +208,7 @@ export class DatacoinProvider {
 	}
 
 	loadBX(): Observable<crypto[]> {
-		return this.http.get(this.apiUrl)
+		return this.http.get("bx.in.th.json")
 			.map(response => {
 				return response.json()
 			});
@@ -189,7 +227,7 @@ export class DatacoinProvider {
 	// 	// this.myCoins.push(dataTransaction);
 	// 	//   this.storage.set('myCoins', this.myCoins);
 	// }
-
+	
 	removedMycoin(){
 		this.myCoinsData = this.angularfire.list(this.pathFirebase);
 	}
@@ -248,6 +286,114 @@ export class DatacoinProvider {
 			}
 			//   console.log('Sussess ' + i + '----- name :' + newCrypto[i].nameCrypto);
 		}
+	}
+
+	// BX Coins
+	mixNameCoins()  {
+		let cryptoNumbers; 
+		this.loadBX().subscribe(data => {
+			cryptoNumbers = Object.keys(data).map(key => data[key]);
+		},
+			error => { console.log("error: " + error); },
+			() => {
+				for (let i = 0; i < cryptoNumbers.length; i++) {
+					this.cryptoWithName[i] = {
+						pairing_id: cryptoNumbers[i].pairing_id,
+						primary_currency: cryptoNumbers[i].primary_currency,
+						secondary_currency: cryptoNumbers[i].secondary_currency,
+						change: cryptoNumbers[i].change,
+						last_price: cryptoNumbers[i].last_price,
+						volume_24hours: cryptoNumbers[i].volume_24hours,
+						nameCrypto: NAME[i],
+						orderbook: cryptoNumbers[i].orderbook
+					}
+				}
+				
+				for (let i = 0; i < this.cryptoWithName.length; i++) {
+					if (this.cryptoWithName[i].secondary_currency == 'BTC') {
+						this.rateBtc = this.cryptoWithName[i].last_price;
+					}
+					if (this.cryptoWithName[i].secondary_currency == 'ETH' && this.cryptoWithName[i].primary_currency == 'THB') {
+						this.rateEth = this.cryptoWithName[i].last_price;
+					}
+				}
+				this.loopOfConvert('THB');
+				this.loopOfConvert('BTC');
+				this.loopOfConvert('ETH');
+				this.loopOfConvert('USD'); 
+			})
+	}
+
+	loopOfConvert(type) {
+		for (let i = 0; i < this.cryptoWithName.length; i++) {
+			this.pushCrytoTotal(type, i);
+		}
+	}
+
+	pushCrytoTotal(type: any, index: number) {
+		this.cryptoCurrency.push({
+			pairing_id: this.cryptoWithName[index].pairing_id,
+			primary_currency: type,
+			secondary_currency: this.cryptoWithName[index].secondary_currency,
+			change: this.cryptoWithName[index].change,
+			last_price: this.convertMoney(this.cryptoWithName[index], type),
+			volume_24hours: this.cryptoWithName[index].volume_24hours,
+			nameCrypto: this.cryptoWithName[index].nameCrypto,
+			orderbook: this.cryptoWithName[index].orderbook
+		})
+	}
+
+	convertMoney(coin, type) {
+		let price = 0;
+		let priceDecimal;
+		if (coin.primary_currency == 'THB') { // แปลงจากเงินบาท
+			if (type == 'THB') {
+				price = coin.last_price;
+			} else if (type == 'BTC') {
+				price = (coin.last_price / this.rateBtc);
+			} else if (type == 'ETH') {
+				price = (coin.last_price / this.rateEth);
+			} else if (type == 'USD') {
+				price = (coin.last_price / this.rateUsd);
+			}
+		} else if (coin.primary_currency == 'BTC') { // แปลงจากเงิน BTC
+			if (type == 'THB') {
+				price = (coin.last_price * this.rateBtc);
+			} else if (type == 'BTC') {
+				price = coin.last_price;
+			} else if (type == 'ETH') {
+				price = ((coin.last_price * this.rateBtc) / this.rateEth);
+			} else if (type == 'USD') {
+				price = ((coin.last_price * this.rateBtc) / this.rateUsd);
+			}
+		}
+
+		// Decimal Format
+		if (price < 1) {
+			priceDecimal = price.toFixed(8);
+		} else {
+			priceDecimal = price.toFixed(2);
+		}
+		return priceDecimal;
+	}
+
+	getBxCoin(){
+		// this.mixNameCoins();
+
+		console.log('getBxCoin : '+this.cryptoCurrency.length)
+		return this.cryptoCurrency;
+	}
+	getName(){
+		this.loadBX().subscribe(data => {
+			this.getNameCoinsBX = Object.keys(data).map(key => data[key]);
+			console.dir(this.getNameCoinsBX)
+		},
+			error => { console.log("error: " + error); },
+			() => {
+				
+				
+			})	
+		return this.getNameCoinsBX		
 	}
 
 

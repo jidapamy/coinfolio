@@ -19,7 +19,7 @@ import { HomePage } from '../home/home';
 })
 export class AddTransationPage {
   addTransactionForm: FormGroup;
-  chooseType = 'buy';
+  chooseType = 'Buy';
   myDate: String = new Date().toISOString();
   crypto: cryptoCurrency;
   status: any;
@@ -75,7 +75,7 @@ export class AddTransationPage {
       let calculate = this.addTransactionForm.value.tradePrice * this.addTransactionForm.value.quantity;
       // console.log('calculate>>' + calculate + ' type:' + typeof (calculate))
       let price;
-      
+
       // decimalFormat
       if (calculate < 1) {
         price = (this.addTransactionForm.value.tradePrice * this.addTransactionForm.value.quantity).toFixed(8);
@@ -95,7 +95,15 @@ export class AddTransationPage {
       if (totalQuantity.indexOf('.') == -1) {
         totalQuantity = (+totalQuantity)
       } else {
-        totalQuantity = (+totalQuantity).toFixed(2)
+        totalQuantity = (+totalQuantity)
+        if (totalQuantity >= 1) {
+          totalQuantity = (+totalQuantity).toFixed(2)
+          console.log('totalQuantity >= 1 : ' + totalQuantity)
+        } else {
+          totalQuantity = (+totalQuantity).toFixed(8)
+          console.log('totalQuantity < 1 : ' + totalQuantity)
+        }
+
       }
       console.log('totalQuantity:' + totalQuantity)
 
@@ -105,7 +113,7 @@ export class AddTransationPage {
         tradePrice: this.addTransactionForm.value.tradePrice,
         quantity: this.addTransactionForm.value.quantity,
         total: price,
-        date: this.addTransactionForm.value.date,
+        date: ('' + this.addTransactionForm.value.date).substr(0, 10),
         note: this.addTransactionForm.value.note
       };
 
@@ -150,38 +158,41 @@ export class AddTransationPage {
         let totalQuantity;
         let totalPrice;
         // เชคว่า status เป็นแบบไหนเพื่อทำการคำนวน total
-        if (dataAddTransaction.status == 'buy') {
+        if (dataAddTransaction.status == 'Buy') {
           totalQuantity = ((+coinAlready.totalQuantity) + (+coins.totalQuantity));
           totalPrice = ((+coinAlready.totalPrice) + (+coins.totalPrice))
-        } else if (dataAddTransaction.status == 'sell') {
+        } else if (dataAddTransaction.status == 'Sell') {
           totalQuantity = ((+coinAlready.totalQuantity) - (+coins.totalQuantity));
           totalPrice = ((+coinAlready.totalPrice) - (+coins.totalPrice))
-        } else if (dataAddTransaction.status == 'watch') {
+        } else if (dataAddTransaction.status == 'Watch') {
           totalQuantity = (+coinAlready.totalQuantity);
           totalPrice = (+coinAlready.totalPrice);
         }
-        this.provider.addTransactionAlreadyCoin(coinAlready, dataAddTransaction)    //add transtion
-        this.provider.updateAmountHolding(coinAlready, totalQuantity, totalPrice);  //update totalPrice & totalQuantity
-      } else {  // เหรียญใหม่
-         // เชคว่า status เป็นแบบไหนเพื่อทำการคำนวน total
-        if (dataAddTransaction.status == 'watch') {
-          coins.totalPrice = 0
-          coins.totalQuantity = 0
-        } else if (dataAddTransaction.status == 'sell') {
-          coins.totalPrice = 0 - coins.totalPrice
-          coins.totalQuantity = coins.totalQuantity
+
+          this.provider.coinsKey = coinAlready.$key
+          this.provider.addTransactionAlreadyCoin(dataAddTransaction)    //add transtion
+          this.provider.updateAmountHolding(coinAlready, totalQuantity, totalPrice);  //update totalPrice & totalQuantity
+        } else {  // เหรียญใหม่
+          // เชคว่า status เป็นแบบไหนเพื่อทำการคำนวน total
+          if (dataAddTransaction.status == 'Watch') {
+            coins.totalPrice = 0
+            coins.totalQuantity = 0
+          } else if (dataAddTransaction.status == 'Sell') {
+            coins.totalPrice = 0 - coins.totalPrice
+            coins.totalQuantity = coins.totalQuantity
+          }
+          console.log('Add new coin')
+          console.dir(coins)
+          this.provider.addMycoins(coins);        // add new coin
+          myCoins = this.provider.getMycoins();
+          this.provider.coinsKey = myCoins[myCoins.length - 1].$key
+          this.provider.addTransactionAlreadyCoin(dataAddTransaction); // add transition in new Coin
         }
-        console.log('Add new coin')
-        console.dir(coins)
-        this.provider.addMycoins(coins);        // add new coin
-        myCoins = this.provider.getMycoins();   
-        this.provider.addTransactionAlreadyCoin(myCoins[myCoins.length - 1], dataAddTransaction); // add transition in new Coin
       }
     }
-  }
 
-  chooseStatus() {
-    this.errorStatus = '';
-  }
+    chooseStatus() {
+      this.errorStatus = '';
+    }
 
-}
+  }

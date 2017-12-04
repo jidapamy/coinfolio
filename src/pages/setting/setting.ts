@@ -1,14 +1,13 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { DatacoinProvider } from '../../providers/datacoin/datacoin';
 import { FingerprintAIO } from '@ionic-native/fingerprint-aio';
-import { PasscodePage } from '../passcode/passcode';
 import { PrivacyPage } from '../privacy/privacy';
 import { TutorialPage } from '../tutorial/tutorial';
 import { FeedbackPage } from '../feedback/feedback';
-import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { EmailComposer } from '@ionic-native/email-composer';
+
 /**
  * Generated class for the SettingPage page.
  *
@@ -22,10 +21,12 @@ import { EmailComposer } from '@ionic-native/email-composer';
 })
 export class SettingPage {
   checkedFiger: boolean;
-  
+  statusToggle: boolean;
 
-  constructor(private faio: FingerprintAIO,private EmailComposer:EmailComposer,public navCtrl: NavController, public navParams: NavParams){
-    
+  constructor(public provider: DatacoinProvider,private faio: FingerprintAIO,private EmailComposer:EmailComposer,public navCtrl: NavController, public navParams: NavParams){
+    this.provider.getFingerprint().then(data => {
+      this.statusToggle = data;
+    })
   }
   goToFeedback() {
     let email = {
@@ -46,8 +47,11 @@ export class SettingPage {
   goToTutorail() {
     this.navCtrl.push(TutorialPage);
 
+  } 
+  checkToggle(){
+    this.statusToggle = !this.statusToggle;
+    this.provider.setFingerprint(this.statusToggle);
   }
-
 }
 
 

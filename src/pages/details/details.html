@@ -18,23 +18,7 @@
       <button ion-button icon-only>
         <ion-icon  name="camera"></ion-icon>
       </button>
-
-
     </ion-buttons>
-
-
-
-    <!-- <button end ion-button menuToggle (click)="screenShot()">
-      <ion-icon name="md-camera"></ion-icon>
-    </button> -->
-
-    <!-- <button start ion-button menuToggle (click)="goToHomePage()">
-      <ion-icon name="md-arrow-back"></ion-icon>
-    </button> -->
-
-
-
-
   </ion-navbar>
 
   <ion-segment [(ngModel)]="segment">
@@ -54,25 +38,25 @@
   <ion-list>
     <ion-item class="BackgroundColorcoins">
       <ion-avatar item-start>
-        <img class="imgSize" src="https://d2v7vc3vnopnyy.cloudfront.net/img/coins/{{ crypto.secondary_currency }}.png" />
+        <img class="imgSize" src="https://d2v7vc3vnopnyy.cloudfront.net/img/coins/{{ crypto.cryptoCurrency.secondary_currency }}.png" />
       </ion-avatar>
       <ion-label class="fixedLeft">
-        {{ crypto.secondary_currency }}/{{crypto.primary_currency}} <br>
-        <span class="fontsize bottons">{{crypto.nameCrypto}}</span>
+        {{ crypto.myCoins.coin.secondary_currency }}/{{crypto.myCoins.coin.primary_currency}} <br>
+        <span class="fontsize bottons">{{crypto.myCoins.coin.nameCrypto}}</span>
   </ion-label>
   <ion-label class="fixedRight">
 
-    <span [ngClass]="{rateCurrency:crypto.change<0}">
-                            {{crypto.last_price}} {{crypto.primary_currency}}
+    <span [ngClass]="{rateCurrency:crypto.cryptoCurrency.change<0}">
+                            {{crypto.cryptoCurrency.last_price}} {{crypto.cryptoCurrency.primary_currency}}
                                     <br>
                                     
-                        <span *ngIf="crypto.change<0" [ngClass]="{ratedownCurrency:crypto.change<0}">
-                             Volume  {{crypto.change}}%
+                        <span *ngIf="crypto.cryptoCurrency.change<0" [ngClass]="{ratedownCurrency:crypto.cryptoCurrency.change<0}">
+                             Volum  {{crypto.cryptoCurrency.change}}%
                               <ion-icon name="md-arrow-dropdown"></ion-icon>
                         </span>
 
-    <span *ngIf="crypto.change>=0" [ngClass]="{rateupCurrency:crypto.change>=0}">
-                            <span> Volume  +{{crypto.change}} </span>
+    <span *ngIf="crypto.cryptoCurrency.change>=0" [ngClass]="{rateupCurrency:crypto.cryptoCurrency.change>=0}">
+                            <span> Volume  +{{crypto.cryptoCurrency.change}} </span>
     <ion-icon name="md-arrow-dropup"></ion-icon>
     </span>
     </span>
@@ -86,12 +70,12 @@
   <ion-list style="margin-left: 8%;margin-top: 0%;">
     <ion-item>
       <ion-label>
-        <p style="font-size:12px;color:#F0B90B;">Highbid</p>
-        <p>{{hightBid}}</p>
+        <p style="font-size:13px;color:#F0B90B;">Highbid</p>
+        <p>{{crypto.cryptoCurrency.orderbook.bids.highbid}}</p>
       </ion-label>
       <ion-label>
-        <p style="font-size:12px;color:#F0B90B;">Total</p>
-        <p>{{crypto.orderbook.bids.total}}</p>
+        <p style="font-size:10px;color:#F0B90B;">Total</p>
+        <p>{{crypto.cryptoCurrency.orderbook.bids.total}}</p>
       </ion-label>
       <ion-label>
         <p style="font-size:12px;color:#F0B90B;">Volume</p>
@@ -104,8 +88,8 @@
         <p>{{hightAsk}}</p>
       </ion-label>
       <ion-label>
-        <p style="font-size:12px;color:#F0B90B;">Total</p>
-        <p>{{crypto.orderbook.asks.total}}</p>
+        <p style="font-size:5px;color:#F0B90B;">Total</p>
+        <p>{{crypto.cryptoCurrency.orderbook.asks.total}}</p>
       </ion-label>
       <ion-label>
         <p style="font-size:12px;color:#F0B90B;">Volume</p>
@@ -115,54 +99,81 @@
   </ion-list>
   </span>
 
-
-
   <span *ngIf="segment=='holdings'">
-    <ion-list> 
-      <ion-item style="background-color:#111314;color:#bfbfbf;padding-top:2%;padding-bottom:2%;">
-        <ion-label class="fixedLeft" >
-          <img class="imgSize" src="https://d2v7vc3vnopnyy.cloudfront.net/img/coins/{{ crypto.secondary_currency }}.png" />
-          <span style="color:#F0B90B">{{ crypto.secondary_currency }}/{{crypto.primary_currency}}</span>
-          <br><span style="font-size:12px;">{{crypto.nameCrypto}}</span>
-  <span style="font-size:12px;"><br class="fixedRight" >Holodings><br>0.0222</span>
-  </ion-label>
-
-  <ion-label class="fixedRight"><span style="color:#F0B90B">Profit / Loss</span>
-
-    <span style="font-size:12px;"><br class="fixedRight" ><button  style="border-radius:5px;background-color:#74A700;color:white;padding:5px">1400000000</button><br>
-      Net Cost<br>23223121THB</span>
-  </ion-label>
-  </ion-item>
-</ion-list>
-              <!-- <button style=" text-align: center;">Holdings</button> -->
-  <ion-list>
-    <ion-item-sliding #slidingItem>
-    <ion-item style="background-color:#111314;color:#bfbfbf;padding-top:2%;padding-bottom:2%;" (click)="goTOEditTransactionPage()">
-      <ion-label class="fixedLeft">Buy : 50000
-        <br><span  style="font-size:12px;">Date: Jun / 21 / 2017</span>
-
-      </ion-label>
-
-      <ion-label class="fixedRight">Cost
-        <br>40201 THB
+    <ion-list style="background-color: #111314;padding-top: 10px;margin-top: 0px;margin-bottom: 0px;" *ngIf="segment=='holdings'">
+    <ion-item style="background-color: #111314">
+      <ion-label class="fixedLeft topic">{{ crypto.myCoins.coin.secondary_currency }}/{{crypto.myCoins.coin.primary_currency}} Summary</ion-label>
+      <ion-label class="fixedRightEnd">
+        <p style="color:rgb(131, 131, 131);font-size: 13px">Profit / Lost*</p>
+        <button *ngIf="result<0" class="priceMinusSumary" >{{result}} THB</button>
+        <button *ngIf="result>=0" class="pricePlusSumary">{{result}} THB</button>
       </ion-label>
     </ion-item>
-   
-    
-    <ion-item-options side="right">
-      <button ion-button icon-only (click)="addTransaction(slidingItem,crypto)" color="danger">
-	 	 			  <ion-icon color="light" name="add-circle"></ion-icon>
-	 	 	</button>
-    </ion-item-options>
-
-    </ion-item-sliding>
-    <!-- <hr style="background-color:#F0B90B;color:#F0B90B;font-size:10px;"> -->
-
+    <ion-item style="padding-top: 4px;padding-bottom: 8px;background-color: #111314;border-bottom: solid 1px;">
+      <ion-label class="fixedfirst">
+        <p class="detailTopic">Holdings</p>
+        <p class="detailContent">{{ crypto.myCoins.totalQuantity}}</p>
+      </ion-label>
+      <ion-label class="fixedMiddle">
+        <p class="detailTopic">Market Value</p>
+        <p class="detailContent">{{crypto.myCoins.totalQuantity * crypto.cryptoCurrency.last_price}} THB</p>
+      </ion-label>
+      <ion-label class="fixedLast" >
+        <p class="detailTopic">Net Cost*</p>
+        <p class="detailContent">{{crypto.myCoins.totalPrice}} THB</p>
+      </ion-label>
+    </ion-item>
   </ion-list>
-<ion-icon style="text-align:center;font-size:29px;color:#bfbfbf;padding-left:48%;" name="add-circle" (click)="goTOAddTransationPage()"></ion-icon>
-  
+  <ion-grid style="border-bottom:0.5px solid rgba(255, 255, 255, 0.07)" *ngFor="let transaction of transactionList">
+      <ion-row>
+        <ion-col class="fixedfirst">
+          <p class="toppicSummary">{{transaction.status}}</p>
+          <p [ngClass]="{buyType:transaction.status=='Buy'}" *ngIf="transaction.status == 'Buy'">{{transaction.quantity}}</p>
+          <p [ngClass]="{sellType:transaction.status=='Sell'}"  *ngIf="transaction.status == 'Sell'">{{transaction.quantity}}</p>
+        </ion-col>
+        <ion-col class="fixedMiddle">
+            <p class="toppicSummary">Price</p>
+            <p class="detailSummary">{{transaction.tradePrice}} THB</p>
+        </ion-col>
+        <ion-col class="fixedLast">
+          <p class="toppicSummary" *ngIf="transaction.status == 'Buy'">Cost</p>
+          <p class="toppicSummary" *ngIf="transaction.status == 'Sell'">Proceeds</p>
+          <p class="detailSummary">{{transaction.total}} THB</p>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="dateSummary">
+          {{transaction.date}}
+        </ion-col>
+      </ion-row> 
+  </ion-grid>
+<!-- 
+  <ion-grid style="border-bottom: 0.5px solid rgba(255, 255, 255, 0.07)">
+    <ion-row>
+      <ion-col class="fixedfirst">
+        <p class="toppicSummary">Sell</p>
+        <p class="sellType">10</p>
+      </ion-col>
+      <ion-col class="fixedMiddle">
+        <p class="toppicSummary">Price</p>
+        <p class="detailSummary">40201 THB</p>
+      </ion-col>
+      <ion-col class="fixedLast">
+        <span class="toppicSummary">Proceeds</span><br>
+        <span class="detailSummary">40201 THB</span>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="dateSummary">
+        Date: 2017-12-02
+      </ion-col>
+    </ion-row>
+  </ion-grid>-->
+  <br>
+  <ion-icon style="text-align:center;font-size:29px;color:#bfbfbf;padding-left:48%;" name="add-circle" (click)="goTOAddTransationPage(crypto.myCoins.coin  )"></ion-icon>
+ 
 
-  
+
 
   </span>
 </ion-content>
