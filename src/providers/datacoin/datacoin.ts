@@ -150,18 +150,17 @@ export class DatacoinProvider {
 		})
 		return transaction;
 	}
-<<<<<<< HEAD
 	removedMyCoins(coin) {
 		this.myCoinsData.remove(coin);
-=======
+	}
 	updateTransaction(key,newTransaction){
 		console.log('Key :'+key)
 		console.dir(newTransaction)
 		this.transactionData.update(key, { date: newTransaction.date, note: newTransaction.note,
 										   quantity: newTransaction.quantity, status: newTransaction.status,
 										   total: newTransaction.total, tradePrice: newTransaction.tradePrice});
->>>>>>> 01c97b058c567f84d4613d25fb6937618a1cc35d
 	}
+
 
 	// Chat
 	getChatData(){

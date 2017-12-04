@@ -29,6 +29,7 @@
       USDT Markets
     </ion-segment-button>
   </ion-segment>
+  <ion-searchbar (ionInput)="searchQuotes($event)"></ion-searchbar>
 </ion-header>
 
 
@@ -36,7 +37,7 @@
 
   
   <ion-list>
-    <ion-searchbar (ionInput)="searchQuotes(crypto)"></ion-searchbar>
+   
     <ion-item-sliding #slidingItem *ngFor="let crypto of coins">
       <ion-item (click)="goToDetail(crypto)" >
         <ion-avatar item-start>
