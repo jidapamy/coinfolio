@@ -19,10 +19,9 @@ import { HomePage } from '../home/home';
 })
 export class AddTransationPage {
   addTransactionForm: FormGroup;
-  chooseType = 'Buy';
   myDate: String = new Date().toISOString();
   crypto: cryptoCurrency;
-  status: any;
+  status: any = 'Buy';
 
   errorStatus: string = '';
 
@@ -33,7 +32,6 @@ export class AddTransationPage {
     public provider: DatacoinProvider,
     public angularfire: AngularFireDatabase) {
     this.crypto = this.navParams.data;
-
     this.addTransactionForm = this.builder.group({
       'status': ['', Validators.required],
       'tradePrice': [, Validators.required],
@@ -168,6 +166,7 @@ export class AddTransationPage {
           totalQuantity = (+coinAlready.totalQuantity);
           totalPrice = (+coinAlready.totalPrice);
         }
+
 
           this.provider.coinsKey = coinAlready.$key
           this.provider.addTransactionAlreadyCoin(dataAddTransaction)    //add transtion
