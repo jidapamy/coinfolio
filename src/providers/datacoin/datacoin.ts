@@ -239,8 +239,8 @@ export class DatacoinProvider {
 	}
 
 	loadBX(): Observable<crypto[]> {
-		return this.http.get(this.apiUrl)
-			// return this.http.get('/api')
+		// return this.http.get(this.apiUrl)
+		return this.http.get('bx.in.th.json')
 			.map(response => {
 				return response.json()
 			});

@@ -50,7 +50,17 @@ export class CoinsDetailPage {
 
 
   constructor(private screenshot: Screenshot,public navCtrl: NavController, public navParams: NavParams, public provider: DatacoinProvider) {
-    this.crypto = this.navParams.data
+    let paramType = this.navParams.get('type');
+    
+    if(paramType == 'home'){
+      this.crypto = this.navParams.get('crypto')
+    }else{
+      this.crypto = this.navParams.get('crypto').cryptoCurrency
+      this.crypto.primary_currency = this.navParams.get('crypto').myCoins.coin.primary_currency
+    }
+
+    // this.crypto = this.navParams.data
+    console.dir(this.crypto)
     this.orderbook = this.crypto.orderbook;
     this.bids = this.orderbook.bids;
     this.asks = this.orderbook.asks;
@@ -118,8 +128,8 @@ export class CoinsDetailPage {
   }
   
 
-  goToHomePage() {
-    this.navCtrl.setRoot(HomePage);
+  goBack() {
+    this.navCtrl.pop();
     // this.navCtrl.push(CoinsDetailPage,crypto);
 
   }

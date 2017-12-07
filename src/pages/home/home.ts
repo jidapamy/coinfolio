@@ -122,7 +122,7 @@ export class HomePage {
 
   goToDetail(crypto) {
     
-    this.navCtrl.push(CoinsDetailPage, crypto);
+    this.navCtrl.push(CoinsDetailPage, { crypto: crypto, type: 'home' });
   }
 
   goToMyCoins(){
@@ -143,11 +143,7 @@ export class HomePage {
             console.log('err: ', error);
           });
       } else {
-<<<<<<< HEAD
-        this.navCtrl.setRoot(HomePage);
-=======
         this.navCtrl.setRoot(FolioPage);
->>>>>>> 35ee6c0de6b141df26ea83572e5f06baf69a6ce5
       }
     })
     

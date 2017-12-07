@@ -21,20 +21,19 @@
     </ion-buttons>
   </ion-navbar>
 
-  <ion-segment [(ngModel)]="segment">
-
+  <!-- <ion-segment [(ngModel)]="segment">
     <ion-segment-button value="details">
       Details
     </ion-segment-button>
     <ion-segment-button value="holdings">
       Holdings
     </ion-segment-button>
-  </ion-segment>
+  </ion-segment> -->
 </ion-header>
 
 
 <ion-content>
-  <span *ngIf="segment=='details'">
+  <!-- <span *ngIf="segment=='details'">
   <ion-list>
     <ion-item class="BackgroundColorcoins">
       <ion-avatar item-start>
@@ -97,10 +96,10 @@
       </ion-label>
     </ion-item>
   </ion-list>
-  </span>
+  </span> -->
 
-  <span *ngIf="segment=='holdings'">
-    <ion-list style="background-color: #111314;padding-top: 10px;margin-top: 0px;margin-bottom: 0px;" *ngIf="segment=='holdings'">
+  <!-- <span *ngIf="segment=='holdings'"> -->
+    <ion-list style="background-color: #111314;padding-top: 10px;margin-top: 0px;margin-bottom: 0px;" (click)="gotoGraph()">
       <ion-item style="background-color: #111314">
         <ion-label class="fixedLeft topic">{{ crypto.myCoins.coin.secondary_currency }}/{{crypto.myCoins.coin.primary_currency}} Summary</ion-label>
         <ion-label class="fixedRightEnd">
@@ -153,5 +152,5 @@
 
 
 
-  </span>
+  <!-- </span> -->
 </ion-content>

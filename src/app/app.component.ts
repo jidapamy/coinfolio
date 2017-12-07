@@ -38,10 +38,6 @@ export class MyApp {
   pages: Array<{ icon: string; title: string, component: any }>;
 
   constructor(
-<<<<<<< HEAD
-=======
-
->>>>>>> 35ee6c0de6b141df26ea83572e5f06baf69a6ce5
     public platform: Platform,
     public statusBar: StatusBar,
     private faio: FingerprintAIO,
@@ -195,15 +191,8 @@ export class MyApp {
       statusStorage = data;
       console.log('statusStorage ' + statusStorage)
       if (!statusStorage) {
-<<<<<<< HEAD
-
-            let modal = this.modalCtrl.create(TutorialPage);
-            modal.present();
-
-=======
         let modal = this.modalCtrl.create(TutorialPage);
         modal.present();
->>>>>>> 35ee6c0de6b141df26ea83572e5f06baf69a6ce5
       } else {
         let modal = this.modalCtrl.create(HomePage);
       }
