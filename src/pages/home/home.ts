@@ -134,23 +134,19 @@ export class HomePage {
           localizedReason: 'Please authenticate'
         })
           .then((result: any) => {
-            let modal = this.modalCtrl.create(HomePage);
-            modal.present();
-            // this.navCtrl.push(TutorialPage);
+            this.navCtrl.setRoot(FolioPage);
           })
           .catch((error: any) => {
             console.log('err: ', error);
           });
 
       } else {
-        let modal = this.modalCtrl.create(HomePage);
+        this.navCtrl.setRoot(HomePage);
       }
     })
     
       // this.navCtrl.setRoot(FolioPage);
-      
-    
-    
+
   }
 
   reset() {

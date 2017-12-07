@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform, MenuController, ModalController } from 'ionic-angular';
+import {Nav, Platform, MenuController, ModalController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Storage } from '@ionic/storage';
@@ -38,7 +38,6 @@ export class MyApp {
   pages: Array<{ icon: string; title: string, component: any }>;
 
   constructor(
-    
     public platform: Platform,
     public statusBar: StatusBar,
     private faio: FingerprintAIO,
@@ -198,20 +197,9 @@ export class MyApp {
       console.log('statusStorage ' + statusStorage)
       if (!statusStorage) {
 
-        this.faio.show({
-          clientId: 'Coinfolio-Demo',
-          localizedFallbackTitle: 'Use Pin',
-          localizedReason: 'Please authenticate'
-        })
-          .then((result: any) => {
             let modal = this.modalCtrl.create(TutorialPage);
             modal.present();
-            // this.navCtrl.push(TutorialPage);
-          })
-          .catch((error: any) => {
-            console.log('err: ', error);
-          });
- 
+
       } else {
         let modal = this.modalCtrl.create(HomePage);
       }

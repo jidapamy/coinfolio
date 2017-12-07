@@ -30,9 +30,9 @@ export class SettingPage {
   }
   goToFeedback() {
     let email = {
-      to: 'thailand_hka@hotmail.com',
-      cc: 'thailand_hka@hotmail.com',
-      bcc: ['thailand_hka@hotmail.com'],
+      to: 'admin@coinsfolio.com',
+      cc: 'support@coinsfolio.com',
+     
       
       subject: 'แจ้งปัญหา Coinfolio',
       body: 'กรุณาแจ้งปัญหาที่เกิดขึ้นกับแอปของเราแล้วทางเราจะรีบปรับปรุงโดยด่วน!!',
