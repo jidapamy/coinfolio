@@ -41,7 +41,7 @@
     <ion-item-sliding #slidingItem *ngFor="let crypto of coins">
       <ion-item (click)="goToDetail(crypto)" >
         <ion-avatar item-start>
-          <img class="imgSize" src="https://d2v7vc3vnopnyy.cloudfront.net/img/coins/{{ crypto.secondary_currency }}.png" />
+          <img class="imgSize" src="https://d2v7vc3vnopnyy.cloudfront.net/img/coins/{{crypto.secondary_currency}}.png" />
         </ion-avatar>
         <ion-label class="fixedLeft">
           {{ crypto.secondary_currency }} <br>

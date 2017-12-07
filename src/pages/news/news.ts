@@ -20,7 +20,10 @@ import { DatacoinProvider, newsData, newsDataDetail } from '../../providers/data
 })
 export class NewsPage {
   news: any = '';
+  // status: any;
+  // feed: feeds[];
   items: newsDataDetail[] = [];
+  // data: newsDataDetail[];
   isSelect: boolean;
 
   title: any;
@@ -33,11 +36,14 @@ export class NewsPage {
 
     this.provider.loadNews().subscribe(data => {
       this.news = data;
+      // this.news = data; Object.keys(data).map(key => data[key]);
       console.dir(this.news)
     },
       error => { console.log("error: " + error); },
       () => {
-        // วนเอาค่า ข่าวที่เก็บมาใส่ ใน itemที่เป็น objectเพื่อไปแสดงในหน้า html
+        // console.log("Read park completely");
+        // console.log('length' + this.news.items);
+        // console.log('item' + this.news.items.length);
         for (let i = 0; i < this.news.items.length; i++) {
 
           this.items.push({
@@ -54,26 +60,35 @@ export class NewsPage {
 
           })
 
+          console.log('item' + i + ' ' + this.news.items[i].title);
         }
+        console.log('item' + this.items.length);
+        console.log('item 3:' + this.items[3].title);
+
+
 
       })
-
+    // }, 1000);
+    this.isSelect = false;
     this.isSelect = false;
   }
 
 
-  //   method   รับlink จาก หน้า html มาเปิดในเบาเซอร์
+
   openWebpage(item) {
     const options: InAppBrowserOptions = {
       zoom: 'no'
     }
+
     // Opening a URL and returning an InAppBrowserObject
     const browser = this.inAppBrowser.create(item.link, '_self', options);
 
     // Inject scripts, css and more with browser.X
   }
   doRefresh(refresher) {
-    // ดึงข้อมูลมาเมื่อมีการใช้ method 
+    console.log("5555555");
+
+   
     setTimeout(() => {
       console.log('Async operation has ended');
       this.items.length = 0;
@@ -92,12 +107,17 @@ export class NewsPage {
         })
         console.log('item' + i + ' ' + this.news.items[i].title);
       }
-      // ตั้งเวลาหน่วงเวลา รีเฟรชหน้า
+
       refresher.complete();
       console.log(`length: ${this.items.length}`)
 
     }, 500);
+
+
+
   }
 
- 
+  test() {
+    console.log('item' + this.news.items[0].title);
+  }
 }

@@ -9,7 +9,7 @@ import { Screenshot } from '@ionic-native/screenshot';
 import { HeaderPage } from '../header/header';
 import { FolioPage } from '../folio/folio';
 import { LoginPage } from '../login/login';
-
+import { FingerprintAIO } from '@ionic-native/fingerprint-aio';
 /**
  * Generated class for the HomePage page.
  *
@@ -33,6 +33,7 @@ export class HomePage {
   isfiltered: boolean;
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
+    private faio: FingerprintAIO,
     public provider: DatacoinProvider,
     public modalCtrl: ModalController,
     private screenshot: Screenshot,
@@ -121,8 +122,32 @@ export class HomePage {
   }
 
   goToMyCoins(){
+    let statusStorage;
+    this.provider.getDataTutorial().then(data => {
+      statusStorage = data;
+      console.log('statusStorage ' + statusStorage)
+      if (!statusStorage) {
+
+        this.faio.show({
+          clientId: 'Coinfolio-Demo',
+          localizedFallbackTitle: 'Use Pin',
+          localizedReason: 'Please authenticate'
+        })
+          .then((result: any) => {
+            let modal = this.modalCtrl.create(HomePage);
+            modal.present();
+            // this.navCtrl.push(TutorialPage);
+          })
+          .catch((error: any) => {
+            console.log('err: ', error);
+          });
+
+      } else {
+        let modal = this.modalCtrl.create(HomePage);
+      }
+    })
     
-      this.navCtrl.setRoot(FolioPage);
+      // this.navCtrl.setRoot(FolioPage);
       
     
     

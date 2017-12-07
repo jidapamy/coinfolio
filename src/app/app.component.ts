@@ -37,7 +37,9 @@ export class MyApp {
   pagesForLogin: Array<{ icon: string; title: string, component: any }>;
   pages: Array<{ icon: string; title: string, component: any }>;
 
-  constructor(public platform: Platform,
+  constructor(
+    
+    public platform: Platform,
     public statusBar: StatusBar,
     private faio: FingerprintAIO,
     public splashScreen: SplashScreen,
@@ -195,8 +197,21 @@ export class MyApp {
       statusStorage = data;
       console.log('statusStorage ' + statusStorage)
       if (!statusStorage) {
-        let modal = this.modalCtrl.create(TutorialPage);
-        modal.present();
+
+        this.faio.show({
+          clientId: 'Coinfolio-Demo',
+          localizedFallbackTitle: 'Use Pin',
+          localizedReason: 'Please authenticate'
+        })
+          .then((result: any) => {
+            let modal = this.modalCtrl.create(TutorialPage);
+            modal.present();
+            // this.navCtrl.push(TutorialPage);
+          })
+          .catch((error: any) => {
+            console.log('err: ', error);
+          });
+ 
       } else {
         let modal = this.modalCtrl.create(HomePage);
       }
