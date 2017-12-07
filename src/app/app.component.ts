@@ -38,6 +38,10 @@ export class MyApp {
   pages: Array<{ icon: string; title: string, component: any }>;
 
   constructor(
+<<<<<<< HEAD
+=======
+
+>>>>>>> 35ee6c0de6b141df26ea83572e5f06baf69a6ce5
     public platform: Platform,
     public statusBar: StatusBar,
     private faio: FingerprintAIO,
@@ -118,32 +122,27 @@ export class MyApp {
     this.provider.getFingerprint().then(data => {
       statusFingerprint = data;
       console.log('statusFingerprint ' + statusFingerprint);
-    
-    // Reset the content nav to have just this page
-    // we wouldn't want the back button to show in this scenario
-    if (page.component == FolioPage) {
+      if (page.component == FolioPage) {
         if (statusFingerprint) {
-         
           this.faio.show({
             clientId: 'Figer',
             clientSecret: 'password',
             localizedFallbackTitle: 'Use Pin',
             localizedReason: 'Please authenticate'
-                  }).then((result: any) => {
-                    this.nav.setRoot(page.component);
-                  }).catch((error: any) => {
-                    console.log('err: ', error);
-                  });
+          }).then((result: any) => {
+            this.nav.setRoot(page.component);
+          }).catch((error: any) => {
+            console.log('err: ', error);
+          });
         } else {
-                  this.nav.setRoot(page.component);
+          this.nav.setRoot(page.component);
         }
-
-    } else {
+      } else {
         this.nav.setRoot(page.component);
-    }
-          })
+      }
+    })
 
-}
+  }
 
   logout() {
     this.provider.setUsername('');
@@ -155,12 +154,12 @@ export class MyApp {
 
   login() {
     this.nav.push(LoginPage);
-    
+
 
   }
 
   ngOnInit() {
-    
+
   }
 
   ionViewWillEnter() {
@@ -169,15 +168,15 @@ export class MyApp {
   }
 
 
-  doRefresh(refresher) {
-    console.log("5555555");
-    setTimeout(() => {
-      this.content.resize();
-      refresher.complete();
-      console.log('refresher')
-      console.log('USername refresh: ' + this.username)
-    }, 500);
-  }
+  // doRefresh(refresher) {
+  //   console.log("5555555");
+  //   setTimeout(() => {
+  //     this.content.resize();
+  //     refresher.complete();
+  //     console.log('refresher')
+  //     console.log('USername refresh: '+this.username)
+  //   }, 500);
+  // }
 
   changeLogoutMenuControl() {
     this.activeMenu = "notLogin"
@@ -196,10 +195,15 @@ export class MyApp {
       statusStorage = data;
       console.log('statusStorage ' + statusStorage)
       if (!statusStorage) {
+<<<<<<< HEAD
 
             let modal = this.modalCtrl.create(TutorialPage);
             modal.present();
 
+=======
+        let modal = this.modalCtrl.create(TutorialPage);
+        modal.present();
+>>>>>>> 35ee6c0de6b141df26ea83572e5f06baf69a6ce5
       } else {
         let modal = this.modalCtrl.create(HomePage);
       }

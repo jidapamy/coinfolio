@@ -69,7 +69,7 @@ export class AddTransationPage {
     this.errorStatus = '';
     if (this.validate()) {
       let trasactionDetail = this.addTransactionForm.value;
-      this.viewCtrl.dismiss();
+      this.viewCtrl.dismiss('daata');
       let calculate = this.addTransactionForm.value.tradePrice * this.addTransactionForm.value.quantity;
       // console.log('calculate>>' + calculate + ' type:' + typeof (calculate))
       let price;

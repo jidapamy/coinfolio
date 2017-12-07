@@ -29,15 +29,14 @@
       USDT Markets
     </ion-segment-button>
   </ion-segment>
-  <ion-searchbar (ionInput)="searchQuotes($event)"></ion-searchbar>
+  <ion-searchbar (ionInput)="search($event)" [(ngModel)]="searchText"></ion-searchbar>
 </ion-header>
 
 
 <ion-content padding>
 
-  
+  <span *ngIf="!isfiltered">
   <ion-list>
-   
     <ion-item-sliding #slidingItem *ngFor="let crypto of coins">
       <ion-item (click)="goToDetail(crypto)" >
         <ion-avatar item-start>
@@ -70,4 +69,41 @@
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>
+  </span>
+
+<span *ngIf="isfiltered">
+    <ion-list>
+      <ion-item-sliding #slidingItem *ngFor="let crypto of filteredCrypto">
+        <ion-item (click)="goToDetail(crypto)">
+          <ion-avatar item-start>
+            <img class="imgSize" src="https://d2v7vc3vnopnyy.cloudfront.net/img/coins/{{crypto.secondary_currency}}.png" />
+          </ion-avatar>
+          <ion-label class="fixedLeft">
+            {{ crypto.secondary_currency }} <br>
+            <span class="fontsize bottons">{{crypto.nameCrypto}}</span>
+          </ion-label>
+          <ion-label class="fixedRight">
+            <span [ngClass]="{rateCurrency:crypto.change<0}">
+                {{crypto.last_price}} {{crypto.primary_currency}}
+            <br>
+            <span *ngIf="crypto.change<0" [ngClass]="{ratedownCurrency:crypto.change<0}">
+                  {{crypto.change}}%
+                  <span><ion-icon name="md-arrow-dropdown"></ion-icon></span>
+            </span>
+            <span *ngIf="crypto.change>=0" [ngClass]="{rateupCurrency:crypto.change>=0}">
+                <span> +{{crypto.change}} </span>
+            <ion-icon name="md-arrow-dropup"></ion-icon>
+            </span>
+            </span>
+          </ion-label>
+        </ion-item>
+
+        <ion-item-options side="left">
+          <button ion-button icon-only (click)="goToAddTransaction(slidingItem,crypto)" color="bgyellow">
+	 	 			  <ion-icon color="light" name="add-circle"></ion-icon>
+	 	 		  </button>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+</span>
 </ion-content>

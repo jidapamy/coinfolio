@@ -27,10 +27,11 @@ export class HomePage {
   user: any;
   cryptoTotal: cryptoCurrency[] = [];
   coins: cryptoCurrency[] = [];
-  filteredQuotes: Array<any> = [];
+  filteredCrypto: Array<any> = [];
   screen: any;
   state: boolean = false;
   isfiltered: boolean;
+  searchText:any
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     private faio: FingerprintAIO,
@@ -43,12 +44,12 @@ export class HomePage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad HomePage');
   }
-  searchQuotes(event) {
-    console.dir(this.cryptoTotal)
+  search(event) {
+    console.dir(this.coins)
     if (event.target.value) {
       console.log(event.target.value)
-      if (event.target.value.length > 2) {
-        let filteredJson = this.cryptoTotal.filter(row => {
+      if (event.target.value.length > 0) {
+        let filteredJson = this.coins.filter(row => {
           if (row.secondary_currency.indexOf(event.target.value) != -1) {
             return true;
           } else {
@@ -56,17 +57,20 @@ export class HomePage {
           }
         });
         this.isfiltered = true;
-        this.filteredQuotes = filteredJson;
-        console.log(this.filteredQuotes)
+        this.filteredCrypto = filteredJson;
+        console.log(this.filteredCrypto)
       } else {
         this.isfiltered = false;
       }
     } else {
       this.isfiltered = false;
     }
+    console.log('searchText '+this.searchText)
   }
   // select segment
   changeMarket(type) {
+    this.searchText =''
+    this.isfiltered = false;
     this.content.scrollToTop(300);
     this.segment = type;
     if (this.cryptoTotal.length > -1) {
@@ -123,11 +127,10 @@ export class HomePage {
 
   goToMyCoins(){
     let statusStorage;
-    this.provider.getDataTutorial().then(data => {
+    this.provider.getFingerprint().then(data => {
       statusStorage = data;
       console.log('statusStorage ' + statusStorage)
-      if (!statusStorage) {
-
+      if (statusStorage) {
         this.faio.show({
           clientId: 'Coinfolio-Demo',
           localizedFallbackTitle: 'Use Pin',
@@ -139,9 +142,12 @@ export class HomePage {
           .catch((error: any) => {
             console.log('err: ', error);
           });
-
       } else {
+<<<<<<< HEAD
         this.navCtrl.setRoot(HomePage);
+=======
+        this.navCtrl.setRoot(FolioPage);
+>>>>>>> 35ee6c0de6b141df26ea83572e5f06baf69a6ce5
       }
     })
     

@@ -34,8 +34,8 @@ export class SettingPage {
       cc: 'support@coinsfolio.com',
      
       
-      subject: 'แจ้งปัญหา Coinfolio',
-      body: 'กรุณาแจ้งปัญหาที่เกิดขึ้นกับแอปของเราแล้วทางเราจะรีบปรับปรุงโดยด่วน!!',
+      subject: 'Suggestions for Blockfolio ios',
+      body: 'Thank you for Suggestions',
       isHtml: true
     };
     this.EmailComposer.open(email);

@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ModalController} from 'ionic-angular';
 import { DatacoinProvider, tempStatisticsCoinsDetail, tempbookorderBidItem, tempbookorderBid, tempbookorder, cryptoCurrency } from '../../providers/datacoin/datacoin';
 import Highcharts from 'highcharts/highstock';
 import * as HighCharts from 'highcharts';
@@ -59,8 +59,8 @@ export class DetailsPage {
 
   transactionList: transaction[] = [];
   thisCoins: any;
-  result :any;
-  marketValue:any;
+  result: any;
+  marketValue: any;
 
   // myCoins:my
 
@@ -68,31 +68,15 @@ export class DetailsPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public provider: DatacoinProvider,
-    public angularfire: AngularFireDatabase) {
+    public angularfire: AngularFireDatabase,
+    public modalCtrl: ModalController) {
     this.crypto = this.navParams.data;
     console.log('this.crypto')
     console.dir(this.crypto);
     this.orderbook = this.crypto.cryptoCurrency.orderbook;
     this.bids = this.orderbook.bids;
     this.asks = this.orderbook.asks;
-    this.marketValue = this.crypto.myCoins.totalQuantity * this.crypto.cryptoCurrency.last_price
-    this.result = this.crypto.myCoins.totalPrice - this.marketValue
-    
-
-    this.marketValue = +this.marketValue
-    if (this.marketValue > 1){
-      this.marketValue = this.marketValue.toFixed(2)
-    }else{
-      this.marketValue = this.marketValue.toFixed(8)
-    }
-
-    this.result = +this.result
-    if (this.result < -100 || this.result > 1) {
-      this.result = this.result.toFixed(2)
-    } else {
-      this.result = this.result.toFixed(8)
-    }
-    console.log('Result '+this.result)
+    console.log('Result ' + this.result)
 
     console.dir(this.crypto);
 
@@ -133,36 +117,61 @@ export class DetailsPage {
         console.log(typeof this.hightBid)
         this.hightAsk = (+this.asks.highbid)
 
-
-
-        this.volumeBid = this.decimalFormat(this.volumeBid);
-        this.volumeAsk = this.decimalFormat(this.volumeAsk);
-        this.hightBid = this.decimalFormat(this.hightBid);
-        this.hightAsk = this.decimalFormat(this.hightAsk);
-
-
-
+        this.volumeBid = this.provider.decimalFormat(this.volumeBid);
+        this.volumeAsk = this.provider.decimalFormat(this.volumeAsk);
+        this.hightBid = this.provider.decimalFormat(this.hightBid);
+        this.hightAsk = this.provider.decimalFormat(this.hightAsk);
       })
+    this.ModifyData();
+  }
 
-    // this.transactionList = this.crypto.myCoins.transaction;
-    // console.log('this.transactionList');
-    // console.dir(this.transactionList)
-    // this.crypto.myCoins.transaction.subscribe(data => {
-    //   this.transactionList = data;
-    // });
-    // console.log('this.transactionList')
-    // console.dir(this.transactionList)
+  goTOEditTransactionPage(transaction) {
+    // this.navCtrl.push(EditTransactionPage, { transaction: transaction, coin: this.crypto.myCoins });
+    this.openModal(EditTransactionPage, { transaction: transaction, coin: this.crypto.myCoins });
+  }
+  
+  goTOAddTransationPage() {
+   console.log(this.crypto.cryptoCurrency)
+   this.openModal(AddTransationPage, this.crypto.cryptoCurrency);
+  }
+  goToHomePage() {
+    this.navCtrl.setRoot(HomePage);
+    // this.navCtrl.push(CoinsDetailPage,crypto);
+  }
 
-    // let thisCoinsParam = this.provider.getMycoins();
-    // console.log('thisCoins')
-    // console.dir(thisCoinsParam);
-    // for (let i = 0; i < thisCoinsParam.length; i++) {
-    //   if (thisCoinsParam[i].$key == this.provider.coinsKey) {
-    //     this.thisCoins = thisCoinsParam[i]
-    //   }
-    // }
-    // console.dir(this.thisCoins)
+  openModal(page,param){
+    let modal = this.modalCtrl.create(page, param);
+    modal.present();
+    modal.onDidDismiss(data => {
+      console.log(data)
+      let myCoins = this.provider.getMycoins();
+      console.dir(myCoins)
+      for (let i = 0; i < myCoins.length; i++) {
+        if (myCoins[i].$key == this.provider.coinsKey) {
+          console.log(this.provider.coinsKey + ' = ' + myCoins[i].$key)
+          console.log(this.crypto.myCoins.totalPrice + ' = ' + myCoins[i].totalPrice)
+          this.crypto.myCoins.totalPrice = this.provider.decimalFormat(myCoins[i].totalPrice)
+          this.crypto.myCoins.totalQuantity = this.provider.decimalFormat(myCoins[i].totalQuantity);
+        }
+      }
+      this.ModifyData();
+    })
 
+  }
+
+  ModifyData(){
+    this.marketValue = this.provider.decimalFormat((this.crypto.myCoins.totalQuantity * this.crypto.cryptoCurrency.last_price));
+    this.result = this.crypto.myCoins.totalPrice - this.marketValue
+    this.result = +this.result
+    if (this.result < -100 || this.result > 1) {
+      this.result = this.result.toFixed(2)
+    } else if (this.result == 0){
+      this.result = this.result.toFixed(0)
+    }else {
+      this.result = this.result.toFixed(8)
+    }
+
+    this.transactionList.length = 0;
     let transationParam = this.provider.getTransactionOfCoin();
     for (let i = 0; i < transationParam.length; i++) {
       if (transationParam[i].status != 'Watch') {
@@ -171,40 +180,6 @@ export class DetailsPage {
     }
     console.log('transactionList');
     console.dir(this.transactionList)
-
-    
-
-    // let intervel = setInterval(() => {        // fetch data BXCoin API
-    //   let cryptoTotal: cryptoCurrency[] = []
-    //   if (cryptoTotal.length == 0) {
-    //     cryptoTotal = this.provider.getBxCoin();
-    //     console.log('cryptoTotaly')
-    //     console.dir(cryptoTotal)
-    //     clearInterval(intervel);
-    //     this.content.resize();
-
-    //     for (let j = 0; j < cryptoTotal.length; j++) {
-    //       if (cryptoTotal[i].primary_currency == this.) {
-    //           this.cryptoRecent.push({
-    //             cryptoCurrency: this.cryptoCurrency[j],
-    //             myCoins: this.myCoinsList[i]
-    //           })
-    //         }
-    //       }
-    //     }});
-
-
-  }
-  goTOEditTransactionPage(transaction) {
-    this.navCtrl.push(EditTransactionPage, { transaction: transaction, coin: this.crypto.myCoins});
-  }
-  goTOAddTransationPage() {
-    this.navCtrl.push(AddTransationPage);
-  }
-  goToHomePage() {
-    this.navCtrl.setRoot(HomePage);
-    // this.navCtrl.push(CoinsDetailPage,crypto);
-
   }
 
 
@@ -226,17 +201,6 @@ export class DetailsPage {
 
   ionViewDidLoad() {
     console.log("ionViewDidLoad")
-  }
-
-  decimalFormat(param) {
-    console.log('fecimal')
-    if (param < 1) {
-      param = param.toFixed(8);
-      return param
-    } else {
-      param = param.toFixed(2);
-      return param
-    }
   }
 
   showGraph(data) {
@@ -525,16 +489,20 @@ export class DetailsPage {
     this.navCtrl.setRoot(FolioPage);
   }
 
-  refreshPage() {
+  // refreshPage() {
+  //   console.log('refresh')
+  //   this.content.resize();
+  // }
 
-
-
-    console.log('refresh')
-
-    this.content.resize();
-
-
+  ngOnInit() {
+    console.log('Detail : ngOnInit')
+    this.provider.updatePage = false;
+    if (this.provider.updatePage) {
+      this.content.resize();
+      console.log('resize()');
+    }
   }
+
 }
 
 
