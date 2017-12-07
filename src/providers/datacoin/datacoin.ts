@@ -30,6 +30,9 @@ export class DatacoinProvider {
 	updatePage: boolean;
 
 	username: any = '';
+
+	getNameCoinsBX:any[];
+
 	// private headers = new Headers({ 'Content-Type': 'application/json' });
 	private apiUrl = "/api";
 	rateBtc: any = 0;
@@ -57,12 +60,47 @@ export class DatacoinProvider {
 				if (data) {
 					this.userLogin = data.user;
 					this.userKey = data.key;
-					// console.log('userLogin นะจ๊ะ อิอิ ==' + this.userKey )
 				}
 			});
 		});
 
+
+
+		this.storage.ready().then(() => {
+			this.storage.get('tutorial').then((data) => {
+				console.log('tutoraial')
+				console.dir(data);
+			});
+		});
+
+
+		this.storage.ready().then(() => {
+			this.storage.get('Fingerprint').then((data) => {
+				console.log('Fingerprint')
+				console.dir(data);
+			});
+		});
+		// this.storage.set('tutorial', false);
+		// this.setDataTutorial(false);
 	}
+
+	getFingerprint(): Promise<any> {
+		return this.storage.get('Fingerprint')
+	}
+	setFingerprint(data) {
+		this.storage.set('Fingerprint', data)
+		console.log(data)
+	}
+	
+	getDataTutorial(){
+		return this.storage.get('tutorial')
+	}
+	setDataTutorial(boolean){
+		this.storage.set('tutorial', boolean)
+	}
+	
+
+	
 
 
 
@@ -124,8 +162,13 @@ export class DatacoinProvider {
 		})
 		return transaction;
 	}
-	updateTransaction(key, newTransaction) {
-		console.log('Key :' + key)
+
+	removedMyCoins(coin) {
+		this.myCoinsData.remove(coin);
+	}
+	
+	updateTransaction(key,newTransaction){
+		console.log('Key :'+key)
 		console.dir(newTransaction)
 		this.transactionData.update(key, {
 			date: newTransaction.date, note: newTransaction.note,
@@ -137,6 +180,7 @@ export class DatacoinProvider {
 	removedTransaction(key) {
 		this.transactionData.remove(key)
 	}
+
 
 	// Chat
 	getChatData() {
@@ -160,9 +204,9 @@ export class DatacoinProvider {
 		this.storage.set('userLogin', this.username);
 	}
 
-	clearStorage() {
-		this.storage.clear();
-	}
+	// clearStorage() {
+	// 	this.storage.clear();
+	// }
 
 	getUsername(): Promise<any> {
 		return this.storage.get('userLogin')
@@ -255,7 +299,7 @@ export class DatacoinProvider {
 		console.log(`loadBids: ${pairing_id}`);
 		console.log('/orderbook/?/orderbook/?pairing=' + pairing_id);
 		let url = `/api${pairing_id}`
-		console.log(`url: ${url}`)
+		console.log(`url: ${url}-`)
 		return this.http.get('api/' + 'orderbook/?/orderbook/?pairing=' + pairing_id)
 			.map(response => response.json().asks);
 	}
@@ -370,6 +414,18 @@ export class DatacoinProvider {
 
 		console.log('getBxCoin : ' + this.cryptoCurrency.length)
 		return this.cryptoCurrency;
+	}
+	getName(){
+		this.loadBX().subscribe(data => {
+			this.getNameCoinsBX = Object.keys(data).map(key => data[key]);
+			console.dir(this.getNameCoinsBX)
+		},
+			error => { console.log("error: " + error); },
+			() => {
+				
+				
+			})	
+		return this.getNameCoinsBX		
 	}
 
 	decimalFormat(param) {

@@ -9,7 +9,7 @@ import { Screenshot } from '@ionic-native/screenshot';
 import { HeaderPage } from '../header/header';
 import { FolioPage } from '../folio/folio';
 import { LoginPage } from '../login/login';
-
+import { FingerprintAIO } from '@ionic-native/fingerprint-aio';
 /**
  * Generated class for the HomePage page.
  *
@@ -27,12 +27,14 @@ export class HomePage {
   user: any;
   cryptoTotal: cryptoCurrency[] = [];
   coins: cryptoCurrency[] = [];
-
+  filteredCrypto: Array<any> = [];
   screen: any;
   state: boolean = false;
-  
+  isfiltered: boolean;
+  searchText:any
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
+    private faio: FingerprintAIO,
     public provider: DatacoinProvider,
     public modalCtrl: ModalController,
     private screenshot: Screenshot,
@@ -42,9 +44,33 @@ export class HomePage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad HomePage');
   }
-
+  search(event) {
+    console.dir(this.coins)
+    if (event.target.value) {
+      console.log(event.target.value)
+      if (event.target.value.length > 0) {
+        let filteredJson = this.coins.filter(row => {
+          if (row.secondary_currency.indexOf(event.target.value) != -1) {
+            return true;
+          } else {
+            return false;
+          }
+        });
+        this.isfiltered = true;
+        this.filteredCrypto = filteredJson;
+        console.log(this.filteredCrypto)
+      } else {
+        this.isfiltered = false;
+      }
+    } else {
+      this.isfiltered = false;
+    }
+    console.log('searchText '+this.searchText)
+  }
   // select segment
   changeMarket(type) {
+    this.searchText =''
+    this.isfiltered = false;
     this.content.scrollToTop(300);
     this.segment = type;
     if (this.cryptoTotal.length > -1) {
@@ -95,11 +121,36 @@ export class HomePage {
   }
 
   goToDetail(crypto) {
+    
     this.navCtrl.push(CoinsDetailPage, crypto);
   }
 
   goToMyCoins(){
-    this.navCtrl.setRoot(FolioPage);
+    let statusStorage;
+    this.provider.getFingerprint().then(data => {
+      statusStorage = data;
+      console.log('statusStorage ' + statusStorage)
+      if (statusStorage) {
+        this.faio.show({
+          clientId: 'Coinfolio-Demo',
+          localizedFallbackTitle: 'Use Pin',
+          localizedReason: 'Please authenticate'
+        })
+          .then((result: any) => {
+            this.navCtrl.setRoot(FolioPage);
+          })
+          .catch((error: any) => {
+            console.log('err: ', error);
+          });
+      } else {
+        this.navCtrl.setRoot(FolioPage);
+      }
+    })
+    
+      // this.navCtrl.setRoot(FolioPage);
+      
+    
+    
   }
 
   reset() {

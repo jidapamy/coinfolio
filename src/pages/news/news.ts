@@ -44,7 +44,6 @@ export class NewsPage {
         // console.log("Read park completely");
         // console.log('length' + this.news.items);
         // console.log('item' + this.news.items.length);
-
         for (let i = 0; i < this.news.items.length; i++) {
 
           this.items.push({
@@ -70,7 +69,6 @@ export class NewsPage {
 
       })
     // }, 1000);
-
     this.isSelect = false;
     this.isSelect = false;
   }

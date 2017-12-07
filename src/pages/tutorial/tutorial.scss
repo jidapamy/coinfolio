@@ -1,4 +1,11 @@
 page-tutorial {
+
+ .skips{
+     font-size: 15px;
+     color:#F7A200;
+    // text-align: left;
+    float: left
+ }   
     ion-content {
     background-color: #EFEFEF !important;
     font-family:'Raleway';
@@ -30,24 +37,28 @@ p {
 }
 
 .swiper-pagination-bullet-active {
-    background:#C400FF;
+    background:#F0B90B;
 }
 
 .swiper-pagination {
-    bottom: 12% !important;
+    bottom: 1% !important;
 }
 
 #skip {
     position:absolute;
-    bottom: 20px;
+    bottom: 95%;
+    left:1%;
     width:100%;
     background:none !important;
     text-align:center;
     cursor:pointer;
+    font-family: 'Copse', serif;
     z-index:5;
 }
 $colors: (
-  primary:    #C400FF,
+  primary:    #F0B90B,
   
 );    
+
+
 }

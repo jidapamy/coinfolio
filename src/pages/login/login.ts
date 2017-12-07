@@ -108,17 +108,15 @@ export class LoginPage {
           console.log('invalid')
           this.invalid = true
         }
-      }
+      } 
     }
   }
-
   afterKeyUsername() {
     this.errorUsername = '';
   }
   afterKeyPassword() {
     this.errorPassword = '';
   }
-
   register() {
     this.navCtrl.push(RegisterPage);
   }
@@ -128,7 +126,6 @@ export class LoginPage {
     this.menuControl.enable(true, this.activeMenu)
     this.menuControl.enable(false, 'notLogin');
   }
-
   goBack() {
     this.navCtrl.pop()
   }

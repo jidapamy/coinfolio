@@ -3,7 +3,6 @@ import { NavController, Content, ItemSliding } from 'ionic-angular';
 import { DatacoinProvider, cryptoCurrency, crypto } from '../../providers/datacoin/datacoin';
 import { EditTransactionPage } from '../edit-transaction/edit-transaction';
 import { AlertPage } from '../alert/alert';
-import { HeaderPage } from '../header/header';
 import { DetailsPage } from '../details/details';
 import { AlertController } from 'ionic-angular';
 
@@ -71,7 +70,7 @@ export class FolioPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad FolioPage');
   }
-
+  
   goToAlert(slidingItem: ItemSliding, crypto: any) {
     this.navCtrl.push(AlertPage, crypto);
     slidingItem.close();
@@ -104,6 +103,10 @@ export class FolioPage {
           text: 'Yes',
           handler: () => {
             console.log('Agree clicked');
+            this.provider.removedMyCoins(crypto.myCoins.$key);
+            let index = this.cryptoRecent.indexOf(crypto);
+            this.cryptoRecent.splice(index,1);
+            
           }
         }
       ]
@@ -111,4 +114,5 @@ export class FolioPage {
     confirm.present();
     slidingItem.close();
   }
+  
 }
