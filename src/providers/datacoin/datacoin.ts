@@ -22,32 +22,33 @@ export class DatacoinProvider {
 	transactionData: FirebaseListObservable<any[]>;
 	chatsData: FirebaseListObservable<any[]> = this.angularfire.list('/chats');
 
-	userLogin:any;
-	userKey:any;
+	userLogin: any;
+	userKey: any;
 	coinsKey: any;
-	mycoinsPath:any;
-	transactionPath:any;
+	mycoinsPath: any;
+	transactionPath: any;
+	updatePage: boolean;
 
-	username: any='';
+	username: any = '';
 	// private headers = new Headers({ 'Content-Type': 'application/json' });
 	private apiUrl = "/api";
 	rateBtc: any = 0;
 	rateEth: any = 0;
-	rateUsd : any =34;
-	cryptoWithName:any[]=[]
-	cryptoCurrency:any[]=[];
+	rateUsd: any = 34;
+	cryptoWithName: any[] = []
+	cryptoCurrency: any[] = [];
 
 	constructor(public http: Http,
 		public platform: Platform,
 		public storage: Storage,
 		public angularfire: AngularFireDatabase) {
 		console.log('Hello DatacoinProvider Provider');
-		this.mixNameCoins() 
+		this.mixNameCoins()
 		console.log('this.cryptoCurrency นะจ๊ะ')
 		console.dir(this.cryptoCurrency)
 		if (this.platform.is('cordova')) {                // <<< is Cordova available?
 			this.apiUrl = 'https://bx.in.th/api';
-		}	
+		}
 
 		this.storage.ready().then(() => {
 			this.storage.get('userLogin').then((data) => {
@@ -63,17 +64,17 @@ export class DatacoinProvider {
 
 	}
 
-	
+
 
 	// getTransactionPath(myCoinsKey) { // เพิ่ม Transition ใน coin ที่มีอยู่แล้ว
 	// 	this.transactionPath = this.getMycoinsPath() + '/' + myCoinsKey + '/transaction';
 	// 	return this.transactionPath;
 	// }
 
-// //////////////////////////////////////////////
-	
+	// //////////////////////////////////////////////
+
 	// Transition & Coins
-	getMycoinsPath(){ //myCoin ของ User ตามที่ login
+	getMycoinsPath() { //myCoin ของ User ตามที่ login
 		this.mycoinsPath = this.pathFirebase + '/' + this.userKey + '/myCoins';
 		return this.mycoinsPath;
 	}
@@ -85,9 +86,18 @@ export class DatacoinProvider {
 		})
 		return myCoins;
 	}
-	addMycoins(coin){
+	addMycoins(coin) {
 		this.myCoinsData = this.angularfire.list(this.getMycoinsPath())
 		this.myCoinsData.push(coin)
+	}
+	getOneCoinInMycoins() {
+		let myCoins;
+		console.log(this.getMycoinsPath() + '/' + this.coinsKey)
+		this.myCoinsData = this.angularfire.list(this.getMycoinsPath() + '/' + this.coinsKey)
+		this.myCoinsData.subscribe(data => {
+			myCoins = data;
+		})
+		return myCoins;
 	}
 
 	updateAmountHolding(coin, totalQuantity, totalPrice) {
@@ -96,7 +106,7 @@ export class DatacoinProvider {
 		this.myCoinsData.update(coin.$key, { totalQuantity: totalQuantity, totalPrice: totalPrice })
 	}
 
-	addTransactionAlreadyCoin(transaction){
+	addTransactionAlreadyCoin(transaction) {
 		console.log()
 		this.transactionData = this.angularfire.list(this.getTransactionPath());
 		this.transactionData.push(transaction);
@@ -106,7 +116,7 @@ export class DatacoinProvider {
 		return this.getMycoinsPath() + '/' + this.coinsKey + '/transaction'
 	}
 
-	getTransactionOfCoin(){
+	getTransactionOfCoin() {
 		let transaction;
 		this.transactionData = this.angularfire.list(this.getTransactionPath())
 		this.transactionData.subscribe(data => {
@@ -114,75 +124,84 @@ export class DatacoinProvider {
 		})
 		return transaction;
 	}
-	updateTransaction(key,newTransaction){
-		console.log('Key :'+key)
+	updateTransaction(key, newTransaction) {
+		console.log('Key :' + key)
 		console.dir(newTransaction)
-		this.transactionData.update(key, { date: newTransaction.date, note: newTransaction.note,
-										   quantity: newTransaction.quantity, status: newTransaction.status,
-										   total: newTransaction.total, tradePrice: newTransaction.tradePrice});
+		this.transactionData.update(key, {
+			date: newTransaction.date, note: newTransaction.note,
+			quantity: newTransaction.quantity, status: newTransaction.status,
+			total: newTransaction.total, tradePrice: newTransaction.tradePrice
+		});
+	}
+
+	removedTransaction(key) {
+		this.transactionData.remove(key)
 	}
 
 	// Chat
-	getChatData(){
-		let chats=[];
+	getChatData() {
+		let chats = [];
 		this.chatsData.subscribe(data => {
 			chats = data;
 		})
 		return chats;
 	}
-	removedChat(chat){
+	removedChat(chat) {
 		this.chatsData.remove(chat.$key);
 	}
-	addChats(message){
+	addChats(message) {
 		this.chatsData.push(message);
 	}
 
 	// User
-	setUsername(username){
+	setUsername(username) {
 		console.log('save:' + username)
 		this.username = username
-		this.storage.set('userLogin', this.username); 
+		this.storage.set('userLogin', this.username);
 	}
 
-	getUsername():Promise<any>{
+	clearStorage() {
+		this.storage.clear();
+	}
+
+	getUsername(): Promise<any> {
 		return this.storage.get('userLogin')
 	}
 
-	registerUser(data){
+	registerUser(data) {
 		this.userData.push(data)
 	}
 
-	getAllUSer(){
-		let userList:any[];
-		this.userData.subscribe(data =>{
+	getAllUSer() {
+		let userList: any[];
+		this.userData.subscribe(data => {
 			userList = data
 			// return userList;
 		})
 		return userList;
 	}
 
-	setUserLogin(user){
+	setUserLogin(user) {
 		// this.userLogin = user; 
 		// console.log('Login: '+user.username)
 		console.dir(user)
-		this.storage.set('userLogin', user); 
+		this.storage.set('userLogin', user);
 		this.username = user.user.username
 		this.userKey = user.key
-		console.log('Set Username :'+this.username+'KEY: ' + this.userKey)
-		
-
+		console.log('Set Username :' + this.username + 'KEY: ' + this.userKey)
 	}
-	getUserLogin(): Promise<any>{
+	getUserLogin(): Promise<any> {
 		return this.storage.get('userLogin')
 	}
 
 	loadBX(): Observable<crypto[]> {
 		return this.http.get(this.apiUrl)
+			// return this.http.get('/api')
 			.map(response => {
 				return response.json()
 			});
 	}
-	
+
 	loadNews(): Observable<newsData[]> {
 		return this.http.get('https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fcointelegraph.com%2Frss&api_key=ss1px1umuunducpxqlhspjeyh18k9hfweenrq8ds')
 			.map(response => {
@@ -197,14 +216,14 @@ export class DatacoinProvider {
 	// 	//   this.storage.set('myCoins', this.myCoins);
 	// }
 
-	removedMycoin(){
+	removedMycoin() {
 		this.myCoinsData = this.angularfire.list(this.pathFirebase);
 	}
 
 	getTransaction() {
 		//   return this.myCoins;
 	}
-	
+
 	loadStatistics(): Observable<tempStatisticsCoins[]> {
 		return this.http.get('DataCoinPriceOfDay.json')
 			.map(response => {
@@ -258,8 +277,8 @@ export class DatacoinProvider {
 	}
 
 	// BX Coins
-	mixNameCoins()  {
-		let cryptoNumbers; 
+	mixNameCoins() {
+		let cryptoNumbers;
 		this.loadBX().subscribe(data => {
 			cryptoNumbers = Object.keys(data).map(key => data[key]);
 		},
@@ -277,7 +296,7 @@ export class DatacoinProvider {
 						orderbook: cryptoNumbers[i].orderbook
 					}
 				}
-				
+
 				for (let i = 0; i < this.cryptoWithName.length; i++) {
 					if (this.cryptoWithName[i].secondary_currency == 'BTC') {
 						this.rateBtc = this.cryptoWithName[i].last_price;
@@ -289,7 +308,7 @@ export class DatacoinProvider {
 				this.loopOfConvert('THB');
 				this.loopOfConvert('BTC');
 				this.loopOfConvert('ETH');
-				this.loopOfConvert('USD'); 
+				this.loopOfConvert('USD');
 			})
 	}
 
@@ -346,11 +365,31 @@ export class DatacoinProvider {
 		return priceDecimal;
 	}
 
-	getBxCoin(){
+	getBxCoin() {
 		// this.mixNameCoins();
 
-		console.log('getBxCoin : '+this.cryptoCurrency.length)
+		console.log('getBxCoin : ' + this.cryptoCurrency.length)
 		return this.cryptoCurrency;
+	}
+
+	decimalFormat(param) {
+		param = ''+param
+		console.log('decimal ' + param + ' type :'+typeof param)
+		if (param.indexOf('.')==-1) {
+			param = (+param).toFixed(0)
+			console.log('toFixed(0) '+param)
+		}else {
+			param = +param
+			if (-1<param && param < 1) {
+				param = param.toFixed(8);
+				console.log('toFixed(8) ' + param)
+			}else {
+				param = param.toFixed(2);
+				console.log('toFixed(2) ' + param)
+			}
+		}
+
+		return param
 	}
 
 
@@ -358,7 +397,7 @@ export class DatacoinProvider {
 
 
 
-} 
+}
 
 
 
@@ -492,14 +531,14 @@ export class crypto {
 // }
 
 export class orderbook {
-	bids: { total: any, volume: any, highbid: any}
-	asks: { total: any, volume: any, highbid: any}
+	bids: { total: any, volume: any, highbid: any }
+	asks: { total: any, volume: any, highbid: any }
 }
 // export class cryptoNumbers {
 // 	crytos: crypto[]
 // }
 
-export class cryptoCurrency{
+export class cryptoCurrency {
 	pairing_id: any;
 	primary_currency: any;
 	secondary_currency: any;

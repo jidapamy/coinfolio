@@ -56,9 +56,8 @@ export class MyApp {
       this.username = data;
       this.content.resize();
       console.log('Menu Constructor: ' + this.username)
-      if(this.username!=''){
+      if(this.username!=null){
         console.log('Menu Constructor: ' + this.username)
-        
         this.activeMenu = "login"
         this.menuControl.enable(true, this.activeMenu)
         this.menuControl.enable(false, 'notLogin');
@@ -122,8 +121,8 @@ export class MyApp {
   }
 
   logout(){
-    this.provider.setUsername('');
-    this.username='';
+    this.provider.clearStorage();
+    // this.username='';
     this.nav.setRoot(HomePage);
     this.content.resize();
     this.changeLogoutMenuControl();
@@ -168,15 +167,15 @@ export class MyApp {
   }
 
 
-  doRefresh(refresher) {
-    console.log("5555555");
-    setTimeout(() => {
-      this.content.resize();
-      refresher.complete();
-      console.log('refresher')
-      console.log('USername refresh: '+this.username)
-    }, 500);
-  }
+  // doRefresh(refresher) {
+  //   console.log("5555555");
+  //   setTimeout(() => {
+  //     this.content.resize();
+  //     refresher.complete();
+  //     console.log('refresher')
+  //     console.log('USername refresh: '+this.username)
+  //   }, 500);
+  // }
 
   changeLogoutMenuControl() {
     this.activeMenu = "notLogin"

@@ -5,8 +5,13 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
   <ion-navbar>
+    <ion-buttons end (click)="goBack()">
+      <button ion-button>
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+
     <ion-title>Edit Transaction</ion-title>
   </ion-navbar>
 
@@ -103,20 +108,21 @@
     <ion-list>
       <ion-item>
         <ion-label class="fixedLeft">Current Price</ion-label>
-        <ion-label class="fixedRight"><img class="imgSize" src="https://d2v7vc3vnopnyy.cloudfront.net/img/coins/{{crypto.coin.secondary_currency}}.png" />&nbsp;&nbsp;{{crypto.coin.secondary_currency }}</ion-label>
+        <ion-label class="fixedRight"><img class="imgSize" src="https://d2v7vc3vnopnyy.cloudfront.net/img/coins/{{crypto.coin.secondary_currency}}.png"
+          />&nbsp;&nbsp;{{crypto.coin.secondary_currency }}</ion-label>
       </ion-item>
       <ion-item>
         <ion-label class="fixedLeft">Trade Price {{errorTradePrice}}</ion-label>
-        <ion-input *ngIf="status!='Watch'" class="fixedRight" [(ngModel)]="tradePrice" item-right type="number" value="{{transaction.tradePrice}}"
+        <ion-input *ngIf="transaction.status!='Watch'" class="fixedRight" [(ngModel)]="tradePrice" item-right type="number" value="{{transaction.tradePrice}}"
           placeholder="{{transaction.tradePrice}}" (keyup)="calPrice($event)" formControlName="tradePrice"></ion-input>
-        <ion-input *ngIf="status=='Watch'" class="fixedRight" disabled [(ngModel)]="tradePrice" item-right type="number" value="{{transaction.tradePrice}}"
+        <ion-input *ngIf="transaction.status=='Watch'" class="fixedRight" disabled [(ngModel)]="tradePrice" item-right type="number" value="{{transaction.tradePrice}}"
           placeholder="{{transaction.tradePrice}}" formControlName="tradePrice"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label class="fixedLeft">Enter Quantity</ion-label>
-        <ion-input *ngIf="status!='Watch'" class="fixedRight" [(ngModel)]="quantity" item-right min="0" type="number" (keyup)="calPrice($event)"
+        <ion-input *ngIf="transaction.status!='Watch'" class="fixedRight" [(ngModel)]="quantity" item-right min="0" type="number" (keyup)="calPrice($event)"
           placeholder="0" formControlName="quantity"></ion-input>
-        <ion-input *ngIf="status=='Watch'" disabled class="fixedRight" [(ngModel)]="quantity" item-right min="0" type="number" placeholder="0"
+        <ion-input *ngIf="transaction.status=='Watch'" disabled class="fixedRight" [(ngModel)]="quantity" item-right min="0" type="number" placeholder="0"
           formControlName="quantity"></ion-input>
       </ion-item>
       <ion-item>
@@ -124,30 +130,11 @@
         <ion-label class="fixedRight">{{total}}</ion-label>
         <ion-label class="fixedRight">{{total}}</ion-label>
       </ion-item>
-      <!-- <ion-item>
-        <ion-label class="fixedLeft">Trade Price {{errorTradePrice}}</ion-label>
-        <ion-input *ngIf="status!='Watch'" class="fixedRight" [(ngModel)]="tradePrice" item-right type="number" placeholder="{{tradePrice}}"
-          value="{{transaction.tradePrice}}" formControlName="tradePrice"></ion-input>
-        <ion-input *ngIf="status=='Watch'" class="fixedRight" disabled [(ngModel)]="tradePrice" item-right type="number" placeholder="{{tradePrice}}"
-          value="{{transaction.tradePrice}}" formControlName="tradePrice"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label class="fixedLeft">Enter Quantity {{quantity}}</ion-label>
-        <ion-input *ngIf="status!='Watch'" class="fixedRight" [(ngModel)]="quantity" formControlName="quantity" item-right min="0"
-          type="number" placeholder="{{quantity}}" value=0></ion-input>
-        <ion-input *ngIf="status=='Watch'" disabled class="fixedRight" [(ngModel)]="quantity" formControlName="quantity" item-right
-          min="0" type="number" placeholder="{{quantity}}" value=0></ion-input>
-      </ion-item> -->
-<!-- 
-      <ion-item>
-        <ion-label class="fixedLeft">Total Value</ion-label>
-        <ion-label class="fixedRight"> {{price * quantity}}</ion-label>
-      </ion-item> -->
     </ion-list>
     <ion-list>
       <ion-item>
         <ion-label class="fixedLeft">Trade Date</ion-label>
-        <ion-datetime class="datetimeColor" displayFormat="MMM/DD/YYYY" pickerFormat="MMMM DD YYYY" [(ngModel)]="myDate" formControlName="date"></ion-datetime>
+        <ion-datetime class="datetimeColor" displayFormat="MMM/DD/YYYY" pickerFormat="MMMM DD YYYY" formControlName="date"></ion-datetime>
       </ion-item>
       <ion-item>
         <ion-label class="fixedLeft">Note</ion-label>
@@ -158,4 +145,8 @@
       <button type="submit" full ion-button color="bgyellow">Save</button>
     </ion-list>
   </form>
+
+  <ion-list>
+    <button type="submit" full ion-button color="danger" (click)="removeTransaction()">Remove Transaction</button>
+  </ion-list>
 </ion-content>

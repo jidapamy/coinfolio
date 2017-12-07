@@ -52,6 +52,11 @@ export class FolioPage {
             }
           }
         }
+        for (let i = 0; i < this.cryptoRecent.length; i++) {
+          console.log(this.cryptoRecent[i].myCoins.totalPrice + 'type :' + typeof this.cryptoRecent[i].myCoins.totalPrice)
+          this.cryptoRecent[i].myCoins.totalPrice = this.provider.decimalFormat(this.cryptoRecent[i].myCoins.totalPrice);
+          this.cryptoRecent[i].myCoins.totalQuantity = this.provider.decimalFormat(this.cryptoRecent[i].myCoins.totalQuantity);
+        }        
       }
       console.log('this.cryptoCurrency')
       console.dir(this.cryptoCurrency)
@@ -75,6 +80,7 @@ export class FolioPage {
   openDetailsPage(crypto) {
     this.navCtrl.push(DetailsPage, crypto)
     this.provider.coinsKey = crypto.myCoins.$key;
+    console.dir(crypto)
   }
 
   ngOnInit() {
