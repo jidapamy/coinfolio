@@ -24,7 +24,7 @@ import { FingerprintAIO } from '@ionic-native/fingerprint-aio';
 export class HomePage {
   @ViewChild(Content) content: Content
   segment = 'THB';
-  user: any;
+  user: any='';
   cryptoTotal: cryptoCurrency[] = [];
   coins: cryptoCurrency[] = [];
   filteredCrypto: Array<any> = [];
@@ -39,6 +39,8 @@ export class HomePage {
     public modalCtrl: ModalController,
     private screenshot: Screenshot,
     public menuControl: MenuController) {
+      //set rate
+
   }
 
   ionViewDidLoad() {
@@ -50,7 +52,7 @@ export class HomePage {
       console.log(event.target.value)
       if (event.target.value.length > 0) {
         let filteredJson = this.coins.filter(row => {
-          if (row.secondary_currency.indexOf(event.target.value) != -1) {
+          if (row.secondary_currency.toLowerCase().indexOf(event.target.value.toLowerCase()) != -1) {
             return true;
           } else {
             return false;
@@ -101,6 +103,7 @@ export class HomePage {
 
   ngOnInit() {
     this.provider.getUserLogin().then(data =>{
+      console.log('USer L '+data)
       this.user = data;
       this.content.resize();
       console.log('ngOnInit')
@@ -114,6 +117,17 @@ export class HomePage {
         console.dir(this.cryptoTotal)
         clearInterval(intervel);
         this.changeMarket(this.segment);
+        console.log('this.cryptoTotal '+this.cryptoTotal.length)
+        for (let i = 0; i < this.cryptoTotal.length; i++) {
+          if (this.cryptoTotal[i].primary_currency == 'USD' && this.cryptoTotal[i].secondary_currency == "BTC") {
+            console.log('rateBtcPerUsd')
+            this.provider.rateBtcPerUsd = this.cryptoTotal[i].last_price;
+          }
+          if (this.cryptoTotal[i].primary_currency == 'USD' && this.cryptoTotal[i].secondary_currency == "ETH") {
+            console.log('rateEthPerUsd')
+            this.provider.rateEthPerUsd = this.cryptoTotal[i].last_price;
+          }
+        }
       }
     }, 300);
 

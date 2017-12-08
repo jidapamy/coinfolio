@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import {Nav, Platform, MenuController, ModalController } from 'ionic-angular';
+import { Nav, Platform, MenuController, ModalController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Storage } from '@ionic/storage';
@@ -48,19 +48,25 @@ export class MyApp {
     public modalCtrl: ModalController
   ) {
     this.initializeApp();
+    this.changeLogoutMenuControl()
 
-
-    this.provider.getUsername().then((data) => {
-      this.username = data;
-      this.content.resize();
-      console.log('Menu Constructor: ' + this.username)
-      if (this.username != '') {
+    this.provider.getUserLogin().then((data) => {
+      if (data != '') {
+        this.username = data.user.username;
+        this.content.resize();
         console.log('Menu Constructor: ' + this.username)
-
-        this.activeMenu = "login"
-        this.menuControl.enable(true, this.activeMenu)
-        this.menuControl.enable(false, 'notLogin');
+        if (this.username == undefined || this.username == '') {
+          console.log('undefined Menu Constructor: ' + this.username)
+          // this.activeMenu = "notLogin"
+          this.menuControl.enable(true, "notLogin")
+          this.menuControl.enable(false, 'login');
+        } else {
+          console.log('Menu Constructor: ' + this.username)
+          this.menuControl.enable(true, "login")
+          this.menuControl.enable(false, 'notLogin');
+        }
       }
+
     })
 
 
@@ -141,7 +147,7 @@ export class MyApp {
   }
 
   logout() {
-    this.provider.setUsername('');
+    this.provider.setUserLogin('');
     this.username = '';
     this.nav.setRoot(HomePage);
     this.content.resize();

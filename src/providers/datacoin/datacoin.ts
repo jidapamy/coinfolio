@@ -22,8 +22,8 @@ export class DatacoinProvider {
 	transactionData: FirebaseListObservable<any[]>;
 	chatsData: FirebaseListObservable<any[]> = this.angularfire.list('/chats');
 
-	userLogin: any;
-	userKey: any;
+	userLogin: any='';
+	userKey: any='';
 	coinsKey: any;
 	mycoinsPath: any;
 	transactionPath: any;
@@ -38,6 +38,8 @@ export class DatacoinProvider {
 	rateBtc: any = 0;
 	rateEth: any = 0;
 	rateUsd: any = 34;
+	rateBtcPerUsd: any = 0;
+	rateEthPerUsd: any = 0;
 	cryptoWithName: any[] = []
 	cryptoCurrency: any[] = [];
 
@@ -45,6 +47,7 @@ export class DatacoinProvider {
 		public platform: Platform,
 		public storage: Storage,
 		public angularfire: AngularFireDatabase) {
+			// this.setUserLogin('')
 		console.log('Hello DatacoinProvider Provider');
 		this.mixNameCoins()
 		console.log('this.cryptoCurrency นะจ๊ะ')
@@ -198,19 +201,19 @@ export class DatacoinProvider {
 	}
 
 	// User
-	setUsername(username) {
-		console.log('save:' + username)
-		this.username = username
-		this.storage.set('userLogin', this.username);
-	}
+	// setUsername(username) {
+	// 	console.log('save:' + username)
+	// 	this.username = username
+	// 	this.storage.set('userLogin', this.username);
+	// }
 
 	// clearStorage() {
 	// 	this.storage.clear();
 	// }
 
-	getUsername(): Promise<any> {
-		return this.storage.get('userLogin')
-	}
+	// getUsername(): Promise<any> {
+	// 	return this.storage.get('userLogin')
+	// }
 
 	registerUser(data) {
 		this.userData.push(data)
@@ -230,9 +233,15 @@ export class DatacoinProvider {
 		// console.log('Login: '+user.username)
 		console.dir(user)
 		this.storage.set('userLogin', user);
-		this.username = user.user.username
-		this.userKey = user.key
-		console.log('Set Username :' + this.username + 'KEY: ' + this.userKey)
+		if(user != ''){
+			this.username = user.user.username
+			this.userKey = user.key
+			console.log('Set Username :' + this.username + 'KEY: ' + this.userKey)
+		}else{
+			this.username = ''
+			this.userKey = ''
+		}
+		
 	}
 	getUserLogin(): Promise<any> {
 		return this.storage.get('userLogin')
@@ -269,7 +278,7 @@ export class DatacoinProvider {
 	}
 
 	loadStatistics(): Observable<tempStatisticsCoins[]> {
-		return this.http.get('DataCoinPriceOfDay.json')
+		return this.http.get('staticCoinPriceperday.json')
 			.map(response => {
 				return response.json();
 			});
@@ -379,6 +388,7 @@ export class DatacoinProvider {
 		let price = 0;
 		let priceDecimal;
 		if (coin.primary_currency == 'THB') { // แปลงจากเงินบาท
+			console.log(`${coin.primary_currency} >> ${type}`)
 			if (type == 'THB') {
 				price = coin.last_price;
 			} else if (type == 'BTC') {
@@ -398,7 +408,7 @@ export class DatacoinProvider {
 			} else if (type == 'USD') {
 				price = ((coin.last_price * this.rateBtc) / this.rateUsd);
 			}
-		}
+		} 
 
 		// Decimal Format
 		if (price < 1) {

@@ -89,7 +89,7 @@ export class LoginPage {
 
       // check user 
       for (let i = 0; i < this.allUsers.length; i++) {
-        if (this.allUsers[i].username == this.loginForm.value.username && this.allUsers[i].password == this.loginForm.value.password) {
+        if (this.allUsers[i].username.toLowerCase() == this.loginForm.value.username.toLowerCase() && this.allUsers[i].password == this.loginForm.value.password) {
           this.invalid = false;
           this.provider.setUserLogin({ user: this.allUsers[i], key: this.allUsers[i].$key });
           setTimeout(() => {

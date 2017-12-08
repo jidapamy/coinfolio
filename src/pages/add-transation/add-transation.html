@@ -19,7 +19,7 @@
 
 
 <ion-content padding>
-  <form class="list" [formGroup]="addTransactionForm" (ngSubmit)="saveTransation()">
+  <form class="list" [formGroup]="addTransactionForm" >
     <ion-list >
       <ion-item>
         <ion-label class="fixedLeft">
@@ -66,7 +66,7 @@
     <ion-list>
       <ion-item>
         <ion-label class="fixedLeft">Trade Date</ion-label>
-        <ion-datetime class="datetimeColor" displayFormat="MMM/DD/YYYY" pickerFormat="MMMM DD YYYY" [(ngModel)]="myDate" formControlName="date"></ion-datetime>
+        <ion-datetime class="datetimeColor" displayFormat="MMM/DD/YYYY" pickerFormat="MMMM DD YYYY" [(ngModel)]="myDate" (ionChange)="chooseDate()" formControlName="date"></ion-datetime>
       </ion-item>
       <ion-item>
         <ion-label class="fixedLeft">Note</ion-label>

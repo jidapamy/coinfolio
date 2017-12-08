@@ -31,6 +31,7 @@ export class HeaderPage {
     public navParams: NavParams,
     public provider: DatacoinProvider,
     public angularfire: AngularFireDatabase) {
+    console.log('Header : ')
 
     this.provider.getUserLogin().then(data => {
       if (data) {

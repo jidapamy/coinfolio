@@ -55,7 +55,7 @@ export class ChatPage {
 
 
 		// username in chat
-		this.provider.getUsername().then((data) => {
+		this.provider.getUserLogin().then((data) => {
 			if (data) {
 				this.username = data.user.username;
 				this.userLogin = true;
